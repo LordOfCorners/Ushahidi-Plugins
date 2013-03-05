@@ -1,19 +1,18 @@
 === About ===
-name: SMS Automate
+name: Inventory Management via SMS
 website: http://www.ushahidi.com
-description: Automates turning a SMS message into a report
-version: 1.1
+description: Allows for the mass generation of reports based on codes sent in a SMS message. Based off of John Etherton's SMS Automate plugin
+version: 0.1
 requires: 2.0b10
 tested up to: 2.0
-author: John Etherton
-author website: http:/johnetherton.com
+author: Michael Kahane
+author website: http://michaelkahane.com
 
 == Description ==
-Allows properly formatted SMS messages to be automatically converted into approved reports. Uses a code word to provide some level of security.
+Allows for the mass generation of reports based on codes sent in a SMS. In one scenario, this is used by someone who goes to a health clinic and reports missing items, each item corresponding to a codes in the SMS message, separated by a space. 
 
 == Installation ==
 1. Copy the entire /smsautomate/ directory into your /plugins/ directory.
 2. Activate the plugin.
 
 == Changelog ==
-v1.1 - 2010-10-26: Changed to work with the new SMS architecture, and the switch from <plugin-name>_admin.php to <plugin-name>_settings.php for the name of the admin file
