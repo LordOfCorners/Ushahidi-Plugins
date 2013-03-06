@@ -284,6 +284,7 @@ class smsautomate {
 		}		
 		
 		/*CAIMI*/
+		//EQUIPMENT
 		else if($message_elements[$i]=="E11"){
 			$title = "Depósito de sangre";
 			$category = "43";
@@ -384,6 +385,123 @@ class smsautomate {
 			$category = "19";
 			$incident_description="This is a default description";
 		}
+		//NEW EQUIPMENT (NO CODES)
+		else if($message_elements[$i]==""){
+			$title = "Equipo análisis de calidad de agua";
+			$category = "71";
+			$incident_description="LABORATORIO";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Estetoscopios para adultos";
+			$category = "72";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Esfigmomanómetros adultos";
+			$category = "73";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Lámparas cuello de ganso";
+			$category = "74";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Termómetro oral";
+			$category = "75";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Termómetro rectal";
+			$category = "76";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Equipo papanicolau";
+			$category = "77";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Pinzas de anillos";
+			$category = "78";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Bandejas";
+			$category = "79";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Tijeras";
+			$category = "80";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Equipo de Venoclisis";
+			$category = "81";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Gasas";
+			$category = "82";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Guantes descartables";
+			$category = "83";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Jeringas descartables";
+			$category = "84";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Hilos de sutura (Sedas) puede reemplazarse por nylon";
+			$category = "85";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Ferula fracturas";
+			$category = "86";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Estetoscopio";
+			$category = "87";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Esfigmomanómetro";
+			$category = "88";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Recipiente de plástico de 30ml (Multistix)";
+			$category = "89";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Cinta de Castilla";
+			$category = "90";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Espéculos";
+			$category = "91";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Hoja para bisturi";
+			$category = "92";
+			$incident_description="This is a default description";
+		}
+		else if($message_elements[$i]==""){
+			$title = "Esparadrapo microporoso (Micropore)";
+			$category = "93";
+			$incident_description="This is a default description";
+		}
+		//MEDICINE
 		else if($message_elements[$i]=="M11"){
 			$title = "Medicina para la fiebre adultos";
 			$category = "27";
@@ -503,8 +621,13 @@ class smsautomate {
 			$title = "Medicina para el dolor niños";
 			$category = "70";
 			$incident_description="This is a default description";
-		}								
-													
+		}	
+		//NEW MEDICINE (NO CODES)
+		else if($message_elements[$i]==""){
+			$title = "Medicinas para el asma y alergia pulmonar para niños";
+			$category = "94";
+			$incident_description="This is a default description";
+		}											
 		else{
 			$title = "You have not entered a title for this code yet";
 			$category = "5";
