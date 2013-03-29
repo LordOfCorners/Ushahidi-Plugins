@@ -88,29 +88,20 @@ class smsautomate {
 			$message_elements[$j]= strtoupper($message_elements[$j]);
 		}
 		
-		if($message_elements[0]=="41"){
-			$location_description = "Totonicapan"; //EDIT EDIT EDIT!!!
-			//$location_lat = 15.38; //edit edit edit!
-			//$location_long = -90.92; // edit edit edit!
-			//14.911777,-91.360931
-			//Totonicapan
+		if($message_elements[0]=="170404"){			
+			$location_description = "Campur";
+			$municipality = "San Pedro Carcha";
+			$location_lat = 15.63346211;
+			$location_long = -90.04852005;
 		}
-		if($message_elements[1]=="56"){
-			$location_description .= ",";
-			$location_description .= "Totonicapan"; //EDIT EDIT EDIT!!!
-			//echo $location_description;
-			$location_lat = 14.91; //edit edit edit!
-			$location_long = -91.36; // edit edit edit!
-			//14.911777,-91.360931
-			//Totonicapan
-		}
+
 		// 225 = á
 		// 233 = é
 		// 237 = í
 		// 243 = ó
 		// 250 = ú
 		// 253 = ý
-		for($i=2; $i<$elements_count; $i++){
+		for($i=1; $i<$elements_count; $i++){
 		
 		if($message_elements[$i]=="01"){
 			$title = "Termómetro oral";
