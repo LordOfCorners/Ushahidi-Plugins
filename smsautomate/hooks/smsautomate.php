@@ -632,9 +632,17 @@ class smsautomate {
 		$location->longitude = $location_long;//-90.92;
 		$location->location_date = $message_date;
 		$location->save();
-		//STEP 2: Save the incident
+		
+		// STEP 2: SAVE CUSTOM FIELDS
+		$saveMunicipality = new Form_Response_Model();
+		$saveMunicipality->incident_id = $location->id;
+		$saveMunicipality->form_field_id=1;
+		$saveMunicipality->form_response=$municipality;
+		$saveMunicipality->save();
+				
+		//STEP 3: Save the incident
 		$incident = new Incident_Model();
-		$incident->location_id = $location->id;
+		$incident-location_id = $location->id;
 		$incident->user_id = 0;
 		$incident->incident_title = $title;  
 		$incident->incident_description = $incident_description;
@@ -647,7 +655,7 @@ class smsautomate {
 		//Save
 		$incident->save();
 		error_log($incident->id);
-		//STEP 3: Record Approval
+		//STEP 4: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
 		$verify->user_id = 0;
