@@ -89,8 +89,12 @@ class smsautomate {
 		}
 		
 		if($message_elements[0]=="170404"){			
-			$location_description = "Campur";
+			$location_description = "Campur (C/S)";
+			$facilityType = "Centro de Salud";
 			$municipality = "San Pedro Carcha";
+			$department = "Alta Verapaz";
+			$dms = "Campur";
+			$das = "Alta Verapaz";
 			$location_lat = 15.63346211;
 			$location_long = -90.04852005;
 		}
@@ -634,12 +638,41 @@ class smsautomate {
 		$location->save();
 		
 		// STEP 2: SAVE CUSTOM FIELDS
+		//facilityType
+		$saveFacilityType = new Form_Response_Model();
+		$saveFacilityType->incident_id = $location->id;
+		$saveFacilityType->form_field_id=6; 
+		$saveFacilityType->form_response=$facilityType;
+		$saveFacilityType->save();
+		
+		//Municipality Name
 		$saveMunicipality = new Form_Response_Model();
 		$saveMunicipality->incident_id = $location->id;
 		$saveMunicipality->form_field_id=1;
 		$saveMunicipality->form_response=$municipality;
 		$saveMunicipality->save();
-				
+		
+		//Department Name
+		$saveDepartment = new Form_Response_Model();
+		$saveDepartment->incident_id = $location->id;
+		$saveDepartment->form_field_id=3;
+		$saveDepartment->form_response=$department;
+		$saveDepartment->save();
+		
+		//DMS
+		$saveDMS = new Form_Response_Model();
+		$saveDMS->incident_id = $location->id;
+		$saveDMS->form_field_id=4;
+		$saveDMS->form_response=$dms;
+		$saveDMS->save();
+		
+		//DAS
+		$saveDAS = new Form_Response_Model();
+		$saveDAS->incident_id = $location->id;
+		$saveDAS->form_field_id=5;
+		$saveDAS->form_response=$das;
+		$saveDAS->save();
+	
 		//STEP 3: Save the incident
 		$incident = new Incident_Model();
 		$incident->location_id = $location->id;
