@@ -98,6 +98,97 @@ class smsautomate {
 			$location_lat = 15.63346211;
 			$location_long = -90.04852005;
 		}
+		else if($message_elements[0]=="170405"){			
+			$location_description = "Cojaj (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "San Pedro Carcha";
+			$department = "Alta Verapaz";
+			$dms = "Campur";
+			$das = "Alta Verapaz";
+			$location_lat = 15.56380798;
+			$location_long = -90.13027784;
+		}
+		else if($message_elements[0]=="171307"){			
+			$location_description = "Chisec (C/S)";
+			$facilityType = "Centro de Salud";
+			$municipality = "Chisec";
+			$department = "Alta Verapaz";
+			$dms = "Chisec";
+			$das = "Alta Verapaz";
+			$location_lat = 15.81277802;
+			$location_long = -90.29316432;
+		}
+		else if($message_elements[0]=="171408"){			
+			$location_description = "Coban (C/S)";
+			$facilityType = "Centro de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.4782715;
+			$location_long = -90.37221338;
+		}
+		else if($message_elements[0]=="171409"){			
+			$location_description = "Chitocan (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.64839723;
+			$location_long = -90.41503693;
+		}
+		else if($message_elements[0]=="171413"){			
+			$location_description = "Choval (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.54126377;
+			$location_long = -90.37282672;
+		}
+		else if($message_elements[0]=="171412"){			
+			$location_description = "Purribal (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.79626294;
+			$location_long = -90.72859163;
+		}
+		else if($message_elements[0]=="171411"){			
+			$location_description = "Salacuin (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.8474214;
+			$location_long = -90.71565122;
+		}
+		else if($message_elements[0]=="171414"){			
+			$location_description = "Saxoc (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.57986623;
+			$location_long = -90.38670149;
+		}
+		else if($message_elements[0]=="171410"){			
+			$location_description = "Secocpur (P/S)";
+			$facilityType = "Puesto de Salud";
+			$municipality = "Coban";
+			$department = "Alta Verapaz";
+			$dms = "Coban";
+			$das = "Alta Verapaz";
+			$location_lat = 15.71714901;
+			$location_long = -90.42187901;
+		}
+
 
 		// 225 = á
 		// 233 = é
