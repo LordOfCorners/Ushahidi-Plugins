@@ -642,7 +642,7 @@ class smsautomate {
 				
 		//STEP 3: Save the incident
 		$incident = new Incident_Model();
-		$incident-location_id = $location->id;
+		$incident->location_id = $location->id;
 		$incident->user_id = 0;
 		$incident->incident_title = $title;  
 		$incident->incident_description = $incident_description;
