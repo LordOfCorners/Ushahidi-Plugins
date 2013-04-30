@@ -80,8 +80,9 @@
 		<div class="row">
 		<h4>Enter an Item</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
-			It may be helpful to categorize your item codes by placing a letter at the beginning. To figure out a category's ID number look at the status bar when mousing over the edit or delete link in the Catgories Manage Page in the
-	administrative interface. This should be located in admin/manage on your Ushahidi site  
+			It may be helpful to categorize your item codes by placing a letter at the beginning. <br /> To figure out a category's ID number look at the status bar 
+			when mousing over the edit or delete link in the Catgories Manage Page in the
+	administrative interface. <br />This should be located in admin/manage on your Ushahidi site  
 		</h6>
 		
 		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
