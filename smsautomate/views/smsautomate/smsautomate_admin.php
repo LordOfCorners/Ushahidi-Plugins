@@ -94,7 +94,6 @@
 	
 	
 	
-<!--
 	<div class="row">
 		<h4>White listed phone numbers</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
@@ -103,7 +102,6 @@
 		</h6>
 		<?php print form::textarea('whitelist', $form['whitelist'], ' rows="12" cols="40"') ?>		
 	</div>
--->
 	
 	
 	
