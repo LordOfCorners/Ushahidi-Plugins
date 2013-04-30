@@ -27,31 +27,26 @@
 	<?php } ?>
 
 <h4> 
-	<br/>Inventory Management via SMS allows you to create custom codes that an end user can send to Ushahidi, where each code has key report information tied to it. The message sent by the end user first includes a code that provides all of the location information for a report, and the rest of the codes each correspond to a particular missing item missing form inventory and provide the rest of the report information, such as category, title, description, etc. A new report is created for each item code, using the original location code for every report. 
+	<br/>Inventory Management via SMS allows you to create custom codes that an end user can send to Ushahidi, where each code has key report information tied to it. The message sent by the end user first includes a code that provides all of the location information for a report, and the rest of the codes each correspond to a particular missing item missing form inventory and provide the rest of the report information, such as category, title, description, etc. <br/>A new report is created for each item code, using the original location code for every report. 
 	
-	For incoming SMS messages to work with this plugin, the following format and ordering must be used. Use as many Item Codes as necessary.  <br/>	
+	<br/>For incoming SMS messages to work with this plugin, the following format and ordering must be used. Use as many Item Codes as necessary.  <br/>	
 	<div style="padding:10px;margin:20px; font-style:italic; border: 1px solid black;"> &lt;Location Code&gt;&lt;delimiter&gt;
 	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;&lt;delimiter&gt;
 	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;&lt;delimiter&gt;
 	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;</div><br/>
 	
-	So for example if we use ';' as our delimiter and "abc" as our code word then the following:<br/>
+	So for example if we use a space as our delimiter, a sample message might look like the following:<br/> <!-- note, this setting is turned off right now, always use a space-->
 	
-	<div style="padding:10px;margin:20px; font-style:italic; border: 1px solid black;">abc;7.77;-9.42;My Title;Zorzor, Liberia;The description of the event;1,3,4</div><br/><br/>
+	<div style="padding:10px;margin:20px; font-style:italic; border: 1px solid black;">141803 m12 m14 m22 m24 e21 e22 e37</div>
 	
-	This would be converted into a report at latitude 7.77 and longitude -9.42, calling this location "Zorzor Liberia", with a title of "My Title", a description of 
-	"The description of the event", and tagged under catgories 1, 3 and 4. 
+	These codes correspond to the ones you will set up below. <br />
+	
+	The location name, description, and coordinates would be pulled from the first code, and then a new report will be made for each of the rest of the codes, which all correspond to a specific missing item. <br />
+	 
 	<br/>
-	<br/>
-	To figure out a category's ID number look at the status bar when mousing over the edit or delete link in the Catgories Manage Page in the
-	administrative interface. This should be located in admin/manage on your Ushahidi site.
-	<br/>
-	<br/>
-	The Location Description, Event Description and Category fields are optional. A message must have a code word, lat, lon, and title to be parsed.
-	<br/>
-	<br/> Please becareful with these settings, choosing an easy to guess code word 
-	will make your site an easy target for malicious groups wishing to spread mis-information. Also by choosing a delimiter 
-	that may be used in the message you run the risk of having malformed SMS messages that can't be properly read.
+	
+<!--	To figure out a category's ID number look at the status bar when mousing over the edit or delete link in the Catgories Manage Page in the
+	administrative interface. This should be located in admin/manage on your Ushahidi site.-->
 <h4>
 <br/>
 <br/>
@@ -62,21 +57,43 @@
 		
 		<h4>What character should be the delimiter between fields in a text message?</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
-			Don't use a comma, "," as this is the delimiter for category IDs, and also a fairly commonly used punctionation mark. 
-			<br/>Use something more obscure like a semi-colon, ";" or an ampersand. "&amp;".
+			This is not actually set up to do anything right now. Separate your codes with a space, until further notice.
+			<br/>Separate your codes with a space, until further notice..
 		</h6>
 		<?php print form::input('delimiter', $form['delimiter'], ' class="text"'); ?>		
 	</div>
 	<br/>
 	<div class="row">
-		<h4>What code word should be used to make sure that the SMS is from a trusted user?</h4>
+		<h4>Enter your first location</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
-			This is case insensative. For example "AbC" and "abc" will be treated as the same code word.
+			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
-		<?php print form::input('code_word', $form['code_word'], ' class="text"'); ?>
+		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
+		Location Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+		Latitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+		Longitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+
 		
 	</div>
 	<br/>
+	
+		<div class="row">
+		<h4>Enter an Item</h4>
+		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
+			It may be helpful to categorize your item codes by placing a letter at the beginning. To figure out a category's ID number look at the status bar when mousing over the edit or delete link in the Catgories Manage Page in the
+	administrative interface. This should be located in admin/manage on your Ushahidi site  
+		</h6>
+		
+		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
+		Item Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+		Item Description: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+		Category ID: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
+				
+	</div>
+	
+	
+	
+<!--
 	<div class="row">
 		<h4>White listed phone numbers</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
@@ -85,6 +102,7 @@
 		</h6>
 		<?php print form::textarea('whitelist', $form['whitelist'], ' rows="12" cols="40"') ?>		
 	</div>
+-->
 	
 	
 	
