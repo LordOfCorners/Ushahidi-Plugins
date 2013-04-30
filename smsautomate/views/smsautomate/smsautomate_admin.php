@@ -1,5 +1,5 @@
 
-<h1> SMS Automate - Settings</h1>
+<h1> Inventory Management via SMS - Settings</h1>
 <?php print form::open(); ?>
 
 	<?php if ($form_error) { ?>
@@ -27,12 +27,13 @@
 	<?php } ?>
 
 <h4> 
-	<br/> For incoming SMS messages to work with this plugin the following format and ordering must be used.<br/>
+	<br/>Inventory Management via SMS allows you to create custom codes that an end user can send to Ushahidi, where each code has key report information tied to it. The message sent by the end user first includes a code that provides all of the location information for a report, and the rest of the codes each correspond to a particular missing item missing form inventory and provide the rest of the report information, such as category, title, description, etc. A new report is created for each item code, using the original location code for every report. 
 	
-	<div style="padding:10px;margin:20px; font-style:italic; border: 1px solid black;"> &lt;Code Word&gt;&lt;delimiter&gt;
-	&lt;Decimal Degree Latitude&gt;&lt;delimiter&gt;&lt;Decimal Degree Longitude&gt;&lt;delimiter&gt;
-	&lt;Title&gt;&lt;delimiter&gt;&lt;Location Description&gt;&lt;delimiter&gt;
-	&lt;Event Description&gt;&lt;delimiter&gt;&lt;Category Codes seperated by commas&gt;</div><br/>
+	For incoming SMS messages to work with this plugin, the following format and ordering must be used. Use as many Item Codes as necessary.  <br/>	
+	<div style="padding:10px;margin:20px; font-style:italic; border: 1px solid black;"> &lt;Location Code&gt;&lt;delimiter&gt;
+	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;&lt;delimiter&gt;
+	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;&lt;delimiter&gt;
+	&lt;Item Code&gt;&lt;delimiter&gt;&lt;Item Code&gt;</div><br/>
 	
 	So for example if we use ';' as our delimiter and "abc" as our code word then the following:<br/>
 	

@@ -1428,6 +1428,13 @@ class smsautomate {
 			$location_lat = 14.91408841;
 			$location_long = -91.38060499;
 		}
+		else{
+			$locationError=TRUE;
+			$location_description = "Error";
+			$location_lat = 0;
+			$location_long = 0;
+			$elements_count=2; //make loop run only once.
+		}
 		
 
 		
@@ -1795,6 +1802,7 @@ class smsautomate {
 			$category = "76";
 			$incident_description="This is a default description";
 		}
+		
 
 		//NEW EQUIPMENT (NO CODES)
 		
@@ -1958,6 +1966,12 @@ class smsautomate {
 			$title = "You have not entered a title for this code yet";
 			$category = "5";
 			$incident_description="This is a default description";
+		}
+		
+	    if($locationError==TRUE){
+			$title = "Location Error";
+			$category = "96";
+			$incident_description="The location code used does not exist";
 		}
 		
 		// STEP 1: SAVE LOCATION
