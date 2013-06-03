@@ -1428,6 +1428,7 @@ class smsautomate {
 			$location_lat = 14.91408841;
 			$location_long = -91.38060499;
 		}
+/*
 		else{
 			$locationError=TRUE;
 			$location_description = "Error";
@@ -1435,6 +1436,7 @@ class smsautomate {
 			$location_long = 0;
 			$elements_count=2; //make loop run only once.
 		}
+*/
 		
 
 		
@@ -1449,173 +1451,173 @@ class smsautomate {
 		if($message_elements[$i]=="01"){
 			$title = "Termómetro oral";
 			$category = "7";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//old stuff (number codes)
 		else if($message_elements[$i]=="02"){
 			$title = "Lámpara cuello de ganso";
 			$category = "8";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="03"){
 			$title = "Estetoscopio";
 			$category = "9";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="04"){
 			$title = "Esfigmomanómetro";
 			$category = "10";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="05"){
 			$title = "Recipiente de plástico de 30ml (Multistix)";
 			$category = "11";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}				
 		else if($message_elements[$i]=="06"){
 			$title = "Cinta de castilla";
 			$category = "12";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="07"){
 			$title = "Guantes descartables";
 			$category = "13";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}						
 		else if($message_elements[$i]=="08"){
 			$title = "Equipo de papanicolau";
 			$category = "15";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="09"){
 			$title = "Espéculos";
 			$category = "16";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}				
 		else if($message_elements[$i]=="10"){
 			$title = "Algodón";
 			$category = "17";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="11"){
 			$title = "Gasas";
 			$category = "18";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="12"){
 			$title = "Esparadrapo microporoso (Micropore)";
 			$category = "19";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="13"){
 			$title = "Hoja para bisturi";
 			$category = "20";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="14"){
 			$title = "Jeringas descartables";
 			$category = "21";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="15"){
 			$title = "Equipo de venoclisis";
 			$category = "22";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="16"){
 			$title = "Férula para fracturas";
 			$category = "23";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="17"){
 			$title = "Problemas con personales";
 			$category = "24";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="18"){
 			$title = "Servicio de agua todo el tiempo";
 			$category = "25";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
 		else if($message_elements[$i]=="19"){
 			$title = "Energia eléctrica todo el tiempo";
 			$category = "26";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="20"){
 			$title = "Medicina para la fiebre adultos";
 			$category = "27";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="21"){
 			$title = "Medicina para la fiebre niños";
 			$category = "28";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="22"){
 			$title = "Antibióticos para pulmonía adultos";
 			$category = "29";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="23"){
 			$title = "Antibióticos para pulmonía niños";
 			$category = "30";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="24"){
 			$title = "Acido fólico para embarazadas";
 			$category = "31";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="25"){
 			$title = "Hierro para niños";
 			$category = "32";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="26"){
 			$title = "Desparasitantes para niños";
 			$category = "33";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="27"){
 			$title = "Medicina para amebas";
 			$category = "34";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="28"){
 			$title = "Antibiótico para diarreas";
 			$category = "35";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="29"){
 			$title = "Sueros orales para deshidratación";
 			$category = "36";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="30"){
 			$title = "Medicina para la gastritis";
 			$category = "37";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="31"){
 			$title = "Medicina para la conjuntivitis";
 			$category = "38";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		else if($message_elements[$i]=="32"){
 			$title = "Soluciones intravenosas para deshidratación";
 			$category = "39";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		else if($message_elements[$i]=="33"){
 			$title = "Anestesia local";
 			$category = "40";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		else if($message_elements[$i]=="34"){
 			$title = "Medicinas para el asma y alergia pulmonar para niños";
 			$category = "41";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		
 		/*CAIMI*/
@@ -1624,183 +1626,183 @@ class smsautomate {
 		else if($message_elements[$i]=="E11"){
 			$title = "Depósito de sangre";
 			$category = "43";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E12"){
 			$title = "Equipo de rayos x";
 			$category = "44";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E13"){
 			$title = "Microscopio";
 			$category = "45";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E14"){
 			$title = "Insumos de laboratorio";
 			$category = "46";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E15"){
 			$title = "Equipo análisis de calidad de agua";
 			$category = "47";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Cirugia
 		else if($message_elements[$i]=="E21"){
 			$title = "Equipo e insumos para cesarea (completo)";
 			$category = "48";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E22"){
 			$title = "Equipo de anesthesia";
 			$category = "49";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E23"){
 			$title = "Equipos de cirugía menor";
 			$category = "51";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E24"){
 			$title = "Equipos de sutura";
 			$category = "50";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E25"){
 			$title = "Hilos de sutura";
 			$category = "85";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		else if($message_elements[$i]=="E26"){
 			$title = "Pinzas de anillos";
 			$category = "78";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E27"){
 			$title = "Bandejas";
 			$category = "79";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E28"){
 			$title = "Tijeras";
 			$category = "80";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E29"){
 			$title = "Hoja para bisturi";
 			$category = "92";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Traumas
 		else if($message_elements[$i]=="E31"){
 			$title = "Vendas de yeso";
 			$category = "54";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E32"){
 			$title = "Ferula fracturas";
 			$category = "86";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Urgencias
 		else if($message_elements[$i]=="E41"){
 			$title = "Equipo de resucitación (AMBU y mascarilla)";
 			$category = "55";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E42"){
 			$title = "Oxígeno incluido cilindro, humidificador y manómetro";
 			$category = "56";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Maternidad
 		else if($message_elements[$i]=="E51"){
 			$title = "Equipos para parto";
 			$category = "58";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E52"){
 			$title = "Equipo papanicolau";
 			$category = "15";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E53"){
 			$title = "Cinta de Castilla o clamps";
 			$category = "95";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E54"){
 			$title = "Espéculos";
 			$category = "91";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Asistencia
 		else if($message_elements[$i]=="E61"){
 			$title = "Algodón";
 			$category = "17";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E62"){
 			$title = "Angiokath";
 			$category = "59";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E63"){
 			$title = "Guantes estériles";
 			$category = "60";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E64"){
 			$title = "Guantes descartables";
 			$category = "83";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E65"){
 			$title = "Jeringas descartables";
 			$category = "84";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E66"){
 			$title = "Micropore";
 			$category = "19";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E67"){
 			$title = "Equipo de Venoclisis";
 			$category = "81";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E68"){
 			$title = "Gasas";
 			$category = "82";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Examen
 		else if($message_elements[$i]=="E71"){
 			$title = "Estetoscopios para adultos";
 			$category = "9";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E72"){
 			$title = "Esfigmomanómetros adultos";
 			$category = "73";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E73"){
 			$title = "Lámparas cuello de ganso";
 			$category = "8";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E74"){
 			$title = "Termómetro oral";
 			$category = "75";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="E75"){
 			$title = "Termómetro rectal";
 			$category = "76";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		
 
@@ -1813,17 +1815,17 @@ class smsautomate {
 	/*	else if($message_elements[$i]==""){
 			$title = "Estetoscopio";
 			$category = "87";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		} 
 		else if($message_elements[$i]==""){
 			$title = "Esfigmomanómetro ";
 			$category = "88";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		} 
 		else if($message_elements[$i]==""){
 			$title = "Recipiente de plástico de 30ml (Multistix)";
 			$category = "89";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		} */
 
 
@@ -1833,146 +1835,148 @@ class smsautomate {
 		else if($message_elements[$i]=="M11"){
 			$title = "Medicina para la fiebre adultos";
 			$category = "27";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="M12"){
 			$title = "Medicina para la fiebre niños";
 			$category = "28";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Nutricion
 		else if($message_elements[$i]=="M21"){
 			$title = "Hierro para niños";
 			$category = "32";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="M22"){
 			$title = "Vitaminas para niños";
 			$category = "62";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Ojos
 		else if($message_elements[$i]=="M31"){
 			$title = "Medicina para la conjuntivitis";
 			$category = "38";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Cirugias
 		else if($message_elements[$i]=="M41"){
 			$title = "Anestesia local";
 			$category = "40";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="M42"){
 			$title = "Anestesia para operaciones";
 			$category = "63";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="M43"){
 			$title = "Desinfectante para equipo";
 			$category = "64";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Gastrointestinales
 		else if($message_elements[$i]=="M51"){
 			$title = "Desparasitantes para niños";
 			$category = "33";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		else if($message_elements[$i]=="M52"){
 			$title = "Medicina para amebas";
 			$category = "34";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M61"){
+		else if($message_elements[$i]=="M53"){
 			$title = "Antibiótico para diarreas";
 			$category = "35";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M62"){
+		else if($message_elements[$i]=="M54"){
 			$title = "Medicina para la gastritis";
 			$category = "37";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M63"){
+		else if($message_elements[$i]=="M55"){
 			$title = "Sueros orales para deshidratación";
 			$category = "36";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M64"){
+		else if($message_elements[$i]=="M56"){
 			$title = "Soluciones intravenosas para deshidratación";
 			$category = "39";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}		
 		//Pulmonares
-		else if($message_elements[$i]=="M71"){
+		else if($message_elements[$i]=="M61"){
 			$title = "Antibióticos para pulmonía adultos";
 			$category = "29";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M72"){
+		else if($message_elements[$i]=="M62"){
 			$title = "Antibióticos para pulmonía niños";
 			$category = "30";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M73"){
+		else if($message_elements[$i]=="M63"){
 			$title = "Medicinas para el asma para niños";
 			$category = "41";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}	
-	    else if($message_elements[$i]=="M74"){
+	    else if($message_elements[$i]=="M64"){
 			$title = "Medicinas para el asma y alergia pulmonar para niños";
 			$category = "94";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Maternidad
-		else if($message_elements[$i]=="M81"){
+		else if($message_elements[$i]=="M71"){
 			$title = "Oxitocina para acelerar el parto";
 			$category = "65";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M82"){
+		else if($message_elements[$i]=="M72"){
 			$title = "Magnesio sulfato para la presión en el embarazo";
 			$category = "66";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M83"){
+		else if($message_elements[$i]=="M73"){
 			$title = "Hierro para embarazadas";
 			$category = "67";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M84"){
+		else if($message_elements[$i]=="M74"){
 			$title = "Acido fólico para embarazadas";
 			$category = "31";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		//Trauma
-		else if($message_elements[$i]=="M91"){
+		else if($message_elements[$i]=="M81"){
 			$title = "Relajante muscular";
 			$category = "68";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M92"){
+		else if($message_elements[$i]=="M82"){
 			$title = "Medicina para el dolor para adultos";
 			$category = "69";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
-		else if($message_elements[$i]=="M93"){
+		else if($message_elements[$i]=="M83"){
 			$title = "Medicina para el dolor niños";
 			$category = "70";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}												
 		else{
 			$title = "You have not entered a title for this code yet";
 			$category = "5";
-			$incident_description="This is a default description";
+			$incident_description=" ";
 		}
 		
+/*
 	    if($locationError==TRUE){
 			$title = "Location Error";
 			$category = "96";
 			$incident_description="The location code used does not exist";
 		}
+*/
 		
 		// STEP 1: SAVE LOCATION
 		$categories = array(1);
