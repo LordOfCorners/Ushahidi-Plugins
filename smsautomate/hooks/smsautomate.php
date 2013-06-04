@@ -49,10 +49,9 @@ class smsautomate {
 		$from = Event::$data->message_from;
 		$reporterId = Event::$data->reporter_id;
 		$message_date = Event::$data->message_date;
-		$goodFormat;
-		$goodLocation;
 		$sms_from = Kohana::config("settings.sms_no1");
-
+		$goodLocation = true;
+		//$goodFormat = false;
 
 	/*
 	//check to see if we're using the white list, and if so, if our SMSer is whitelisted
@@ -88,10 +87,7 @@ class smsautomate {
 		
 		if($elements_count <= 1){
 			$goodFormat = false;
-		}else{
-			$goodFormat = true;
 		}
-		
 		
 		//convert strings to uppercase
 		for($j=0;$j<$elements_count;$j++){
@@ -1992,6 +1988,7 @@ class smsautomate {
 */
 		
 		// STEP 1: SAVE LOCATION
+		//var_dump($goodFormat + $goodLocation);
 		if($goodFormat && $goodLocation){
 		$categories = array(1);
 		$location = new Location_Model();
@@ -2094,16 +2091,17 @@ class smsautomate {
 		//Event::$data->incident_id = $incident->id;
 		//Event::$data->save();
 		//sleep(1);
-		}
 			sms::send($from, $sms_from, "Report submitted");
-		}//goodFormat & goodLocation check
+		}
 		else if(!$goodFormat && $goodLocation){
 			sms::send($from, $sms_from, "No items sent");
 		}else if(!$goodLocation && $goodFormat){
 			sms::send($from, $sms_from, "Location code not found");
-		}else{
+		}else if(!$goodFormat && !$goodLocation){
 			sms::send($from, $sms_from, "Location code not found and no items sent");
 		}
+		}
+			
  
 
 	}
