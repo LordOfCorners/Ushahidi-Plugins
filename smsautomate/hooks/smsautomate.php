@@ -49,6 +49,8 @@ class smsautomate {
 		$from = Event::$data->message_from;
 		$reporterId = Event::$data->reporter_id;
 		$message_date = Event::$data->message_date;
+		$goodFormat = false;
+		$sms_from = Kohana::config("settings.sms_no1");
 
 
 	/*
@@ -83,11 +85,19 @@ class smsautomate {
 		//check if the message properly exploded
 		$elements_count = count($message_elements);
 		
+		/*
+		if(elements_count >= 1){
+			sms::send($from, $sms_from, "Message too short");
+		}else{
+			$goodFormat = true;
+		}
+		*/
+		
 		//convert strings to uppercase
 		for($j=0;$j<$elements_count;$j++){
 			$message_elements[$j]= strtoupper($message_elements[$j]);
 		}
-		
+		//if($goodFormat){
 		if($message_elements[0]=="170404"){			
 			$location_description = "Campur (C/S)";
 			$facilityType = "Centro de Salud";
@@ -1969,6 +1979,7 @@ class smsautomate {
 			$category = "5";
 			$incident_description=" ";
 		}
+		//}
 		
 /*
 	    if($locationError==TRUE){
