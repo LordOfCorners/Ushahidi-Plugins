@@ -50,6 +50,7 @@ class smsautomate {
 		$reporterId = Event::$data->reporter_id;
 		$message_date = Event::$data->message_date;
 		$goodFormat = false;
+		$goodLocation =true;
 		$sms_from = Kohana::config("settings.sms_no1");
 
 
@@ -96,7 +97,7 @@ class smsautomate {
 		for($j=0;$j<$elements_count;$j++){
 			$message_elements[$j]= strtoupper($message_elements[$j]);
 		}
-		if($goodFormat){
+		//if($goodFormat){
 		if($message_elements[0]=="170404"){			
 			$location_description = "Campur (C/S)";
 			$facilityType = "Centro de Salud";
@@ -1438,6 +1439,7 @@ class smsautomate {
 			$location_long = -91.38060499;
 		}else{
 			sms::send($from, $sms_from, "Location code not found");
+			$goodLocation=false;
 		}
 /*
 		else{
@@ -1980,7 +1982,7 @@ class smsautomate {
 			$category = "5";
 			$incident_description=" ";
 		}
-		}
+		//}// goodFormat
 		
 /*
 	    if($locationError==TRUE){
@@ -1991,6 +1993,7 @@ class smsautomate {
 */
 		
 		// STEP 1: SAVE LOCATION
+		if($goodFormat && $goodLocation){
 		$categories = array(1);
 		$location = new Location_Model();
 		$location->location_name = $location_description;
@@ -2093,6 +2096,7 @@ class smsautomate {
 		//Event::$data->save();
 		//sleep(1);
 		}
+		}//goodFormat & goodLocation check
 
 
 	}
