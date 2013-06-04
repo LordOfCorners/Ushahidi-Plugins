@@ -21,6 +21,8 @@ class smsautomate {
 	 */
 	public function __construct()
 	{
+		
+		Event::add('ushahidi_action.map_main_filters', array($this, 'filtermap'));
 	
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
@@ -28,7 +30,13 @@ class smsautomate {
 		$this->settings = ORM::factory('smsautomate')
 				->where('id', 1)
 				->find();
+				
 		
+	}
+	
+	public function filtermap(){
+		// This time we'll get the content from our view
+		View::factory('smsautomate/smsautomate_filter')->render(TRUE);
 	}
 	
 	/**
