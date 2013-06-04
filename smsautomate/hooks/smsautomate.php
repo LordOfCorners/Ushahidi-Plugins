@@ -85,7 +85,7 @@ class smsautomate {
 		//check if the message properly exploded
 		$elements_count = count($message_elements);
 		
-		if($elements_count >= 1){
+		if($elements_count <= 1){
 			sms::send($from, $sms_from, "Message too short");
 		}else{
 			$goodFormat = true;
