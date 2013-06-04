@@ -51,8 +51,9 @@ class smsautomate {
 		$message_date = Event::$data->message_date;
 		$sms_from = Kohana::config("settings.sms_no1");
 		$goodLocation = true;
-		//$goodFormat = false;
-
+		$goodFormat = true;
+		$badCodes = array();
+		$badCode = false;
 	/*
 	//check to see if we're using the white list, and if so, if our SMSer is whitelisted
 		$num_whitelist = ORM::factory('smsautomate_whitelist')
@@ -1973,9 +1974,14 @@ class smsautomate {
 			$incident_description=" ";
 		}												
 		else{
+/*
 			$title = "You have not entered a title for this code yet";
 			$category = "5";
 			$incident_description=" ";
+*/
+			$badCode = true;
+			array_push($badCodes, $message_elements[$i]);
+			continue;
 		}
 		//}// goodFormat
 		
@@ -1988,7 +1994,6 @@ class smsautomate {
 */
 		
 		// STEP 1: SAVE LOCATION
-		//var_dump($goodFormat + $goodLocation);
 		if($goodFormat && $goodLocation){
 		$categories = array(1);
 		$location = new Location_Model();
@@ -2091,23 +2096,34 @@ class smsautomate {
 		//Event::$data->incident_id = $incident->id;
 		//Event::$data->save();
 		//sleep(1);
+			} // badCode
+		} // for loop for items
+		
+		
+		if($goodFormat && $goodLocation && !$badCode){
 			sms::send($from, $sms_from, "Report submitted");
-		}
-		else if(!$goodFormat && $goodLocation){
+		}else if(!$goodFormat && $goodLocation){
 			sms::send($from, $sms_from, "No items sent");
 		}else if(!$goodLocation && $goodFormat){
 			sms::send($from, $sms_from, "Location code not found");
 		}else if(!$goodFormat && !$goodLocation){
 			sms::send($from, $sms_from, "Location code not found and no items sent");
+		}else if($goodFormat && $goodLocation && $badCode){
+			$codeList = "";
+			$codeCount = count($badCodes);
+			for($b = 0; $b<$codeCount;$b++){
+				$codeList = $codeList."Invalid code: ".$badCodes[$b]." ";
+			}
+			sms::send($from, $sms_from, "Report submitted $codeList");
 		}
-		}
+
 			
  
 
-	}
+	} // _parseSMS
 	
 
-}
+} // smsautomate
 
 
 new smsautomate;
