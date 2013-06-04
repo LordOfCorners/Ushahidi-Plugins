@@ -1436,6 +1436,8 @@ class smsautomate {
 			$das = "Totonicapan";
 			$location_lat = 14.91408841;
 			$location_long = -91.38060499;
+		}else{
+			sms::send($from, $sms_from, "Location code not found");
 		}
 /*
 		else{
