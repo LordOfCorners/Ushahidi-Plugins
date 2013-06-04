@@ -1997,44 +1997,8 @@ class smsautomate {
 		$location->longitude = $location_long;//-90.92;
 		$location->location_date = $message_date;
 		$location->save();
-		
-		// STEP 2: SAVE CUSTOM FIELDS
-		//facilityType
-		$saveFacilityType = new Form_Response_Model();
-		$saveFacilityType->incident_id = $location->id;
-		$saveFacilityType->form_field_id=6; 
-		$saveFacilityType->form_response=$facilityType;
-		$saveFacilityType->save();
-		
-		//Municipality Name
-		$saveMunicipality = new Form_Response_Model();
-		$saveMunicipality->incident_id = $location->id;
-		$saveMunicipality->form_field_id=1;
-		$saveMunicipality->form_response=$municipality;
-		$saveMunicipality->save();
-		
-		//Department Name
-		$saveDepartment = new Form_Response_Model();
-		$saveDepartment->incident_id = $location->id;
-		$saveDepartment->form_field_id=3;
-		$saveDepartment->form_response=$department;
-		$saveDepartment->save();
-		
-		//DMS
-		$saveDMS = new Form_Response_Model();
-		$saveDMS->incident_id = $location->id;
-		$saveDMS->form_field_id=4;
-		$saveDMS->form_response=$dms;
-		$saveDMS->save();
-		
-		//DAS
-		$saveDAS = new Form_Response_Model();
-		$saveDAS->incident_id = $location->id;
-		$saveDAS->form_field_id=5;
-		$saveDAS->form_response=$das;
-		$saveDAS->save();
-	
-		//STEP 3: Save the incident
+			
+		//STEP 2: Save the incident
 		$incident = new Incident_Model();
 		$incident->location_id = $location->id;
 		$incident->user_id = 0;
@@ -2049,6 +2013,44 @@ class smsautomate {
 		//Save
 		$incident->save();
 		error_log($incident->id);
+		
+		// STEP 3: SAVE CUSTOM FIELDS
+		//facilityType
+		$saveFacilityType = new Form_Response_Model();
+		$saveFacilityType->incident_id = $incident->id;
+		$saveFacilityType->form_field_id=6; 
+		$saveFacilityType->form_response=$facilityType;
+		$saveFacilityType->save();
+		
+		//Municipality Name
+		$saveMunicipality = new Form_Response_Model();
+		$saveMunicipality->incident_id = $incident->id;
+		$saveMunicipality->form_field_id=1;
+		$saveMunicipality->form_response=$municipality;
+		$saveMunicipality->save();
+		
+		//Department Name
+		$saveDepartment = new Form_Response_Model();
+		$saveDepartment->incident_id = $incident->id;
+		$saveDepartment->form_field_id=3;
+		$saveDepartment->form_response=$department;
+		$saveDepartment->save();
+		
+		//DMS
+		$saveDMS = new Form_Response_Model();
+		$saveDMS->incident_id = $incident->id;
+		$saveDMS->form_field_id=4;
+		$saveDMS->form_response=$dms;
+		$saveDMS->save();
+		
+		//DAS
+		$saveDAS = new Form_Response_Model();
+		$saveDAS->incident_id = $incident->id;
+		$saveDAS->form_field_id=5;
+		$saveDAS->form_response=$das;
+		$saveDAS->save();
+
+		
 		//STEP 4: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
