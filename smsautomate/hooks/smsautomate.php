@@ -49,8 +49,8 @@ class smsautomate {
 		$from = Event::$data->message_from;
 		$reporterId = Event::$data->reporter_id;
 		$message_date = Event::$data->message_date;
-		$goodFormat = false;
-		$goodLocation =true;
+		$goodFormat;
+		$goodLocation;
 		$sms_from = Kohana::config("settings.sms_no1");
 
 
@@ -87,7 +87,7 @@ class smsautomate {
 		$elements_count = count($message_elements);
 		
 		if($elements_count <= 1){
-			sms::send($from, $sms_from, "Message too short");
+			$goodFormat = false;
 		}else{
 			$goodFormat = true;
 		}
@@ -1438,7 +1438,6 @@ class smsautomate {
 			$location_lat = 14.91408841;
 			$location_long = -91.38060499;
 		}else{
-			sms::send($from, $sms_from, "Location code not found");
 			$goodLocation=false;
 		}
 /*
@@ -2096,8 +2095,16 @@ class smsautomate {
 		//Event::$data->save();
 		//sleep(1);
 		}
+			sms::send($from, $sms_from, "Report submitted");
 		}//goodFormat & goodLocation check
-
+		else if(!$goodFormat && $goodLocation){
+			sms::send($from, $sms_from, "No items sent");
+		}else if(!$goodLocation && $goodFormat){
+			sms::send($from, $sms_from, "Location code not found");
+		}else{
+			sms::send($from, $sms_from, "Location code not found and no items sent");
+		}
+ 
 
 	}
 	
