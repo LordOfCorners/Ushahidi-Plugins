@@ -96,6 +96,9 @@ class smsautomate {
 		
 		if($elements_count <= 1){
 			$goodFormat = false;
+			if(strtolower($message_elements[0])=="help" || strtolower($message_elements[0])=="ayuda"){
+				$help=true;
+			}
 		}
 		
 		//convert strings to uppercase
@@ -2107,8 +2110,9 @@ class smsautomate {
 			} // badCode
 		} // for loop for items
 		
-		
-		if($goodFormat && $goodLocation && !$badCode){
+		if($help){
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.help_message'));
+		}else if($goodFormat && $goodLocation && !$badCode){
 			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted'));
 		}else if(!$goodFormat && $goodLocation){
 			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.invalid_format'));
