@@ -2129,7 +2129,7 @@ class smsautomate {
 			for($b = 0; $b<$codeCount;$b++){
 				$codeList = $codeList.$badCodes[$b]." ";
 			}
-			sms::send($from, $sms_from, Kohana::lang($codeList));
+			sms::send($from, $sms_from, $codeList);
 		}
 
 			
