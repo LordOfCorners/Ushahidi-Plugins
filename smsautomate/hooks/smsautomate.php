@@ -2113,7 +2113,7 @@ class smsautomate {
 		}else if(!$goodFormat && $goodLocation){
 			sms::send($from, $sms_from, "No items sent");
 		}else if(!$goodLocation && $goodFormat){
-			sms::send($from, $sms_from, echo Kohana::lang('smsautomate_ui.bad_location'));
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.bad_location'));
 		}else if(!$goodFormat && !$goodLocation){
 			sms::send($from, $sms_from, "Location code not found and no items sent");
 		}else if($goodFormat && $goodLocation && $badCode){
