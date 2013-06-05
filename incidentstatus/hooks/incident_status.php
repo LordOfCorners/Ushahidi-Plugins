@@ -23,8 +23,14 @@ class incident_status {
 				
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
+		
+		Event::add('ushahidi_action.map_main_filters', array($this, 'filtermap'));
 	}
 	
+	public function filtermap(){
+		// This time we'll get the content from our view
+		View::factory('incidentstatus/incidentstatus_filter')->render(TRUE);
+	}
 	/**
 	* Adds all the events to the main Ushahidi application	
 	**/
