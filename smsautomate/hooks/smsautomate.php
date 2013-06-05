@@ -2109,20 +2109,20 @@ class smsautomate {
 		
 		
 		if($goodFormat && $goodLocation && !$badCode){
-			sms::send($from, $sms_from, "Report submitted");
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted'));
 		}else if(!$goodFormat && $goodLocation){
-			sms::send($from, $sms_from, "No items sent");
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.invalid_format'));
 		}else if(!$goodLocation && $goodFormat){
 			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.bad_location'));
 		}else if(!$goodFormat && !$goodLocation){
-			sms::send($from, $sms_from, "Location code not found and no items sent");
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.invalid_format'));
 		}else if($goodFormat && $goodLocation && $badCode){
-			$codeList = "";
+			$codeList = Kohana::lang('smsautomate_ui.bad_item');
 			$codeCount = count($badCodes);
 			for($b = 0; $b<$codeCount;$b++){
-				$codeList = $codeList."Invalid code: ".$badCodes[$b]." ";
+				$codeList = $codeList.$badCodes[$b]." ";
 			}
-			sms::send($from, $sms_from, "Report submitted $codeList");
+			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted')." ".$codeList);
 		}
 
 			
