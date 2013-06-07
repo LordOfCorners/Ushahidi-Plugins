@@ -2103,7 +2103,7 @@ class smsautomate {
 			} // badCode
 		} // for loop for items
 		
-		if($help){
+		if(isset($help)){
 			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.help_message'));
 		}else if($goodFormat && $goodLocation && !$badCode){
 			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted'));
