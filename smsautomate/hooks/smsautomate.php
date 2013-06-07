@@ -80,6 +80,7 @@ class smsautomate {
 	//add trim to exploded array
 		
 		//split up the string using the delimiter
+		$message = trim($message);
 		$message_elements = explode(" ", $message);
 		
 		//echo Kohana::debug($message_elements);

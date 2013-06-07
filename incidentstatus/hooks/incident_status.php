@@ -9,7 +9,7 @@
  * @author	   Marco Gnazzo
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-Requirements::js('plugins/incidentstatus/js/incidentstatus_filter.js');
+//Requirements::js('plugins/incidentstatus/js/incidentstatus_filter.js');
 
 class incident_status {
 	/**
@@ -59,7 +59,9 @@ class incident_status {
 			}
 		}
 		if (Router::$controller == 'main' AND Router::$method == 'index') {
-			Event::add('ushahidi_action.main_sidebar_post_filters', array($this, 'filtermap'));
+			plugin::add_stylesheet('incidentstatus/views/css/incident_status');
+			Event::add('ushahidi_action.main_sidebar_pre_filters', array($this, 'filtermap'));
+			Event::add('ushahidi_filter.json_replace_markers',array($this,'filter_json'));
 		}
 		
 	}
@@ -99,6 +101,110 @@ class incident_status {
 		$form->resolved = $this->resolved;
 		$form->summaries = $this->summary;
 		$form->render(TRUE);
+	}
+	
+	public function filter_json(){
+		$incidents = reports::fetch_incidents();
+		$json_features = array();
+		
+		// Extra params for markers only
+		// Get the incidentid (to be added as first marker)
+		$first_incident_id = (isset($_GET['i']) AND intval($_GET['i']) > 0)? intval($_GET['i']) : 0;
+		
+		$media_type = (isset($_GET['k']) AND intval($_GET['k']) > 0)? intval($_GET['m']) : 0;
+		
+		foreach ($incidents as $marker)
+		{
+			// Handle both reports::fetch_incidents() response and actual ORM objects
+			$marker->id = isset($marker->incident_id) ? $marker->incident_id : $marker->id;
+			if (isset($marker->latitude) AND isset($marker->longitude))
+			{
+				$latitude = $marker->latitude;
+				$longitude = $marker->longitude;
+			}
+			elseif (isset($marker->location) AND isset($marker->location->latitude) AND isset($marker->location->longitude))
+			{
+				$latitude = $marker->location->latitude;
+				$longitude = $marker->location->longitude;
+			}
+			else
+			{
+				// No location - skip this report
+				continue;
+			}
+			
+			// Get thumbnail
+			$thumb = "";
+			$media = ORM::factory('incident', $marker->id)->media;
+			if ($media->count())
+			{
+				foreach ($media as $photo)
+				{
+					if ($photo->media_thumb)
+					{
+						// Get the first thumb
+						$thumb = url::convert_uploaded_to_abs($photo->media_thumb);
+						break;
+					}
+				}
+			}
+
+			// Get URL from object, fallback to Incident_Model::get() if object doesn't have url or url()
+			if (method_exists($marker, 'url'))
+			{
+				$link = $marker->url();
+			}
+			elseif (isset($marker->url))
+			{
+				$link = $marker->url;
+			}
+			else
+			{
+				$link = Incident_Model::get_url($marker);
+			}
+			$item_name = $this->get_title($marker->incident_title, $link);
+
+			$json_item = array();
+			$json_item['type'] = 'Feature';
+			$json_item['properties'] = array(
+				'id' => $marker->id,
+				'name' => $item_name,
+				'link' => $link,
+				'category' => array($category_id),
+				'color' => $color,
+				'icon' => $icon,
+				'thumb' => $thumb,
+				'timestamp' => strtotime($marker->incident_date),
+				'count' => 1,
+				'class' => get_class($marker)
+			);
+			$json_item['geometry'] = array(
+				'type' => 'Point',
+				'coordinates' => array($longitude, $latitude)
+			);
+
+			if ($marker->id == $first_incident_id)
+			{
+				array_unshift($json_features, $json_item);
+			}
+			else
+			{
+				array_push($json_features, $json_item);
+			}
+			
+			// Get Incident Geometries
+			if ($include_geometries)
+			{
+				$geometry = $this->_get_geometry($marker->id, $marker->incident_title, $marker->incident_date);
+				if (count($geometry))
+				{
+					foreach ($geometry as $g)
+					{
+						array_push($json_features, $g);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
