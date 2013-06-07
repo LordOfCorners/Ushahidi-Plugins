@@ -9,6 +9,7 @@
  * @author	   Marco Gnazzo
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
+Requirements::js('plugins/incidentstatus/js/incidentstatus_filter.js');
 
 class incident_status {
 	/**

@@ -4,7 +4,7 @@
 				Event::run('ushahidi_action.main_sidebar_post_filters');
 				?>
 -->
-<div id="report-type-filter" class="filters">
+<div id="report-type-filter" class="incidentstatus_filters">
 					<h3><?php echo Kohana::lang('ui_main.type'); ?></h3>
 						<ul>
 							<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
@@ -17,8 +17,10 @@
 
 							</div>
 							<!-- / report type filters -->
+<!--
 											<?php
 				// Action::main_sidebar_post_filters - Add Items to the Entry Page after filters
 				Event::run('ushahidi_action.main_sidebar_post_filters');
 				?>
+-->
 				</div>
