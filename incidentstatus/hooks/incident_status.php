@@ -25,7 +25,7 @@ class incident_status {
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
 		
-		Event::add('ushahidi_action.map_main_filters', array($this, 'filtermap'));
+		
 	}
 	
 	public function filtermap(){
@@ -57,6 +57,9 @@ class incident_status {
 					Event::add('ushahidi_action.report_meta', array($this, '_report_view'));
 					break;
 			}
+		}
+		if (Router::$controller == 'main' AND Router::$method == 'index') {
+			Event::add('ushahidi_action.main_sidebar_post_filters', array($this, 'filtermap'));
 		}
 		
 	}
