@@ -202,7 +202,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="171433"){			
 			$location_description = "Hospital Nacional Hellen Lossi de Laugerud";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Hospital"; //IS THIS RIGHT??!
 			$municipality = "Coban";
 			$department = "Alta Verapaz";
 			$dms = "Coban";
@@ -652,7 +652,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="260228"){			
 			$location_description = "Hospital  Distrital Nebaj";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Hospital"; //IS THIS RIGHT??!
 			$municipality = "Nebaj";
 			$department = "Quiche";
 			$dms = "Nebaj";
@@ -772,7 +772,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="141896"){			
 			$location_description = "Hospital Distrital Uspantan";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Hospital"; //IS THIS RIGHT??!
 			$municipality = "San Miguel Uspantan";
 			$department = "Quiche";
 			$dms = "Uspantan";
@@ -782,7 +782,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120248"){			
 			$location_description = "Concepcion Tutuapa (C/M)";
-			$facilityType = ""; //MISSING!
+			$facilityType = "C/M"; //FIND TRANSLATION!
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -842,7 +842,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120228"){			
 			$location_description = "Belajuyape (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -852,7 +852,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120223"){			
 			$location_description = "Buena Vista (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -862,7 +862,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120219"){			
 			$location_description = "Chamul (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -872,7 +872,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120220"){			
 			$location_description = "El Remate (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -882,7 +882,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120227"){			
 			$location_description = "La Laguna (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -892,7 +892,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120225"){			
 			$location_description = "Lacandon (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -902,7 +902,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120221"){			
 			$location_description = "Los Encuentros (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -912,7 +912,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120224"){			
 			$location_description = "Sichivila (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -922,7 +922,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120222"){			
 			$location_description = "Tuijoj (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -932,7 +932,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120229"){			
 			$location_description = "Tuimuca (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -942,7 +942,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120226"){			
 			$location_description = "Yamoj (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Concepcion Tutuapa";
 			$department = "San Marcos";
 			$dms = "Concepcion Tutuapa";
@@ -952,7 +952,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122111"){			
 			$location_description = "Cieneguillas (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -962,7 +962,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122114"){			
 			$location_description = "Las Manzanas (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -972,7 +972,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122112"){			
 			$location_description = "Choapequez (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -982,7 +982,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122110"){			
 			$location_description = "Nueva Esperanza (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -992,7 +992,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122113"){			
 			$location_description = "Once de Mayo (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1002,7 +1002,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122116"){			
 			$location_description = "San Andres (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1012,7 +1012,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122107"){			
 			$location_description = "Tuichan (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1022,7 +1022,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122108"){			
 			$location_description = "Tuiladrillo (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1032,7 +1032,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122109"){			
 			$location_description = "Tuiquinamble (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1042,7 +1042,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122115"){			
 			$location_description = "Yuinima (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1052,7 +1052,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122118"){			
 			$location_description = "Bexoncan (UMS)";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Unidad Minima de Salud";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1062,7 +1062,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="122117"){			
 			$location_description = "El Plan (UMS)";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Unidad Minima de Salud";
 			$municipality = "Ixchiguan";
 			$department = "San Marcos";
 			$dms = "Ixchiguan";
@@ -1142,7 +1142,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120910"){			
 			$location_description = "Esquipulas (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "San Jose Ojetenam";
 			$department = "San Marcos";
 			$dms = "San Jose Ojetenam";
@@ -1152,7 +1152,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120908"){			
 			$location_description = "La Union (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "San Jose Ojetenam";
 			$department = "San Marcos";
 			$dms = "San Jose Ojetenam";
@@ -1162,7 +1162,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120906"){			
 			$location_description = "Laguna Grande (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "San Jose Ojetenam";
 			$department = "San Marcos";
 			$dms = "San Jose Ojetenam";
@@ -1172,7 +1172,7 @@ class smsautomate {
 		}		
 		else if($message_elements[0]=="120909"){			
 			$location_description = "San Rafael Iguil (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "San Jose Ojetenam";
 			$department = "San Marcos";
 			$dms = "San Jose Ojetenam";
@@ -1182,7 +1182,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="120907"){			
 			$location_description = "Santa Cruz Buena Vista (U/M)";
-			$facilityType = "Unidad Minima de Salud";
+			$facilityType = "Urgencias Médicas";
 			$municipality = "San Jose Ojetenam";
 			$department = "San Marcos";
 			$dms = "San Jose Ojetenam";
@@ -1202,7 +1202,7 @@ class smsautomate {
 		}	
 		else if($message_elements[0]=="70878"){			
 			$location_description = "Guineales (C/M)";
-			$facilityType = ""; //MISSING!
+			$facilityType = "C/M"; //FIND TRANSLATION
 			$municipality = "Nahuala";
 			$department = "Solola";
 			$dms = "Guineales";
@@ -1372,7 +1372,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="80701"){			
 			$location_description = "Totonicapan (CENAPA)";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Centro de Atencion Pacientes Ambulatorios";
 			$municipality = "Totonicapan";
 			$department = "Totonicapan";
 			$dms = "Totonicapan";
@@ -1432,7 +1432,7 @@ class smsautomate {
 		}
 		else if($message_elements[0]=="80781"){			
 			$location_description = "Hospital Nacional Dr. Jose Felipe Flores";
-			$facilityType = ""; //MISSING!
+			$facilityType = "Hospital"; //IS THIS RIGHT??!
 			$municipality = "Totonicapan";
 			$department = "Totonicapan";
 			$dms = "Totonicapan";
@@ -2028,14 +2028,14 @@ class smsautomate {
 		//facilityType
 		$saveFacilityType = new Form_Response_Model();
 		$saveFacilityType->incident_id = $incident->id;
-		$saveFacilityType->form_field_id=6; 
+		$saveFacilityType->form_field_id=8; 
 		$saveFacilityType->form_response=$facilityType;
 		$saveFacilityType->save();
 		
 		//Municipality Name
 		$saveMunicipality = new Form_Response_Model();
 		$saveMunicipality->incident_id = $incident->id;
-		$saveMunicipality->form_field_id=1;
+		$saveMunicipality->form_field_id=7;
 		$saveMunicipality->form_response=$municipality;
 		$saveMunicipality->save();
 		
@@ -2049,14 +2049,14 @@ class smsautomate {
 		//DMS
 		$saveDMS = new Form_Response_Model();
 		$saveDMS->incident_id = $incident->id;
-		$saveDMS->form_field_id=4;
+		$saveDMS->form_field_id=10;
 		$saveDMS->form_response=$dms;
 		$saveDMS->save();
 		
 		//DAS
 		$saveDAS = new Form_Response_Model();
 		$saveDAS->incident_id = $incident->id;
-		$saveDAS->form_field_id=5;
+		$saveDAS->form_field_id=11;
 		$saveDAS->form_response=$das;
 		$saveDAS->save();
 
