@@ -2066,9 +2066,14 @@ class smsautomate {
 		$saveDAS->form_field_id=11;
 		$saveDAS->form_response=$das;
 		$saveDAS->save();
-
 		
-		//STEP 4: Record Approval
+		//STEP 4: Mark report as actionable
+		$saveActionable = new Actionable_Model();
+		$saveActionable->incident_id = $incident->id;
+		$saveActionable->actionable = 1;
+		$saveActionable->save();
+		
+		//STEP 5: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
 		$verify->user_id = 0;
@@ -2092,7 +2097,7 @@ class smsautomate {
 		$verify->save();
 		
 		
-		// STEP 3: SAVE CATEGORIES
+		// STEP 6: SAVE CATEGORIES
 		ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
 
 			if(is_numeric($category))
