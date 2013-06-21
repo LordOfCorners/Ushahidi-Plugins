@@ -138,13 +138,14 @@ class actionable {
 			$action_item->action_summary = $_POST['action_summary'];
 			$action_item->save();
 			
+			//Assign fake media type in media table based on actionable, urgent, or action taken. 
+			// this will need to be removed if this is ever made without messing up the media type stuff.
+			//Added by Michael
+			
 			$media_item = ORM::factory('media')
 				->where('incident_id', $incident->id)
 				->find();
 			
-			//Assign fake media type in media table based on actionable, urgent, or action taken. 
-			// this will need to be removed if this is ever made without messing up the media type stuff.
-			//Added by Michael
 			$media_item->incident_id = $incident->id;
 			if($_POST['actionable']==1) $media_item->media_type=102;
 			else if($_POST['actionable']==2) $media_item->media_type=103; 
