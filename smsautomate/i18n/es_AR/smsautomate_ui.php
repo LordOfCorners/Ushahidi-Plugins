@@ -11,6 +11,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 	$lang = array(
+	'incident_description' => 'tiene suplementos para menos de un mes de',
 	'report_submitted' => 'Informe Enviado',
 	'bad_location' => 'Código de ubicación no válido',
 	'invalid_format' => 'Mensaje no válido - Formato requerido: 999999 e99',
