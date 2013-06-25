@@ -2067,12 +2067,6 @@ class smsautomate {
 		$saveDAS->form_response=$das;
 		$saveDAS->save();
 		
-		//STEP 4: Mark report as actionable
-		$saveActionable = new Actionable_Model();
-		$saveActionable->incident_id = $incident->id;
-		$saveActionable->actionable = 1;
-		$saveActionable->save();
-		
 		//STEP 5: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
