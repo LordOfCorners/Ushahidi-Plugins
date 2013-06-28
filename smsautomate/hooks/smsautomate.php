@@ -2024,6 +2024,14 @@ class smsautomate {
 		$incident->save();
 		error_log($incident->id);
 		
+		//STEP ADDED BY LUIS: SAVE ACCIONABLE
+		$SaveActionable = new actionable_model();
+		$SaveActionable-> incident_id = $incident->id;
+		$SaveActionable-> actionable = 1;
+		//save
+		$accionable->save();
+		
+		
 		// STEP 3: SAVE CUSTOM FIELDS
 		//facilityType
 		$saveFacilityType = new Form_Response_Model();
