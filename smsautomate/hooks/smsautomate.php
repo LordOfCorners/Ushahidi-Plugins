@@ -1637,7 +1637,7 @@ class smsautomate {
 		/*CAIMI*/
 		//EQUIPMENT
 		//Laboratorio
-		else if($message_elements[$i]=="E11"){
+		else if($message_elements[$i]=="E11" || $message_elements[$i]=="*E11" ){
 			$title = "Depósito de sangre";
 			$category = "43";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
@@ -1846,7 +1846,7 @@ class smsautomate {
 
 		//MEDICINE
 		//Fiebre
-		else if($message_elements[$i]=="M11"){
+		else if($message_elements[$i]=="M11" || $message_elements[$i]=="*M11"){
 			$title = "Medicina para la fiebre adultos";
 			$category = "27";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
@@ -1997,9 +1997,9 @@ class smsautomate {
 			$incident_description="The location code used does not exist";
 		}
 */
-		
 		// STEP 1: SAVE LOCATION
 		if($goodFormat && $goodLocation){
+		if(substr($message_elements[$i], 0,1)!="*"){
 		$categories = array(1);
 		$location = new Location_Model();
 		$location->location_name = $location_description;
@@ -2025,11 +2025,11 @@ class smsautomate {
 		error_log($incident->id);
 		
 		//STEP ADDED BY LUIS: SAVE ACCIONABLE
-		$SaveActionable = new actionable_model();
+		$SaveActionable = new Actionable_Model();
 		$SaveActionable-> incident_id = $incident->id;
 		$SaveActionable-> actionable = 1;
 		//save
-		$accionable->save();
+		$SaveActionable->save();
 		
 		
 		// STEP 3: SAVE CUSTOM FIELDS
@@ -2115,6 +2115,34 @@ class smsautomate {
 		//Event::$data->incident_id = $incident->id;
 		//Event::$data->save();
 		//sleep(1);
+		}// end loop to check for asterisk
+		
+		if(substr($message_elements[$i], 0,1)=="*"){
+		
+		
+			//search database for report with location title and (report title or category number)
+			//get the incident ID
+			//edit the actionable database to say action as been taken
+
+			$query = ORM::factory('incident')
+				->join('location', 'incident.location_id', 'location.id')
+				->where('location.location_name', $location_description)
+				->where('incident.incident_title', $title)
+				->find_all();
+
+			foreach($query as $row){
+		    	$loadActionable =ORM::factory('actionable')
+				->where('incident_id',$row->id)
+				->find();
+				$loadActionable->action_taken=1;
+				$loadActionable->save();
+			}
+
+		}//end change actionable loop.
+
+				
+				
+			
 			} // badCode
 		} // for loop for items
 		
