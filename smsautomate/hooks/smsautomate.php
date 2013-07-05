@@ -45,6 +45,10 @@ class smsautomate {
 	 */
 	public function _parse_sms()
 	{
+	
+		$result = mysql_query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
+		$actionableExists = mysql_num_rows($result) > 0;
+
 		//the message
 		$message = Event::$data->message;
 		$from = Event::$data->message_from;
@@ -1637,183 +1641,183 @@ class smsautomate {
 		/*CAIMI*/
 		//EQUIPMENT
 		//Laboratorio
-		else if($message_elements[$i]=="E11" || $message_elements[$i]=="*E11" ){
+		else if($message_elements[$i]=="E11" || $message_elements[$i]=="*E11"){
 			$title = "Depósito de sangre";
 			$category = "43";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E12"){
+		else if($message_elements[$i]=="E12" || $message_elements[$i]=="*E12"){
 			$title = "Equipo de rayos x";
 			$category = "44";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E13"){
+		else if($message_elements[$i]=="E13" || $message_elements[$i]=="*E13"){
 			$title = "Microscopio";
 			$category = "45";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E14"){
+		else if($message_elements[$i]=="E14" || $message_elements[$i]=="*E14"){
 			$title = "Insumos de laboratorio";
 			$category = "46";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E15"){
+		else if($message_elements[$i]=="E15" || $message_elements[$i]=="*E15"){
 			$title = "Equipo análisis de calidad de agua";
 			$category = "47";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Cirugia
-		else if($message_elements[$i]=="E21"){
+		else if($message_elements[$i]=="E21" || $message_elements[$i]=="*E21"){
 			$title = "Equipo e insumos para cesarea (completo)";
 			$category = "48";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E22"){
+		else if($message_elements[$i]=="E22" || $message_elements[$i]=="*E22"){
 			$title = "Equipo de anesthesia";
 			$category = "49";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E23"){
+		else if($message_elements[$i]=="E23" || $message_elements[$i]=="*E23"){
 			$title = "Equipos de cirugía menor";
 			$category = "51";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E24"){
+		else if($message_elements[$i]=="E24" || $message_elements[$i]=="*E24"){
 			$title = "Equipos de sutura";
 			$category = "50";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E25"){
+		else if($message_elements[$i]=="E25" || $message_elements[$i]=="*E25"){
 			$title = "Hilos de sutura";
 			$category = "85";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}		
-		else if($message_elements[$i]=="E26"){
+		else if($message_elements[$i]=="E26" || $message_elements[$i]=="*E26"){
 			$title = "Pinzas de anillos";
 			$category = "78";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E27"){
+		else if($message_elements[$i]=="E27" || $message_elements[$i]=="*E27"){
 			$title = "Bandejas";
 			$category = "79";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E28"){
+		else if($message_elements[$i]=="E28" || $message_elements[$i]=="*E28"){
 			$title = "Tijeras";
 			$category = "80";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E29"){
+		else if($message_elements[$i]=="E29" || $message_elements[$i]=="*E29"){
 			$title = "Hoja para bisturi";
 			$category = "92";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Traumas
-		else if($message_elements[$i]=="E31"){
+		else if($message_elements[$i]=="E31" || $message_elements[$i]=="*E31"){
 			$title = "Vendas de yeso";
 			$category = "54";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E32"){
+		else if($message_elements[$i]=="E32" || $message_elements[$i]=="*E32"){
 			$title = "Ferula fracturas";
 			$category = "86";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Urgencias
-		else if($message_elements[$i]=="E41"){
+		else if($message_elements[$i]=="E41" || $message_elements[$i]=="*E41"){
 			$title = "Equipo de resucitación (AMBU y mascarilla)";
 			$category = "55";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E42"){
+		else if($message_elements[$i]=="E42" || $message_elements[$i]=="*E42"){
 			$title = "Oxígeno incluido cilindro, humidificador y manómetro";
 			$category = "56";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Maternidad
-		else if($message_elements[$i]=="E51"){
+		else if($message_elements[$i]=="E51" || $message_elements[$i]=="*E51"){
 			$title = "Equipos para parto";
 			$category = "58";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E52"){
+		else if($message_elements[$i]=="E52" || $message_elements[$i]=="*E52"){
 			$title = "Equipo papanicolau";
 			$category = "15";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E53"){
+		else if($message_elements[$i]=="E53" || $message_elements[$i]=="*E53"){
 			$title = "Cinta de Castilla o clamps";
 			$category = "95";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E54"){
+		else if($message_elements[$i]=="E54" || $message_elements[$i]=="*E54"){
 			$title = "Espéculos";
 			$category = "91";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Asistencia
-		else if($message_elements[$i]=="E61"){
+		else if($message_elements[$i]=="E61" || $message_elements[$i]=="*E61"){
 			$title = "Algodón";
 			$category = "17";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E62"){
+		else if($message_elements[$i]=="E62" || $message_elements[$i]=="*E62"){
 			$title = "Angiokath";
 			$category = "59";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E63"){
+		else if($message_elements[$i]=="E63" || $message_elements[$i]=="*E63"){
 			$title = "Guantes estériles";
 			$category = "60";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E64"){
+		else if($message_elements[$i]=="E64" || $message_elements[$i]=="*E64"){
 			$title = "Guantes descartables";
 			$category = "83";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E65"){
+		else if($message_elements[$i]=="E65" || $message_elements[$i]=="*E65"){
 			$title = "Jeringas descartables";
 			$category = "84";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E66"){
+		else if($message_elements[$i]=="E66" || $message_elements[$i]=="*E66"){
 			$title = "Micropore";
 			$category = "19";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E67"){
+		else if($message_elements[$i]=="E67" || $message_elements[$i]=="*E67"){
 			$title = "Equipo de Venoclisis";
 			$category = "81";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E68"){
+		else if($message_elements[$i]=="E68" || $message_elements[$i]=="*E68"){
 			$title = "Gasas";
 			$category = "82";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Examen
-		else if($message_elements[$i]=="E71"){
+		else if($message_elements[$i]=="E71" || $message_elements[$i]=="*E71"){
 			$title = "Estetoscopios para adultos";
 			$category = "9";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E72"){
+		else if($message_elements[$i]=="E72" || $message_elements[$i]=="*E72"){
 			$title = "Esfigmomanómetros adultos";
 			$category = "73";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E73"){
+		else if($message_elements[$i]=="E73" || $message_elements[$i]=="*E73"){
 			$title = "Lámparas cuello de ganso";
 			$category = "8";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E74"){
+		else if($message_elements[$i]=="E74" || $message_elements[$i]=="*E74"){
 			$title = "Termómetro oral";
 			$category = "75";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="E75"){
+		else if($message_elements[$i]=="E75" || $message_elements[$i]=="*E75"){
 			$title = "Termómetro rectal";
 			$category = "76";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
@@ -1851,129 +1855,129 @@ class smsautomate {
 			$category = "27";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M12"){
+		else if($message_elements[$i]=="M12" || $message_elements[$i]=="*M12"){
 			$title = "Medicina para la fiebre niños";
 			$category = "28";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Nutricion
-		else if($message_elements[$i]=="M21"){
+		else if($message_elements[$i]=="M21" || $message_elements[$i]=="*M21"){
 			$title = "Hierro para niños";
 			$category = "32";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M22"){
+		else if($message_elements[$i]=="M22" || $message_elements[$i]=="*M22"){
 			$title = "Vitaminas para niños";
 			$category = "62";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Ojos
-		else if($message_elements[$i]=="M31"){
+		else if($message_elements[$i]=="M31" || $message_elements[$i]=="*M31"){
 			$title = "Medicina para la conjuntivitis";
 			$category = "38";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Cirugias
-		else if($message_elements[$i]=="M41"){
+		else if($message_elements[$i]=="M41" || $message_elements[$i]=="*M41"){
 			$title = "Anestesia local";
 			$category = "40";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M42"){
+		else if($message_elements[$i]=="M42" || $message_elements[$i]=="*M42"){
 			$title = "Anestesia para operaciones";
 			$category = "63";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M43"){
+		else if($message_elements[$i]=="M43" || $message_elements[$i]=="*M43"){
 			$title = "Desinfectante para equipo";
 			$category = "64";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Gastrointestinales
-		else if($message_elements[$i]=="M51"){
+		else if($message_elements[$i]=="M51" || $message_elements[$i]=="*M51"){
 			$title = "Desparasitantes para niños";
 			$category = "33";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M52"){
+		else if($message_elements[$i]=="M52" || $message_elements[$i]=="*M52"){
 			$title = "Medicina para amebas";
 			$category = "34";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M53"){
+		else if($message_elements[$i]=="M53" || $message_elements[$i]=="*M53"){
 			$title = "Antibiótico para diarreas";
 			$category = "35";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M54"){
+		else if($message_elements[$i]=="M54" || $message_elements[$i]=="*M54"){
 			$title = "Medicina para la gastritis";
 			$category = "37";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M55"){
+		else if($message_elements[$i]=="M55" || $message_elements[$i]=="*M55"){
 			$title = "Sueros orales para deshidratación";
 			$category = "36";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M56"){
+		else if($message_elements[$i]=="M56" || $message_elements[$i]=="*M56"){
 			$title = "Soluciones intravenosas para deshidratación";
 			$category = "39";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}		
 		//Pulmonares
-		else if($message_elements[$i]=="M61"){
+		else if($message_elements[$i]=="M61" || $message_elements[$i]=="*M61"){
 			$title = "Antibióticos para pulmonía adultos";
 			$category = "29";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M62"){
+		else if($message_elements[$i]=="M62" || $message_elements[$i]=="*M62"){
 			$title = "Antibióticos para pulmonía niños";
 			$category = "30";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M63"){
+		else if($message_elements[$i]=="M63" || $message_elements[$i]=="*M63"){
 			$title = "Medicinas para el asma para niños";
 			$category = "41";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}	
-	    else if($message_elements[$i]=="M64"){
+	    else if($message_elements[$i]=="M64" || $message_elements[$i]=="*M64"){
 			$title = "Medicinas para el asma y alergia pulmonar para niños";
 			$category = "94";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Maternidad
-		else if($message_elements[$i]=="M71"){
+		else if($message_elements[$i]=="M71" || $message_elements[$i]=="*M71"){
 			$title = "Oxitocina para acelerar el parto";
 			$category = "65";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M72"){
+		else if($message_elements[$i]=="M72" || $message_elements[$i]=="*M72"){
 			$title = "Magnesio sulfato para la presión en el embarazo";
 			$category = "66";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M73"){
+		else if($message_elements[$i]=="M73" || $message_elements[$i]=="*M73"){
 			$title = "Hierro para embarazadas";
 			$category = "67";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M74"){
+		else if($message_elements[$i]=="M74" || $message_elements[$i]=="*M74"){
 			$title = "Acido fólico para embarazadas";
 			$category = "31";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
 		//Trauma
-		else if($message_elements[$i]=="M81"){
+		else if($message_elements[$i]=="M81" || $message_elements[$i]=="*M81"){
 			$title = "Relajante muscular";
 			$category = "68";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M82"){
+		else if($message_elements[$i]=="M82" || $message_elements[$i]=="*M82"){
 			$title = "Medicina para el dolor para adultos";
 			$category = "69";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
 		}
-		else if($message_elements[$i]=="M83"){
+		else if($message_elements[$i]=="M83" || $message_elements[$i]=="*M83"){
 			$title = "Medicina para el dolor niños";
 			$category = "70";
 			$incident_description=$location_description." (".$facilityType.") ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
@@ -2024,13 +2028,15 @@ class smsautomate {
 		$incident->save();
 		error_log($incident->id);
 		
-		//STEP ADDED BY LUIS: SAVE ACCIONABLE
-		$SaveActionable = new Actionable_Model();
-		$SaveActionable-> incident_id = $incident->id;
-		$SaveActionable-> actionable = 1;
-		//save
-		$SaveActionable->save();
+		if($actionableExists){
 		
+			//STEP ADDED BY LUIS: SAVE ACTIONABLE
+			$SaveActionable = new Actionable_Model();
+			$SaveActionable-> incident_id = $incident->id;
+			$SaveActionable-> actionable = 1;
+			//save
+			$SaveActionable->save();
+		}
 		
 		// STEP 3: SAVE CUSTOM FIELDS
 		//facilityType
@@ -2117,7 +2123,7 @@ class smsautomate {
 		//sleep(1);
 		}// end loop to check for asterisk
 		
-		if(substr($message_elements[$i], 0,1)=="*"){
+		if(substr($message_elements[$i], 0,1)=="*" && $actionableExists){ //only run if actionable is being used. 
 		
 		
 			//search database for report with location title and (report title or category number)
