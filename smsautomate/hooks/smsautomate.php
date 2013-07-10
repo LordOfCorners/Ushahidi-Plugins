@@ -2029,8 +2029,8 @@ class smsautomate {
 		error_log($incident->id);
 		
 		if($actionableExists){
-		
-			//STEP ADDED BY LUIS: SAVE ACTIONABLE
+	
+		// STEP 3: SAVE REPORTS AS ACTIONABLE
 			$SaveActionable = new Actionable_Model();
 			$SaveActionable-> incident_id = $incident->id;
 			$SaveActionable-> actionable = 1;
@@ -2038,7 +2038,7 @@ class smsautomate {
 			$SaveActionable->save();
 		}
 		
-		// STEP 3: SAVE CUSTOM FIELDS
+		// STEP 4: SAVE CUSTOM FIELDS
 		//facilityType
 		$saveFacilityType = new Form_Response_Model();
 		$saveFacilityType->incident_id = $incident->id;
@@ -2104,8 +2104,15 @@ class smsautomate {
 		}
 		$verify->save();
 		
+		//STEP 6: SAVE "FROM" INFORMATION
+		$person = new Incident_Person_Model();
+		$person->incident_id = $incident->id;
+		$person->person_first = $from;
+		$person->person_date = date("Y-m-d H:i:s",time());
+		$person->save();		
+
 		
-		// STEP 6: SAVE CATEGORIES
+		// STEP 7: SAVE CATEGORIES
 		ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
 
 			if(is_numeric($category))
@@ -2115,6 +2122,8 @@ class smsautomate {
 				$incident_category->category_id = $category;
 				$incident_category->save();
 			}
+			
+			Event::run('ushahidi_action.report_add', $incident);
 		
 
 		//don't forget to set incident_id in the message
