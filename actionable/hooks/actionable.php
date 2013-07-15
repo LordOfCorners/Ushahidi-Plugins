@@ -136,10 +136,15 @@ class actionable {
 			$action_item->action_taken = isset($_POST['action_taken']) ?
 				$_POST['action_taken'] : "";
 			$action_item->action_summary = $_POST['action_summary'];
+			if(isset($_POST['action_taken'])){
+				if(!isset($action_item->action_date)){
+					$action_item->action_date = date("Y-m-d H:i:s",time());
+				}
+			}			
 			$action_item->save();
 			
 			//Assign fake media type in media table based on actionable, urgent, or action taken. 
-			// this will need to be removed if this is ever made without messing up the media type stuff.
+			//this will need to be removed if this is ever made without messing up the media type stuff.
 			//Added by Michael
 			
 			$media_item = ORM::factory('media')
@@ -176,6 +181,7 @@ class actionable {
 					$report->actionable = $actionable->actionable;
 					$report->action_taken = $actionable->action_taken;
 					$report->action_summary = $actionable->action_summary;
+					$report->action_date = $actionable->action_date;
 					$report->render(TRUE);
 				}
 			}

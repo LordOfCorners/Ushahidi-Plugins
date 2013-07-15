@@ -2150,6 +2150,7 @@ class smsautomate {
 				->where('incident_id',$row->id)
 				->find();
 				$loadActionable->action_taken=1;
+				$loadActionable->action_summary=date("Y-m-d H:i:s",time());
 				$loadActionable->save();
 			}
 

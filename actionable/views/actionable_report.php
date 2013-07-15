@@ -19,4 +19,9 @@
 		<strong><?php echo Kohana::lang('actionable.summary');?>: </strong><?php echo $action_summary; ?>
 		</div>
 	<?php }; ?>
+	<?php if ($action_date) { ?>
+		<div id="action-date">
+		<strong><?php echo Kohana::lang('actionable.action_date');?>: </strong><?php echo $action_date; ?>
+		</div>
+	<?php }; ?>
 </div>
