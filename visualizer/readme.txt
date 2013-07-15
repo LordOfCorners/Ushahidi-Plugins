@@ -1,4 +1,4 @@
-=== About ===
+=== About ===    
 name: Visualizer
 website: http://www.michaelkahane.com
 description: Adds a page to Ushahidi with visualizations related to inventory management.
