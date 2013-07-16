@@ -51,6 +51,7 @@ class smsautomate {
 
 		//the message
 		$message = Event::$data->message;
+		$message_id = Event::$data->id;
 		$from = Event::$data->message_from;
 		$reporterId = Event::$data->reporter_id;
 		$message_date = Event::$data->message_date;
@@ -2130,6 +2131,14 @@ class smsautomate {
 		//Event::$data->incident_id = $incident->id;
 		//Event::$data->save();
 		//sleep(1);
+		// STEP 8: SAVE MESSAGE ID
+		//THIS DOES NOT DO ANYTHING BESIDES SAVE DATA. IT IS FOR FUTURE USE TO GROUP REPORTS BASED ON MESSAGE
+		$saveMessageID = new Incident_Message_Model();
+		$saveMessageID->incident_id = $incident->id;
+		$saveMessageID->message_id = $message_id;
+		$saveMessageID->save(); 
+		
+		
 		}// end loop to check for asterisk
 		
 		if(substr($message_elements[$i], 0,1)=="*" && $actionableExists){ //only run if actionable is being used. 
@@ -2150,6 +2159,7 @@ class smsautomate {
 				->where('incident_id',$row->id)
 				->find();
 				$loadActionable->action_taken=1;
+				$loadActionable->action_date=date("Y-m-d H:i:s",time());
 				$loadActionable->save();
 			}
 
