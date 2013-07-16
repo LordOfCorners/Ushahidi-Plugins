@@ -23,6 +23,9 @@ Class Download_Controller extends Main_Controller {
 		$this->template->this_page = 'download';
 		$this->template->header->this_page = 'download';
 		$this->template->content = new View('download_reports');
+		$custom_forms = customforms::get_custom_form_fields();
+		$this->template->content->disp_custom_fields = $custom_forms;
+		$this->template->content->search_form = TRUE;
 		$this->template->content->calendar_img = url::base() . "media/img/icon-calendar.gif";
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
@@ -48,9 +51,13 @@ Class Download_Controller extends Main_Controller {
 		$form_error = FALSE;
 		$form['from_date'] = $from_date;
 		$form['to_date'] = $to_date;
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		$query = array();
 
 		if ($_POST)
 		{
+			$csv_headers = array("#","INCIDENT TITLE","INCIDENT DATE","LOCATION","DESCRIPTION","CATEGORY","LATITUDE","LONGITUDE","APPROVED","VERIFIED");
+			$report_csv = '';
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($_POST);
 
@@ -98,6 +105,84 @@ Class Download_Controller extends Main_Controller {
 					$incident_query->where('incident_verified', 1);
 				}
 				// else - do nothing
+				
+				if(isset($post->custom_field))
+				{		
+					$where_text = "";
+					$i = 0;
+					foreach($post->custom_field as $customfield){
+						if($customfield != "---NOT_SELECTED---"){
+		/*
+					$field_id = $customfield[0];
+							if (intval($field_id) < 1)
+								continue;
+			
+*/
+							$field_value = $customfield;
+							if (is_array($field_value))
+							{
+								$field_value = implode(",", $field_value);
+							}
+											
+							$i++;
+							if ($i > 1)
+							{
+								$where_text .= " OR ";
+							}
+							
+/*
+							$where_text .= "(form_field_id = ".intval($field_id)
+								. " AND form_response = '".Database::instance()->escape_str(trim($field_value))."')";
+*/
+							$where_text .= "(form_response = '".Database::instance()->escape_str(trim($field_value))."')";
+						}
+					}
+					
+					// Make sure there was some valid input in there
+					if ($i > 0)
+					{
+						// Get the valid IDs - faster in a separate query as opposed
+						// to a subquery within the main query
+						$db = new Database();
+		
+						$rows = $db->query('SELECT DISTINCT incident_id FROM '
+						    .$table_prefix.'form_response WHERE '.$where_text);
+						
+						$incident_ids = '';
+						foreach ($rows as $row)
+						{
+							if ($incident_ids != '')
+							{
+									$incident_ids .= ',';
+							}
+		
+							$incident_ids .= $row->incident_id;
+						}
+						
+						//make sure there are IDs found
+/*
+						if ($incident_ids != '')
+						{
+							array_push(self::$params, 'i.id IN ('.$incident_ids.')');
+						}
+						else
+						{
+							array_push(self::$params, 'i.id IN (0)');
+						}
+*/
+					}
+					//we have some custom fields. add them to the header
+					foreach($custom_forms as $field_name)
+						{
+							$csv_headers[] = $field_name['field_name']."-".$field_name['form_id'];
+						}
+						
+					if(isset($incident_ids)){
+						$incident_ids = trim($incident_ids);
+						$incident_array = explode(",", $incident_ids);
+					}
+					
+				}
 
 				// Report Date Filter
 				if (!empty($post->from_date) && !empty($post->to_date))
@@ -105,72 +190,173 @@ Class Download_Controller extends Main_Controller {
 					$incident_query->where(array('incident_date >=' => date("Y-m-d H:i:s", strtotime($post->from_date)), 'incident_date <=' => date("Y-m-d H:i:s", strtotime($post->to_date))));
 				}
 
-				$incidents = $incident_query->join('incident_category', 'incident_category.incident_id', 'incident.id', 'INNER')->orderby('incident_date', 'desc')->find_all();
+				$incidents = $incident_query->join('incident_category', 'incident_category.incident_id', 'incident.id', 'INNER')->orderby('incident_date', 'desc')->find_all();	
 
 				// CSV selected
 				if ($post->formato == 0)
 				{
-					$report_csv = "#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,LATITUDE,LONGITUDE,APPROVED,VERIFIED\n";
+					//$report_csv = download::download_csv($post, $incidents, $custom_forms);
+					//$csv_headers = array("#","FORM #","INCIDENT TITLE","INCIDENT DATE");
+					//$report_csv = "#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,LATITUDE,LONGITUDE,APPROVED,VERIFIED\n";
+					$report_csv .= download::arrayToCsv($csv_headers);
 
 					foreach ($incidents as $incident)
 					{
 						$new_report = array();
-						array_push($new_report, '"' . $incident->id . '"');
-						array_push($new_report, '"' . $this->_csv_text($incident->incident_title) . '"');
-						array_push($new_report, '"' . $incident->incident_date . '"');
-						array_push($new_report, '"' . $this->_csv_text($incident->location->location_name) . '"');
-						array_push($new_report, '"' . $this->_csv_text($incident->incident_description) . '"');
-
-						$catstring = '"';
-						$catcnt = 0;
-
-						foreach ($incident->incident_category as $category)
-						{
-							if ($catcnt > 0)
-							{
-								$catstring .= ",";
+						if(isset($incident_array)){
+							for($j =0;$j<count($incident_array);$j++){
+								if($incident->id == $incident_array[$j]){
+									array_push($new_report, '"' . $incident->id . '"');
+									array_push($new_report, '"' . $this->_csv_text($incident->incident_title) . '"');
+									array_push($new_report, '"' . $incident->incident_date . '"');
+									array_push($new_report, '"' . $this->_csv_text($incident->location->location_name) . '"');
+									array_push($new_report, '"' . $this->_csv_text($incident->incident_description) . '"');
+			
+									$catstring = '"';
+									$catcnt = 0;
+			
+									foreach ($incident->incident_category as $category)
+									{
+										if ($catcnt > 0)
+										{
+											$catstring .= ",";
+										}
+										if ($category->category->category_title)
+										{
+											$catstring .= $this->_csv_text($category->category->category_title);
+										}
+										$catcnt++;
+									}
+			
+									$catstring .= '"';
+									array_push($new_report, $catstring);
+									array_push($new_report, '"' . $incident->location->latitude . '"');
+									array_push($new_report, '"' . $incident->location->longitude . '"');
+			
+									if ($incident->incident_active)
+									{
+										array_push($new_report, "YES");
+									}
+									else
+									{
+										array_push($new_report, "NO");
+									}
+			
+									if ($incident->incident_verified)
+									{
+										array_push($new_report, "YES");
+									}
+									else
+									{
+										array_push($new_report, "NO");
+									}
+									$incident_id = $incident->id;
+									$custom_fields = customforms::get_custom_form_fields($incident_id, NULL, FALSE);
+									if ( ! empty($custom_fields))
+									{
+										foreach($custom_fields as $custom_field)
+										{
+											array_push($new_report, $custom_field['field_response']);
+										}
+									}
+									else
+									{
+										foreach ($custom_forms as $custom)
+										{
+											array_push($new_report,'');
+										}
+									}
+			
+									array_push($new_report, "\n");
+									$repcnt = 0;
+									foreach ($new_report as $column)
+									{
+										if ($repcnt > 0)
+										{
+											$report_csv .= ",";
+										}
+										$report_csv .= $column;
+										$repcnt++;
+									}
+								}else{
+									//echo "NOT MATCHING IDS";
+								}
 							}
-							if ($category->category->category_title)
+						}else{
+							array_push($new_report, '"' . $incident->id . '"');
+							array_push($new_report, '"' . $this->_csv_text($incident->incident_title) . '"');
+							array_push($new_report, '"' . $incident->incident_date . '"');
+							array_push($new_report, '"' . $this->_csv_text($incident->location->location_name) . '"');
+							array_push($new_report, '"' . $this->_csv_text($incident->incident_description) . '"');
+	
+							$catstring = '"';
+							$catcnt = 0;
+	
+							foreach ($incident->incident_category as $category)
 							{
-								$catstring .= $this->_csv_text($category->category->category_title);
+								if ($catcnt > 0)
+								{
+									$catstring .= ",";
+								}
+								if ($category->category->category_title)
+								{
+									$catstring .= $this->_csv_text($category->category->category_title);
+								}
+								$catcnt++;
 							}
-							$catcnt++;
-						}
-
-						$catstring .= '"';
-						array_push($new_report, $catstring);
-						array_push($new_report, '"' . $incident->location->latitude . '"');
-						array_push($new_report, '"' . $incident->location->longitude . '"');
-
-						if ($incident->incident_active)
-						{
-							array_push($new_report, "YES");
-						}
-						else
-						{
-							array_push($new_report, "NO");
-						}
-
-						if ($incident->incident_verified)
-						{
-							array_push($new_report, "YES");
-						}
-						else
-						{
-							array_push($new_report, "NO");
-						}
-
-						array_push($new_report, "\n");
-
-						$repcnt = 0;
-						foreach ($new_report as $column)
-						{
-							if ($repcnt > 0)
+	
+							$catstring .= '"';
+							array_push($new_report, $catstring);
+							array_push($new_report, '"' . $incident->location->latitude . '"');
+							array_push($new_report, '"' . $incident->location->longitude . '"');
+	
+							if ($incident->incident_active)
 							{
-								$report_csv .= ",";
+								array_push($new_report, "YES");
 							}
-							$report_csv .= $column;
-							$repcnt++;
+							else
+							{
+								array_push($new_report, "NO");
+							}
+	
+							if ($incident->incident_verified)
+							{
+								array_push($new_report, "YES");
+							}
+							else
+							{
+								array_push($new_report, "NO");
+							}
+							$incident_id = $incident->id;
+							$custom_fields = customforms::get_custom_form_fields($incident_id, NULL, FALSE);
+							if ( ! empty($custom_fields))
+							{
+								foreach($custom_fields as $custom_field)
+								{
+									array_push($new_report, $custom_field['field_response']);
+								}
+							}
+							else
+							{
+								foreach ($custom_forms as $custom)
+								{
+									array_push($new_report,'');
+								}
+							}
+	
+							array_push($new_report, "\n");
+	
+							$repcnt = 0;
+							foreach ($new_report as $column)
+							{
+								if ($repcnt > 0)
+								{
+									//download::arrayToCsv($csv_headers)
+									$report_csv .= ",";
+								}
+								$report_csv .= $column;
+								$repcnt++;
+							}
 						}
 
 					}
