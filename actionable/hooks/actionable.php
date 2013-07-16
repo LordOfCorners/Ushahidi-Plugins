@@ -140,6 +140,9 @@ class actionable {
 				if(!isset($action_item->action_date)){
 					$action_item->action_date = date("Y-m-d H:i:s",time());
 				}
+			}
+			else{
+				$action_item->action_date = null;
 			}			
 			$action_item->save();
 			
