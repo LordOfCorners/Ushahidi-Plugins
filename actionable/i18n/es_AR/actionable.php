@@ -8,6 +8,7 @@
 		'action_summary_description' => 'Se han tomado las medidas? Resumir la acción tomada o requerida en el presente informe',
 		'summary' => 'Resumen',
 		'action_needed' => 'Acción necesaria',
+		'action_date' => 'Fecha de accion',
 		'action_urgent' => 'Acción necesaria urgente'
 	);
 ?>

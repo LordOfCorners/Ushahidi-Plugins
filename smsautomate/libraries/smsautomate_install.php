@@ -42,6 +42,13 @@ class Smsautomate_Install {
 			  `phone_number` varchar(20) NOT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
+			
+		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'incident_message` (
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			  `incident_id` int(11) NOT NULL COMMENT \'incident_id of the new report that is created\',
+			  `message_id` int(11) NOT NULL COMMENT \'message_id of the incoming message\',
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 		
 		$num_settings = ORM::factory('smsautomate')
 				->where('id', 1)
