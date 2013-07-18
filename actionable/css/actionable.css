@@ -4,3 +4,12 @@ div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0
 #action-urgent-badge { font-size: 1.2em; background: #ee0000; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
 #action-summary { float:left;}
 #action-taken { float:left;}
+div.incident_status { margin: 1em 0; padding: 1em; background: #fffbe0; border: solid 2px #FFF19F; line-height: 1.3em; }
+#badge { font-size: 1.6em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 0.8em 0 0; float: left; }
+#summary { float:left; padding: 0.25em 0.5em;}
+div.actionable_filters ul li a:hover, div.actionable_filters ul li a.active,
+div.actionable_filters ul li { float:none; margin-bottom:2px; display:block; overflow:auto; }
+  div.actionable_filters ul li a { color:#000; font-weight:bold; padding:3px 5px 2px; margin:1px; font-size:10px; display:block; float:left; text-transform:uppercase; }
+  div.actionable_filters ul li a span { font-size:10px; }
+  div.actionable_filters ul li a:hover, div.actionable_filters ul li a.active { -moz-border-radius: 3px; -webkit-border-radius: 3px; display:block; float:left; padding:3px 5px 2px; background:none; border:1px solid #c2c2c2; color:inherit; margin:0; }
+    #actionable-report-type-filter { overflow:auto; padding:5px; margin:0;}

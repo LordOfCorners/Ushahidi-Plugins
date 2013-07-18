@@ -61,8 +61,10 @@ class incident_status {
 		if (Router::$controller == 'main' AND Router::$method == 'index') {
 			plugin::add_stylesheet('incidentstatus/views/css/incident_status');
 			Event::add('ushahidi_action.main_sidebar_pre_filters', array($this, 'filtermap'));
-			Event::add('ushahidi_filter.json_replace_markers',array($this,'filter_json'));
+			
+
 		}
+		//Event::add('ushahidi_filter.json_replace_markers',array($this,'filter_json'));
 		
 	}
 	
@@ -104,6 +106,14 @@ class incident_status {
 	}
 	
 	public function filter_json(){
+		
+			
+/*
+			echo "<LEIF>";
+			echo "</LEIF>";
+			exit;
+*/
+
 		$incidents = reports::fetch_incidents();
 		$json_features = array();
 		

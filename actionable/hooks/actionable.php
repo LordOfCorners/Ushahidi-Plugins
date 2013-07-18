@@ -72,7 +72,8 @@ class actionable {
 			Event::add('ushahidi_action.feed_rss_item', array($this, '_feed_rss'));
 		}
 		elseif (Router::$controller == 'main')
-		{
+		{	
+			plugin::add_stylesheet('actionable/css/actionable');
 			Event::add('ushahidi_action.map_main_filters', array($this, '_map_main_filters'));
 		}
 		elseif (Router::$controller == 'json' OR Router::$controller == 'bigmap_json')
@@ -149,6 +150,7 @@ class actionable {
 			//Assign fake media type in media table based on actionable, urgent, or action taken. 
 			//this will need to be removed if this is ever made without messing up the media type stuff.
 			//Added by Michael
+/*
 			
 			$media_item = ORM::factory('media')
 				->where('incident_id', $incident->id)
@@ -159,6 +161,7 @@ class actionable {
 			else if($_POST['actionable']==2) $media_item->media_type=103; 
 			if(isset($_POST['action_taken']) AND ($_POST['action_taken']==1)) $media_item->media_type=104;
 			$media_item->save();
+*/
 
 			
 		}
@@ -250,11 +253,29 @@ class actionable {
 	 */
 	public function _map_main_filters()
 	{
-		echo '</div><h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
+		echo '</div></div>';
+		echo "<script type='text/javascript'>
+jQuery(function() {
+$('.actionable_filters li a').click(function() {
+		var mediaType = parseFloat(this.id.replace('action_', '')) || 0;
+		
+		$('.actionable_filters li a').attr('class', '');
+		$(this).addClass('active');
+
+		// Update the report filters
+		map.updateReportFilters({k: mediaType});
+		console.log('filter');
+		
+		return false;
+	});
+	});
+</script>";
+		echo '<div id="actionable-report-type-filter" class="actionable_filters">';
+		echo '<h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
 		foreach (self::$media_values as $k => $val) {
-			echo "<li><a id=\"media_$k\" href=\"#\"><span>$val</span></a></li>";
+			echo "<li><a id=\"action_$k\" href=\"#\"><span>$val</span></a></li>";
 		}
-		echo '</ul><div>';
+		echo '</ul></div>';
 	}
 
 	/*
@@ -309,6 +330,11 @@ class actionable {
 		}
 
 		Event::$data = $params;
+/*
+		echo "<LEIF>";
+		var_dump(Event::$data);
+		echo "</LEIF>";
+*/
 	}
 	
 	/*
@@ -354,9 +380,9 @@ class actionable {
 		// Parse the GET param if we haven't yet.
 		if (! isset($this->media_filter)) {
 			$this->media_filter = array();
-			if (isset($_GET['m']))
+			if (isset($_GET['k']))
 			{
-				$this->media_filter = $_GET['m'];
+				$this->media_filter = $_GET['k'];
 				if (! is_array($this->media_filter))
 				{
 					$this->media_filter = explode(',',$this->media_filter);
