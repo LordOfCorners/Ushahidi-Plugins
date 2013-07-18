@@ -113,12 +113,10 @@ Class Download_Controller extends Main_Controller {
 					$i = 0;
 					foreach($post->custom_field as $customfield){
 						if($customfield != "---NOT_SELECTED---"){
-		/*
-					$field_id = $customfield[0];
+							$field_id = array_keys($post->custom_field,$customfield);
 							if (intval($field_id) < 1)
 								continue;
 			
-*/
 							$field_value = $customfield;
 							if (is_array($field_value))
 							{
@@ -128,14 +126,12 @@ Class Download_Controller extends Main_Controller {
 							$i++;
 							if ($i > 1)
 							{
-								$where_text .= " OR ";
+								$where_text .= " AND ";
 							}
 							
-/*
-							$where_text .= "(form_field_id = ".intval($field_id)
+							$where_text .= "(form_field_id = ".intval($field_id[0])
 								. " AND form_response = '".Database::instance()->escape_str(trim($field_value))."')";
-*/
-							$where_text .= "(form_response = '".Database::instance()->escape_str(trim($field_value))."')";
+							//$where_text .= "(form_response = '".Database::instance()->escape_str(trim($field_value))."')";
 						}
 					}
 					
@@ -145,13 +141,57 @@ Class Download_Controller extends Main_Controller {
 						// Get the valid IDs - faster in a separate query as opposed
 						// to a subquery within the main query
 /*
-						$db = new Database();
+						
 		
 						$rows = $db->query('SELECT DISTINCT incident_id FROM '
 						    .$table_prefix.'form_response WHERE '.$where_text);
+						    MAX(IF(form_field_id = 8, form_response, NULL)) AS "8",
+							MAX(IF(form_field_id = 9, form_response, NULL)) AS "9",
+							MAX(IF(form_field_id = 10, form_response, NULL)) AS "10",
+							MAX(IF(form_field_id = 11, form_response, NULL)) AS "11",
+							MAX(IF(form_field_id = 12, form_response, NULL)) AS "12"
 						 
 */
-						$incident_query->join('form_response','form_response.incident_id','incident.id', 'INNER')->where($where_text);
+						$db = new Database();
+						//$sortedquery = ORM::factory('form_response')->select(new Database_Expression('incident_id,MAX(IF(form_field_id = 7, form_response, NULL)) AS "7"'))->groupby('incident_id');
+						//$sortedquery = ORM::factory('form_response')->select(array('incident_id,MAX(IF(form_field_id = 7, form_response, NULL)) AS "7"'))->groupby('incident_id');
+						
+
+/*
+$sub = DB::select('username', array('COUNT("id")', 'total_posts')->from('posts')->group_by('username')->having('total_posts', '>=', 10);
+ 
+$query = DB::select('profiles.*', 'posts.total_posts')->from('profiles')
+    ->join(array($sub, 'posts'), 'INNER')->on('profiles.username', '=', 'posts.username');
+*/
+/*
+
+
+						$sortedquery = Database::select(array('incident_id', new Database_Expression("MAX(IF(form_field_id = 7, form_response, NULL)) AS '7', MAX(IF(form_field_id = 8, form_response, NULL)) AS '8', MAX(IF(form_field_id = 9, form_response, NULL)) AS '9', MAX(IF(form_field_id = 10, form_response, NULL)) AS '10', MAX(IF(form_field_id = 11, form_response, NULL)) AS '11', MAX(IF(form_field_id = 12, form_response, NULL)) AS '12' GROUP BY 'incident_id'"))); 
+*/
+						//FROM 'form_response' GROUP BY 'incident_id') AS 'sorted'");
+						
+						/* $sortedquery = $db->select("(SELECT 's'.'incident_id', MAX(IF(form_field_id = 7, form_response, NULL)) AS '7', MAX(IF(form_field_id = 8, form_response, NULL)) AS '8', MAX(IF(form_field_id = 9, form_response, NULL)) AS '9', MAX(IF(form_field_id = 10, form_response, NULL)) AS '10', MAX(IF(form_field_id = 11, form_response, NULL)) AS '11', MAX(IF(form_field_id = 12, form_response, NULL)) AS '12' FROM 'form_response' AS 's' GROUP BY 'incident_id') AS 'sorted'"); */
+  $sortedquery = '(SELECT
+  s.incident_id,
+  MAX(IF(form_field_id = 7, form_response, NULL)) AS "7",
+  MAX(IF(form_field_id = 8, form_response, NULL)) AS "8",
+  MAX(IF(form_field_id = 9, form_response, NULL)) AS "9",
+  MAX(IF(form_field_id = 10, form_response, NULL)) AS "10",
+  MAX(IF(form_field_id = 11, form_response, NULL)) AS "11",
+  MAX(IF(form_field_id = 12, form_response, NULL)) AS "12"
+FROM
+  form_response s
+GROUP BY
+  `incident_id`) AS sorted';
+
+						$incident_query->join(array(new Database_Expression($sortedquery)),'sorted.incident_id','incident.id','INNER');
+/*
+						echo "<pre>";
+						var_dump($incident_query);
+						echo "</pre>";
+						exit;
+*/
+
 /*
 						$incident_ids = '';
 						foreach ($rows as $row)
@@ -181,12 +221,12 @@ Class Download_Controller extends Main_Controller {
 
 				$incidents = $incident_query->join('incident_category', 'incident_category.incident_id', 'incident.id', 'INNER')->orderby('incident_date', 'desc')->find_all();	
 				//DUMP THE CONTENTS OF THE VAR -- THIS BREAKS IT!!!!
-/*
-				echo "<pre>";
-				var_dump($incidents);
-				echo "</pre>";
-				exit;
-*/
+					
+						echo "<pre>";
+						var_dump($incidents);
+						echo "</pre>";
+						exit;
+
 
 				// CSV selected
 				if ($post->formato == 0)
