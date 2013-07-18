@@ -257,6 +257,15 @@ class actionable {
 		echo '</div></div>';
 		echo "<script type='text/javascript'>
 jQuery(function() {
+$(document).ready(function() {
+	$('.actionable_filters li a').attr('class', '');
+		$( '#action_102' ).addClass('active');
+
+		// Update the report filters
+		map.updateReportFilters({k: 102});
+		return false;
+
+}
 $('.actionable_filters li a').click(function() {
 		var mediaType = parseFloat(this.id.replace('action_', '')) || 0;
 		
@@ -265,8 +274,6 @@ $('.actionable_filters li a').click(function() {
 
 		// Update the report filters
 		map.updateReportFilters({k: mediaType});
-		console.log('filter');
-		
 		return false;
 	});
 	});
