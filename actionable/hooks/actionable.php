@@ -20,7 +20,8 @@ class actionable {
 		101 => 'All',
 		102 => 'Actionable',
 		103 => 'Urgent',
-		104 => 'Action taken'
+		104 => 'Action taken',
+		105 => 'Not Actionable'
 	);
 	
 	/**
@@ -290,13 +291,15 @@ $('.actionable_filters li a').click(function() {
 		{
 			// Remove media type filter based on fake actionable media type
 			// @todo make this work with normal media filters too
-			$sql = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'media WHERE media_type IN ('.implode(',',$this->_check_media_type()).'))';
-			$key = array_search($sql, $params);
+			//$sql = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'media WHERE media_type IN ('.implode(',',$this->_check_media_type()).'))';
+			//$key = array_search($sql, $params);
 			
+/*
 			if ($key !== FALSE)
 			{
 				unset($params[$key]);
 			}
+*/
 			
 			$actionable_sql = array();
 			foreach ($filters as $filter)
@@ -307,6 +310,10 @@ $('.actionable_filters li a').click(function() {
 				// Add filter based on actionable status.
 				switch ($filter)
 				{
+					case '101':
+						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+							WHERE (actionable = 1 OR actionable = 2 OR actionable = 0) AND (action_taken = 0 OR action_taken = 1))';
+						break;
 					case '102':
 						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
 							WHERE actionable = 1 AND action_taken = 0)';
@@ -318,6 +325,10 @@ $('.actionable_filters li a').click(function() {
 					case '104':
 						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
 							WHERE actionable = 1 AND action_taken = 1)';
+						break;
+					case '105':
+						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+							WHERE actionable = 0)';
 						break;
 				}
 			}
