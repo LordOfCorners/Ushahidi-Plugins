@@ -9,6 +9,7 @@
 		'summary' => 'Resumen',
 		'action_needed' => 'Acción necesaria',
 		'action_date' => 'Fecha de accion',
-		'action_urgent' => 'Acción necesaria urgente'
+		'action_urgent' => 'Acción necesaria urgente', 
+		'all' => 'Todo'
 	);
 ?>
