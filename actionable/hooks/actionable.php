@@ -257,7 +257,7 @@ class actionable {
 		echo '</div>';
 		echo "<script type='text/javascript'>
 jQuery(function() {
-/*
+
 $(document).ready(function() {
 	$('.actionable_filters li a').attr('class', '');
 		$( '#action_102' ).addClass('active');
@@ -266,8 +266,8 @@ $(document).ready(function() {
 		map.updateReportFilters({k: 102});
 		return false;
 
-}
-*/
+});
+
 $('.actionable_filters li a').click(function() {
 		var mediaType = parseFloat(this.id.replace('action_', '')) || 0;
 		
@@ -279,8 +279,9 @@ $('.actionable_filters li a').click(function() {
 		map.updateReportFilters({k: mediaType});
 		return false;
 	});
-	});
+});
 </script>";
+		echo '</div>';
 		echo '<div id="actionable-report-type-filter" class="actionable_filters">';
 		echo '<h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
 		foreach (self::$media_values as $k => $val) {
@@ -293,6 +294,8 @@ $('.actionable_filters li a').click(function() {
 			echo "<li><a id=\"action_$k\" href=\"#\"><span>$filterName</span></a></li>";
 		}
 		echo '</ul>';
+		echo '<div>';
+
 	}
 	/*
 	 * Filter incidents for main map based on actionable status

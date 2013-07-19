@@ -410,7 +410,7 @@
 	}
 ?>
 </div>
-<! this is above the download buttons and below the custom form fields dropdowns. 
+<!-- this is above the download buttons and below the custom form fields dropdowns. --> 
 <div class="box">
 		<table>
 			<tr>
