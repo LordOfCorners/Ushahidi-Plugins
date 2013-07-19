@@ -284,11 +284,16 @@ $('.actionable_filters li a').click(function() {
 		echo '<div id="actionable-report-type-filter" class="actionable_filters">';
 		echo '<h3>'.Kohana::lang('actionable.actionable').'</h3><ul>';
 		foreach (self::$media_values as $k => $val) {
-			echo "<li><a id=\"action_$k\" href=\"#\"><span>$val</span></a></li>";
+			if($k == 101){ $filterName = Kohana::lang('actionable.all');}
+			if($k == 102){ $filterName = Kohana::lang('actionable.actionable');}
+			if($k == 103){ $filterName = Kohana::lang('actionable.urgent');}
+			if($k == 104){ $filterName = Kohana::lang('actionable.action_taken');}
+			if($k == 105){ $filterName = Kohana::lang('actionable.not_actionable');}
+
+			echo "<li><a id=\"action_$k\" href=\"#\"><span>$filterName</span></a></li>";
 		}
 		echo '</ul>';
 	}
-
 	/*
 	 * Filter incidents for main map based on actionable status
 	 */

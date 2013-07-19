@@ -9,6 +9,7 @@
 		'summary' => 'Summary',
 		'action_needed' => 'Action needed',
 		'action_date' => 'Date of action',
+		'all' => 'All',
 		'action_urgent' => 'Urgent action needed'
 	);
 ?>
