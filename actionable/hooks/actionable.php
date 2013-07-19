@@ -74,7 +74,7 @@ class actionable {
 		}
 		elseif (Router::$controller == 'main')
 		{	
-			plugin::add_stylesheet('actionable/css/actionable');
+			plugin::add_stylesheet('actionable/css/actionable_filter');
 			Event::add('ushahidi_action.map_main_filters', array($this, '_map_main_filters'));
 		}
 		elseif (Router::$controller == 'json' OR Router::$controller == 'bigmap_json')
@@ -254,9 +254,10 @@ class actionable {
 	 */
 	public function _map_main_filters()
 	{
-		echo '</div></div>';
+		echo '</div>';
 		echo "<script type='text/javascript'>
 jQuery(function() {
+/*
 $(document).ready(function() {
 	$('.actionable_filters li a').attr('class', '');
 		$( '#action_102' ).addClass('active');
@@ -266,6 +267,7 @@ $(document).ready(function() {
 		return false;
 
 }
+*/
 $('.actionable_filters li a').click(function() {
 		var mediaType = parseFloat(this.id.replace('action_', '')) || 0;
 		
@@ -273,6 +275,7 @@ $('.actionable_filters li a').click(function() {
 		$(this).addClass('active');
 
 		// Update the report filters
+		console.log('actionable filter');
 		map.updateReportFilters({k: mediaType});
 		return false;
 	});
@@ -283,7 +286,7 @@ $('.actionable_filters li a').click(function() {
 		foreach (self::$media_values as $k => $val) {
 			echo "<li><a id=\"action_$k\" href=\"#\"><span>$val</span></a></li>";
 		}
-		echo '</ul></div>';
+		echo '</ul>';
 	}
 
 	/*
