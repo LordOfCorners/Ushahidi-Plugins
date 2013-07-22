@@ -29,6 +29,10 @@ Class Download_Controller extends Main_Controller {
 		$this->template->content->search_form = TRUE;
 		$this->template->content->calendar_img = url::base() . "media/img/icon-calendar.gif";
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
+		
+		$result = mysql_query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
+		$actionableExists = mysql_num_rows($result) > 0;
+
 
 		// Javascript Header
 		$this->themes->js = new View('download_reports_js');
@@ -182,11 +186,42 @@ Class Download_Controller extends Main_Controller {
 					}
 					
 				}
+				
+				if($actionableExists){
+					$incident_query->join('actionable','actionable.incident_id','incident.id','INNER')->select('actionable.*');
+					$csv_headers[] = "Actionable Status";
+					$csv_headers[] = "Action Summary";
+					$csv_headers[] = "Action Date";
+				}
+				
+				//Called if actionable filter is set. 
+				if(isset($post->actionable) && $post->actionable!='all'){
+					if($post->actionable=='actionable'){
+						$actionableQuery = "((actionable = 1 OR actionable = 2) AND action_taken = 0)";
+					}
+					if($post->actionable=='urgent'){
+						$actionableQuery = "(actionable = 2 AND action_taken = 0)";
+					}
+					if($post->actionable=='action_taken'){
+						$actionableQuery = "(action_taken = 1)";
+					}
+					if($post->actionable=='not_actionable'){
+						$actionableQuery = "(actionable = 0)";
+					}
+	
+					$incident_query->where($actionableQuery);
+				}
+
 
 				// Report Date Filter
 				if (!empty($post->from_date) && !empty($post->to_date))
 				{
 					$incident_query->where(array('incident_date >=' => date("Y-m-d H:i:s", strtotime($post->from_date)), 'incident_date <=' => date("Y-m-d H:i:s", strtotime($post->to_date))));
+					
+
+
+
+
 				}
 
 				$incidents = $incident_query->join('incident_category', 'incident_category.incident_id', 'incident.id', 'INNER')->orderby('incident_date', 'desc')->find_all();	
@@ -198,7 +233,6 @@ Class Download_Controller extends Main_Controller {
 						echo "</pre>";
 						exit;
 */
-
 
 				// CSV selected
 				if ($post->formato == 0)
@@ -259,7 +293,7 @@ Class Download_Controller extends Main_Controller {
 						{
 							foreach($custom_fields as $custom_field)
 							{
-								array_push($new_report, $custom_field['field_response']);
+								array_push($new_report, '"'. $this->_csv_text($custom_field['field_response']). '"');
 							}
 						}
 						else
@@ -268,6 +302,17 @@ Class Download_Controller extends Main_Controller {
 							{
 								array_push($new_report,'');
 							}
+						}
+						
+						if($actionableExists){
+							if($incident->actionable==0) $actionableStatus = "Not Actionable";
+							else if($incident->actionable==1 && $incident->action_taken==0) $actionableStatus = "Actionable";
+							else if($incident->actionable==2 && $incident->action_taken==0) $actionableStatus = "Urgent";
+							else if($incident->action_taken==1) $actionableStatus = "Action Taken";
+							else $actionableStatus = "";
+							array_push($new_report, '"' . $this->_csv_text($actionableStatus) . '"');
+							array_push($new_report, '"' . $this->_csv_text($incident->action_summary) . '"');
+							array_push($new_report, '"' . $incident->action_date .'"');
 						}
 
 						array_push($new_report, "\n");

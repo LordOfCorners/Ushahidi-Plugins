@@ -10,7 +10,13 @@
  */
 ?>
 
-<?php print form::open(NULL, array('id' => 'reportForm'));?>
+<?php print form::open(NULL, array('id' => 'reportForm'));
+	
+	$result = mysql_query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
+	$actionableExists = mysql_num_rows($result) > 0;
+?>
+
+
 
 <div class="big-block">
 	<h1><?php echo Kohana::lang('ui_admin.download_reports');?></h1>
@@ -77,6 +83,8 @@
 	<div id="custom_forms">
 
 <?php
+	echo "<br /><h2>Custom Fields</h2>";
+
 	// If the user has insufficient permissions to edit report fields, we flag this for a warning message
 	$show_permission_message = FALSE;
 
@@ -411,6 +419,23 @@
 ?>
 </div>
 <!-- this is above the download buttons and below the custom form fields dropdowns. --> 
+<?php
+if($actionableExists){
+	echo"<div id=\"actionable-filters\">";
+		echo "<h2>Actionable Status</h2>";
+		print form::label('actionable', Kohana::lang('actionable.all').': ');
+		print form::radio('actionable', 'all', TRUE).'<br />';
+		print form::label('actionable', Kohana::lang('actionable.actionable').': ');
+		print form::radio('actionable', 'actionable').'<br />';
+		print form::label('actionable', Kohana::lang('actionable.urgent').': ');
+		print form::radio('actionable', 'urgent').'<br />';
+		print form::label('actionable', Kohana::lang('actionable.action_taken').': ');
+		print form::radio('actionable', 'action_taken').'<br />';
+		print form::label('actionable', Kohana::lang('actionable.not_actionable').': ');
+		print form::radio('actionable', 'not_actionable').'<br />';
+	echo"</div>";
+}
+?>
 <div class="box">
 		<table>
 			<tr>

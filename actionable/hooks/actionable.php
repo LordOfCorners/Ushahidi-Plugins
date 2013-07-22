@@ -342,7 +342,7 @@ $('.actionable_filters li a').click(function() {
 						break;
 					case '104':
 						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
-							WHERE actionable = 1 AND action_taken = 1)';
+							WHERE action_taken = 1)';
 						break;
 					case '105':
 						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
