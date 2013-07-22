@@ -42,6 +42,9 @@ class actionable {
 	 */
 	public function add()
 	{
+		Event::add('ushahidi_filter.fetch_incidents_set_params', array($this, '_fetch_incidents_set_params'));
+		Event::add('ushahidi_filter.json_index_features', array($this, '_json_index_features'));
+
 		// Add a Sub-Nav Link
 		Event::add('ushahidi_action.nav_admin_reports', array($this, '_report_link'));
 
@@ -83,10 +86,7 @@ class actionable {
 			Event::add('ushahidi_action.map_main_filters', array($this, '_map_main_filters'));
 		}
 		elseif (Router::$controller == 'json' OR Router::$controller == 'bigmap_json')
-		{
-			Event::add('ushahidi_filter.fetch_incidents_set_params', array($this, '_fetch_incidents_set_params'));
-			Event::add('ushahidi_filter.json_index_features', array($this, '_json_index_features'));
-			
+		{			
 			// Never cluster actionable json
 			if (Router::$method == 'cluster' AND $this->_check_media_type())
 			{
@@ -223,7 +223,6 @@ class actionable {
 			  if (actionableTypes.length > 0)
 			  {
 				urlParameters["k"] = actionableTypes;
-				alert(urlParameters["k"]);
 			  }';		
 	}
 	
