@@ -48,6 +48,11 @@ class actionable {
 		// Only add the events if we are on that controller
 		if (Router::$controller == 'reports')
 		{
+		
+			Event::add('ushahidi_action.report_filters_ui', array($this, '_reports_filters'));
+			Event::add('ushahidi_action.report_js_filterReportsAction', array($this, '_reports_filters_js'));
+
+		
 			switch (Router::$method)
 			{
 				// Hook into the Report Add/Edit Form in Admin
@@ -193,6 +198,33 @@ class actionable {
 				}
 			}
 		}
+	}
+	
+	
+		public function _reports_filters()
+	{
+
+		$reportsFilters = View::factory('actionable_reports_filters');
+		$reportsFilters->render(TRUE);
+
+	}
+	
+		public function _reports_filters_js()
+	{
+		echo '// 
+			  // Get the actionable type
+			  // 
+			  var actionableTypes = [];
+			  $.each($(".fl-actionable li a.selected"), function(i, item){
+				actionableId = item.id.substring("filter_link_actionable_".length);
+				actionableTypes.push(actionableId);
+		      });
+			
+			  if (actionableTypes.length > 0)
+			  {
+				urlParameters["k"] = actionableTypes;
+				alert(urlParameters["k"]);
+			  }';		
 	}
 	
 	/*
