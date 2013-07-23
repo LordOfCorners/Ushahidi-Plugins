@@ -152,24 +152,6 @@ class actionable {
 				$action_item->action_date = null;
 			}			
 			$action_item->save();
-			
-			//Assign fake media type in media table based on actionable, urgent, or action taken. 
-			//this will need to be removed if this is ever made without messing up the media type stuff.
-			//Added by Michael
-/*
-			
-			$media_item = ORM::factory('media')
-				->where('incident_id', $incident->id)
-				->find();
-			
-			$media_item->incident_id = $incident->id;
-			if($_POST['actionable']==1) $media_item->media_type=102;
-			else if($_POST['actionable']==2) $media_item->media_type=103; 
-			if(isset($_POST['action_taken']) AND ($_POST['action_taken']==1)) $media_item->media_type=104;
-			$media_item->save();
-*/
-
-			
 		}
 	}
 	
@@ -338,17 +320,6 @@ $('.actionable_filters li a').click(function() {
 		// Look for fake media type
 		if ($filters = $this->_check_media_type())
 		{
-			// Remove media type filter based on fake actionable media type
-			// @todo make this work with normal media filters too
-			//$sql = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'media WHERE media_type IN ('.implode(',',$this->_check_media_type()).'))';
-			//$key = array_search($sql, $params);
-			
-/*
-			if ($key !== FALSE)
-			{
-				unset($params[$key]);
-			}
-*/
 			
 			$actionable_sql = array();
 			foreach ($filters as $filter)
@@ -433,7 +404,7 @@ $('.actionable_filters li a').click(function() {
 	}
 	
 	/*
-	 * Look for fake media types in GET param
+	 * Look for fake actionable types in GET param (still uses the word media from an older version of this plugin. Pretend it says actionable.
 	 */
 	private function _check_media_type()
 	{
