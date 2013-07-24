@@ -217,7 +217,7 @@ Class Download_Controller extends Main_Controller {
 				// Report Date Filter
 				if (!empty($post->from_date) && !empty($post->to_date))
 				{
-					$incident_query->where(array('incident_date >=' => date("Y-m-d H:i:s", strtotime($post->from_date)), 'incident_date <=' => date("Y-m-d H:i:s", strtotime($post->to_date))));
+					$incident_query->where(array('incident_date >=' => date("Y-m-d H:i:s", strtotime($post->from_date)), 'incident_date <=' => date("Y-m-d H:i:s", strtotime($post->to_date." 23:59:59"))));
 					
 
 
@@ -230,6 +230,7 @@ Class Download_Controller extends Main_Controller {
 					
 /*
 						echo "<pre>";
+						var_dump($custom_forms);
 						var_dump($categories);
 						var_dump($incidents);
 						echo "</pre>";
