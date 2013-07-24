@@ -2148,6 +2148,7 @@ class smsautomate {
 			//get the incident ID
 			//edit the actionable database to say action as been taken
 
+			//this query could also easily be used to prevent duplicate reports 
 			$query = ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id')
 				->where('location.location_name', $location_description)
