@@ -187,8 +187,9 @@ Class Download_Controller extends Main_Controller {
 					
 				}
 				
+				//'actionable.actionable','actionable.action_taken','actionable.action_summary','actionable.action_date'
 				if($actionableExists){
-					$incident_query->join('actionable','actionable.incident_id','incident.id','INNER')->select('actionable.*');
+					$incident_query->join('actionable','actionable.incident_id','incident.id','INNER')->select('actionable.actionable','actionable.action_taken','actionable.action_summary','actionable.action_date');
 					$csv_headers[] = "Actionable Status";
 					$csv_headers[] = "Action Summary";
 					$csv_headers[] = "Action Date";
@@ -229,6 +230,7 @@ Class Download_Controller extends Main_Controller {
 					
 /*
 						echo "<pre>";
+						var_dump($categories);
 						var_dump($incidents);
 						echo "</pre>";
 						exit;
