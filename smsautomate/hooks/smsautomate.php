@@ -540,7 +540,7 @@ class smsautomate {
 			$facilityType = "Hospital";
 			$municipality = "Huehuetenango";
 			$department = "Huehuetenango";
-			$dms = "Huehuetenango";
+			$dms = "Huehuetenango Sur";
 			$das = "Huehuetenango";
 			$location_lat = 15.3161087;
 			$location_long = -91.51551343;
