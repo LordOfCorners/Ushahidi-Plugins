@@ -535,6 +535,16 @@ class smsautomate {
 			$location_lat = 15.29921201;
 			$location_long = -92.0230072;
 		}
+		else if($message_elements[0]=="131626"){			
+			$location_description = "Hospital Nacional Huehuetenango";
+			$facilityType = "Hospital";
+			$municipality = "Huehuetenango";
+			$department = "Huehuetenango";
+			$dms = "Huehuetenango";
+			$das = "Huehuetenango";
+			$location_lat = 15.3161087;
+			$location_long = -91.51551343;
+		}
 		else if($message_elements[0]=="260208"){			
 			$location_description = "Actxumbal P/S";
 			$facilityType = "Puesto de Salud";
@@ -784,6 +794,16 @@ class smsautomate {
 			$das = "Quiche";
 			$location_lat = 15.34623796;
 			$location_long = -90.87592961;
+		}
+		else if($message_elements[0]=="142114"){			
+			$location_description = "Hospital Nacional Santa Elena";
+			$facilityType = "Hospital"; //IS THIS RIGHT??!
+			$municipality = "Santa Cruz del Quiche";
+			$department = "Quiche";
+			$dms = "Santa Cruz del Quiche";
+			$das = "Quiche";
+			$location_lat = 15.03130346;
+			$location_long = -91.15768536;
 		}
 		else if($message_elements[0]=="120248"){			
 			$location_description = "Concepcion Tutuapa C/M";
@@ -1205,6 +1225,16 @@ class smsautomate {
 			$location_lat = 15.2341229;
 			$location_long = -91.97099343;
 		}	
+		else if($message_elements[0]=="122011"){			
+			$location_description = "Hospital Nacional de San Marcos";
+			$facilityType = "Hospital";
+			$municipality = "San Marcos";
+			$department = "San Marcos";
+			$dms = "San Marcos";
+			$das = "San Marcos";
+			$location_lat = 14.95372454;
+			$location_long = -91.80652602;
+		}	
 		else if($message_elements[0]=="70878"){			
 			$location_description = "Guineales C/M";
 			$facilityType = "C/M"; //FIND TRANSLATION
@@ -1284,6 +1314,16 @@ class smsautomate {
 			$das = "Solola";
 			$location_lat = 14.62857444;
 			$location_long = -91.45746763; 
+		}
+		else if($message_elements[0]=="70120"){			
+			$location_description = "Hospital Nacional Juan De Dios Rodas";
+			$facilityType = "Hospital";
+			$municipality = "Solola";
+			$department = "Solola";
+			$dms = "Solola";
+			$das = "Solola";
+			$location_lat = 14.764828724;
+			$location_long = -91.17681657; 
 		}
 		else if($message_elements[0]=="80501"){			
 			$location_description = "Santa Lucia La Reforma CAP";
@@ -1444,6 +1484,16 @@ class smsautomate {
 			$das = "Totonicapan";
 			$location_lat = 14.91408841;
 			$location_long = -91.38060499;
+		}
+		else if($message_elements[0]=="180208"){			
+			$location_description = "Hospital Regional Dr Antonio Penado";
+			$facilityType = "Hospital"; 
+			$municipality = "San Benito";
+			$department = "El Peten";
+			$dms = "Flores";
+			$das = "Peten Norte";
+			$location_lat = 16.91298969;
+			$location_long = -89.91263661;	
 		}else{
 			$goodLocation=false;
 		}
