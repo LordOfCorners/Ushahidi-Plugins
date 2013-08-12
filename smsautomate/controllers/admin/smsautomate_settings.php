@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+ <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * SMS Automate Administrative Controller
  *
@@ -29,10 +29,17 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		//create the form array
 		$form = array
 		(
-		        'delimiter' => "",
+		    'delimiter' => "",
 			'code_word' => "",
-			'whitelist' => ""
+			'whitelist' => "",
+			'location_count' => ORM::factory('inventory_locations')->count_all()
 		);
+		for($i=0; $i < $form['location_count']; $i++){
+		$form['location_description'.$i] = "";
+		$form['location_code'.$i] = "";
+		$form['longitude'.$i] = "";
+		$form['latitude'.$i] = "";
+		}
 		
 		$errors = $form;
 		$form_error = FALSE;
@@ -61,6 +68,21 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				$settings->save();
 				$form_saved = TRUE;
 				$form = arr::overwrite($form, $post->as_array());
+				ORM::factory('inventory_locations')->delete_all();
+				for($i=0; $i < $form['location_count']; $i++){
+					$_locationCode = "location_code".$i;
+					$_locationDesc = "location_description".$i;
+					$_latitude = "latitude".$i;
+					$_longitude = "longitude".$i;
+	
+					$locations = new Inventory_locations_Model();
+					$locations->location_code = $post->$_locationCode;
+					$locations->location_description = $post->$_locationDesc;
+					$locations->latitude = $post->$_latitude.$i;
+					$locations->longitude = $post->$_longitude.$i;
+					$locations->save();
+				}
+
 				
 				//do the white list
 				
@@ -101,6 +123,18 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				->find();
 			$form['delimiter'] = $settings->delimiter;
 			$form['code_word'] = $settings->code_word;
+			
+			
+				$j=0;			
+				$locations = ORM::factory('inventory_locations')->find_all();
+				foreach($locations as $row){
+				$form['location_code'.$j] = $row->location_code;
+				$form['location_description'.$j] = $row->location_description;
+				$form['latitude'.$j] = $row->latitude;
+				$form['longitude'.$j] = $row->longitude;
+				$j++;
+				}
+			
 			
 			//get the white listed numbers
 			$whitelist = "";

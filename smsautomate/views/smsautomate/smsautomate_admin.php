@@ -1,3 +1,7 @@
+<?php echo"<script>
+
+
+</script>" ?>
 
 <h1> Inventory Management via SMS - Settings</h1>
 <?php print form::open(); ?>
@@ -68,11 +72,18 @@
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
-		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
-		Location Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Latitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Longitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-
+		<?php
+		for($i=0; $i < $form['location_count']; $i++){
+		echo("<br/> Code: ");
+		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
+		echo("<br/> Location Name: ");
+		print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
+		echo("Latitude: ");
+		print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
+		echo("Longitude: ");
+		print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
+		}?>
+		<button id="newLocation" type="button">Add new location</button>
 		
 	</div>
 	<br/>
