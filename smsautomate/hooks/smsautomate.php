@@ -46,8 +46,8 @@ class smsautomate {
 	public function _parse_sms()
 	{
 	
-		$result = mysql_query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
-		$actionableExists = mysql_num_rows($result) > 0;
+		$result = Database::instance()->query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
+		$actionableExists = count($result) > 0;
 
 		//the message
 		$message = Event::$data->message;
