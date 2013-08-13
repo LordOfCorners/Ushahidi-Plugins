@@ -52,7 +52,7 @@ class Smsautomate_Install {
 			
 		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `location_code` int(11) NOT NULL COMMENT \'code used to indicate location\',
+			  `location_code` varchar(255) NOT NULL COMMENT \'code used to indicate location\',
 			  `location_description` varchar(255) NOT NULL,
 			  `latitude` double NOT NULL,
 			  `longitude` double NOT NULL,
@@ -61,7 +61,7 @@ class Smsautomate_Install {
 			
 		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_items` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `item_code` int(11) NOT NULL COMMENT \'code used to indicate item\',
+			  `item_code` varchar(255) NOT NULL COMMENT \'code used to indicate item\',
 			  `item_description` varchar(255) NOT NULL,
 			  `item_category` int(11) NOT NULL COMMENT \'the number here corresponds to the category table\',
 			  PRIMARY KEY (`id`)

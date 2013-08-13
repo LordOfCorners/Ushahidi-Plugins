@@ -1,8 +1,3 @@
-<?php echo"<script>
-
-
-</script>" ?>
-
 <h1> Inventory Management via SMS - Settings</h1>
 <?php print form::open(); ?>
 
@@ -72,19 +67,20 @@
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
-		<?php
+				<?php
 		for($i=0; $i < $form['location_count']; $i++){
-		echo("<br/> Code: ");
+		echo("<p> Code: ");
 		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
-		echo("<br/> Location Name: ");
+		echo(" Location Name: ");
 		print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
-		echo("Latitude: ");
+		echo(" Latitude: ");
 		print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
-		echo("Longitude: ");
+		echo(" Longitude: ");
 		print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
+		echo("</p>");
 		}?>
-		<button id="newLocation" type="button">Add new location</button>
-		
+		<span id="newLocations"> </span>
+		<button onclick="addLocation()" type="button">Add new location</button>
 	</div>
 	<br/>
 	
@@ -96,11 +92,31 @@
 	administrative interface. <br />This should be located in admin/manage on your Ushahidi site  
 		</h6>
 		
-		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
-		Item Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Item Description: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Category ID: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-				
+		<?php
+		$categories = ORM::factory('category')->find_all();
+		for($i=0; $i < $form['item_count']; $i++){
+		echo("<p> Code: ");
+		print form::input('item_code'.$i, $form['item_code'.$i], ' class="text"');
+		echo(" Item Description: ");
+		print form::input('item_description'.$i, $form['item_description'.$i], ' class="text"');
+		echo(" Item Category: "); //would be great to make this a dropdown of categories. 
+		echo("<select name='item_category".$i."'>");
+		foreach($categories as $row){
+			if($form['item_category'.$i] == $row->id){
+				echo("<option selected='selected' value='".$row->id."'>".$row->category_title."</option>");
+			}
+			else{
+				echo("<option value='".$row->id."'>".$row->category_title."</option>");
+			}
+		}
+		echo("</select>");
+/* 		print form::input('item_category'.$i, $form['item_category'.$i], ' class="text"'); 		 */
+		echo("</p>");		
+		}
+?>
+
+		<span id="newItems"> </span>
+		<button onclick="addItem()" type="button">Add new item</button>
 	</div>
 	
 	
@@ -119,8 +135,52 @@
 	
 </div>
 <br/>
-
+<input name="newLocationCount" type="hidden" id="newLocationCount" value="" />
+<input name="newItemCount" type="hidden" id="newItemCount" value="" />
 <input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
 
 <?php print form::close(); ?>
+
+<!-- store location count in javascript -->
+<?php echo"<script>
+var locationCount = $form[location_count];
+var itemCount = $form[item_count];
+</script>" ?>
+
+	<?php echo("<script> 
+				var catArray = new Array();
+				var catIDs = new Array();");
+		  foreach($categories as $row){
+		   		echo("catArray.push('$row->category_title');");
+		   		echo("catIDs.push('$row->id');");
+		   }
+		  echo("</script>");
+		  ?>
+
+<!-- add new location form field -->
+<?php echo"<script>
+function addLocation()
+{
+	var string = '<p>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'>';
+	$( '#newLocations' ).append(string);
+	locationCount = locationCount+1;
+	document.getElementById('newLocationCount').value = locationCount-$form[location_count];
+}
+
+function addItem()
+{
+	var string = '<p>Code: ' + '<input type=\'text\' name=\'item_code' + itemCount + '\' id=\'item_code' + itemCount + '\' class=\'text\'> Item Description: '+'<input type=\'text\' name=\'item_description' + itemCount + '\' id=\'item_description' + itemCount + '\' class=\'text\'>';
+	
+	string += ' Item Category: <select name=\'item_category' + itemCount +'\'>';
+	for(var i=0; i<catArray.length;i++){
+	string += '<option value=\''+catIDs[i]+'\'>'+ catArray[i] +'</option>';
+	}
+	string += '</select>';
+
+	$( '#newItems' ).append(string);
+	itemCount = itemCount+1;
+	document.getElementById('newItemCount').value = itemCount-$form[item_count];
+}
+
+</script>" ?>
 

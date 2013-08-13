@@ -32,13 +32,21 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		    'delimiter' => "",
 			'code_word' => "",
 			'whitelist' => "",
-			'location_count' => ORM::factory('inventory_locations')->count_all()
+			'location_count' => ORM::factory('inventory_locations')->count_all(),
+			'item_count' => ORM::factory('inventory_items')->count_all()
+
 		);
 		for($i=0; $i < $form['location_count']; $i++){
 		$form['location_description'.$i] = "";
 		$form['location_code'.$i] = "";
 		$form['longitude'.$i] = "";
 		$form['latitude'.$i] = "";
+		}
+		
+		for($i=0; $i < $form['item_count']; $i++){
+		$form['item_description'.$i] = "";
+		$form['item_code'.$i] = "";
+		$form['item_category'.$i] = "";
 		}
 		
 		$errors = $form;
@@ -48,9 +56,24 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		// check, has the form been submitted if so check the input values and save them
 		if ($_POST)
 		{
+		
+
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
 			$post = new Validation($_POST);
+			
+			for($i=$form['location_count']; $i < $form['location_count']+$post->newLocationCount; $i++){
+				$form['location_description'.$i] = "";
+				$form['location_code'.$i] = "";
+				$form['longitude'.$i] = "";
+				$form['latitude'.$i] = "";
+			}
+			
+			for($i=$form['item_count']; $i < $form['item_count']+$post->newItemCount; $i++){
+				$form['item_description'.$i] = "";
+				$form['item_code'.$i] = "";
+				$form['item_category'.$i] = "";
+			}
 			
 			// Add some filters
 			$post->pre_filter('trim', TRUE);
@@ -69,18 +92,31 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				$form_saved = TRUE;
 				$form = arr::overwrite($form, $post->as_array());
 				ORM::factory('inventory_locations')->delete_all();
-				for($i=0; $i < $form['location_count']; $i++){
+				for($i=0; $i < $form['location_count']+ $post->newLocationCount; $i++){
 					$_locationCode = "location_code".$i;
 					$_locationDesc = "location_description".$i;
 					$_latitude = "latitude".$i;
 					$_longitude = "longitude".$i;
 	
 					$locations = new Inventory_locations_Model();
-					$locations->location_code = $post->$_locationCode;
+					$locations->location_code = strtoupper($post->$_locationCode);
 					$locations->location_description = $post->$_locationDesc;
-					$locations->latitude = $post->$_latitude.$i;
-					$locations->longitude = $post->$_longitude.$i;
+					$locations->latitude = $post->$_latitude;
+					$locations->longitude = $post->$_longitude;
 					$locations->save();
+				}
+				
+				ORM::factory('inventory_items')->delete_all();
+				for($i=0; $i < $form['item_count']+ $post->newItemCount; $i++){
+					$_itemCode = "item_code".$i;
+					$_itemDesc = "item_description".$i;
+					$_itemCat = "item_category".$i;
+	
+					$items = new Inventory_items_Model();
+					$items->item_code = strtoupper($post->$_itemCode);
+					$items->item_description = $post->$_itemDesc;
+					$items->item_category = $post->$_itemCat;
+					$items->save();
 				}
 
 				
@@ -133,6 +169,15 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				$form['latitude'.$j] = $row->latitude;
 				$form['longitude'.$j] = $row->longitude;
 				$j++;
+				}
+				
+				$k=0;			
+				$items = ORM::factory('inventory_items')->find_all();
+				foreach($items as $row){
+				$form['item_code'.$k] = $row->item_code;
+				$form['item_description'.$k] = $row->item_description;
+				$form['item_category'.$k] = $row->item_category;
+				$k++;
 				}
 			
 			
