@@ -62,14 +62,14 @@
 		<?php print form::input('delimiter', $form['delimiter'], ' class="text"'); ?>		
 	</div>
 	<br/>
-	<div class="row">
+	<div class="row" id="locationDiv">
 		<h4>Enter your first location</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
 				<?php
 		for($i=0; $i < $form['location_count']+$newLocationCount; $i++){
-		echo("<p> Code: ");
+		echo("<p id='location".$i."'> Code: ");
 		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
 		echo(" Location Name: ");
 		print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
@@ -77,14 +77,16 @@
 		print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
 		echo(" Longitude: ");
 		print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
+		echo("<button onclick='removeElement(&#39;locationDiv&#39;, &#39;location".$i."&#39;)' type='button'>Delete</button>");
 		echo("</p>");
+		
 		}?>
 		<span id="newLocations"> </span>
 		<button onclick="addLocation()" type="button">Add new location</button>
 	</div>
 	<br/>
 	
-		<div class="row">
+		<div class="row" id="itemDiv">
 		<h4>Enter an Item</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			It may be helpful to categorize your item codes by placing a letter at the beginning. <br /> To figure out a category's ID number look at the status bar 
@@ -95,7 +97,7 @@
 		<?php
 		$categories = ORM::factory('category')->find_all();
 		for($i=0; $i < $form['item_count']+$newItemCount; $i++){
-		echo("<p> Code: ");
+		echo("<p id='item".$i."'> Code: ");
 		print form::input('item_code'.$i, $form['item_code'.$i], ' class="text"');
 		echo(" Item Description: ");
 		print form::input('item_description'.$i, $form['item_description'.$i], ' class="text"');
@@ -110,6 +112,7 @@
 			}
 		}
 		echo("</select>");
+		echo("<button onclick='removeElement(&#39;itemDiv&#39;, &#39;item".$i."&#39;)' type='button'>Delete</button>");
 /* 		print form::input('item_category'.$i, $form['item_category'.$i], ' class="text"'); 		 */
 		echo("</p>");		
 		}
@@ -167,7 +170,9 @@ var itemCount = $form[item_count];
 <?php echo"<script>
 function addLocation()
 {
-	var string = '<p>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'>';
+	var string = '<p id=\'item'+locationCount+'\'>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'><button onclick=\'removeElement(\'locationDiv\',\''+locationCount+'\')' + 'type=\'button\'>Delete</button></p>';
+	
+	
 	$( '#newLocations' ).append(string);
 	locationCount = locationCount+1;
 	
@@ -182,13 +187,23 @@ function addItem()
 	for(var i=0; i<catArray.length;i++){
 	string += '<option value=\''+catIDs[i]+'\'>'+ catArray[i] +'</option>';
 	}
-	string += '</select>';
+	string += '</select><button onclick=\'removeElement(\'itemDiv\',\''+itemCount+'\')' + 'type=\'button\'>Delete</button></p>';
 
 	$( '#newItems' ).append(string);
 	itemCount = itemCount+1;
 	
 	document.getElementById('newItemCount').value = itemCount-$form[item_count];
 }
+
+function removeElement(parent,toDelete) {
+
+  var d = document.getElementById(parent);
+
+  var olddiv = document.getElementById(toDelete);
+
+  d.removeChild(olddiv);
+}
+
 
 </script>" ?>
 

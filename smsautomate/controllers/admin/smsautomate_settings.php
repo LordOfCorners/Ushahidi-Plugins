@@ -107,12 +107,17 @@ class Smsautomate_settings_Controller extends Admin_Controller
 					$_latitude = "latitude".$i;
 					$_longitude = "longitude".$i;
 	
-					$locations = new Inventory_locations_Model();
-					$locations->location_code = strtoupper($post->$_locationCode);
-					$locations->location_description = $post->$_locationDesc;
-					$locations->latitude = $post->$_latitude;
-					$locations->longitude = $post->$_longitude;
-					$locations->save();
+					if(isset($post->$_locationCode)){
+						$locations = new Inventory_locations_Model();
+						$locations->location_code = strtoupper($post->$_locationCode);
+						$locations->location_description = $post->$_locationDesc;
+						$locations->latitude = $post->$_latitude;
+						$locations->longitude = $post->$_longitude;
+						$locations->save();
+					}
+					else{
+						continue;
+					}
 				}
 				
 				ORM::factory('inventory_items')->delete_all();
@@ -121,11 +126,16 @@ class Smsautomate_settings_Controller extends Admin_Controller
 					$_itemDesc = "item_description".$i;
 					$_itemCat = "item_category".$i;
 	
-					$items = new Inventory_items_Model();
-					$items->item_code = strtoupper($post->$_itemCode);
-					$items->item_description = $post->$_itemDesc;
-					$items->item_category = $post->$_itemCat;
-					$items->save();
+					if(isset($post->$_itemCode)){
+						$items = new Inventory_items_Model();
+						$items->item_code = strtoupper($post->$_itemCode);
+						$items->item_description = $post->$_itemDesc;
+						$items->item_category = $post->$_itemCat;
+						$items->save();
+					}
+					else{
+						continue;
+					}
 				}
 
 				
