@@ -49,6 +49,9 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		$form['item_category'.$i] = "";
 		}
 		
+		$newItemCount=0;
+		$newLocationCount=0;
+		
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -90,9 +93,15 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				$settings->code_word = $post->code_word;
 				$settings->save();
 				$form_saved = TRUE;
+				if($post->newLocationCount!=null){
+				$newLocationCount=$post->newLocationCount;
+				}
+				if($post->newItemCount!=null){
+				$newItemCount=$post->newItemCount;
+				}
 				$form = arr::overwrite($form, $post->as_array());
 				ORM::factory('inventory_locations')->delete_all();
-				for($i=0; $i < $form['location_count']+ $post->newLocationCount; $i++){
+				for($i=0; $i < $form['location_count']+ $newLocationCount; $i++){
 					$_locationCode = "location_code".$i;
 					$_locationDesc = "location_description".$i;
 					$_latitude = "latitude".$i;
@@ -107,7 +116,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				}
 				
 				ORM::factory('inventory_items')->delete_all();
-				for($i=0; $i < $form['item_count']+ $post->newItemCount; $i++){
+				for($i=0; $i < $form['item_count']+ $newItemCount; $i++){
 					$_itemCode = "item_code".$i;
 					$_itemDesc = "item_description".$i;
 					$_itemCat = "item_category".$i;
@@ -200,6 +209,8 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		
 		
 		$this->template->content->form_saved = $form_saved;
+		$this->template->content->newLocationCount = $newLocationCount;
+		$this->template->content->newItemCount = $newItemCount;
 		$this->template->content->form = $form;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->errors = $errors;

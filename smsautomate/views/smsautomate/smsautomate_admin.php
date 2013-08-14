@@ -68,7 +68,7 @@
 			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
 				<?php
-		for($i=0; $i < $form['location_count']; $i++){
+		for($i=0; $i < $form['location_count']+$newLocationCount; $i++){
 		echo("<p> Code: ");
 		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
 		echo(" Location Name: ");
@@ -94,7 +94,7 @@
 		
 		<?php
 		$categories = ORM::factory('category')->find_all();
-		for($i=0; $i < $form['item_count']; $i++){
+		for($i=0; $i < $form['item_count']+$newItemCount; $i++){
 		echo("<p> Code: ");
 		print form::input('item_code'.$i, $form['item_code'.$i], ' class="text"');
 		echo(" Item Description: ");
@@ -142,10 +142,16 @@
 <?php print form::close(); ?>
 
 <!-- store location count in javascript -->
-<?php echo"<script>
+<?php 
+$form['location_count'] = ORM::factory('inventory_locations')->count_all();
+$form['item_count'] = ORM::factory('inventory_items')->count_all();
+
+
+echo"<script>
 var locationCount = $form[location_count];
 var itemCount = $form[item_count];
-</script>" ?>
+</script>";
+ ?>
 
 	<?php echo("<script> 
 				var catArray = new Array();
@@ -164,6 +170,7 @@ function addLocation()
 	var string = '<p>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'>';
 	$( '#newLocations' ).append(string);
 	locationCount = locationCount+1;
+	
 	document.getElementById('newLocationCount').value = locationCount-$form[location_count];
 }
 
@@ -179,6 +186,7 @@ function addItem()
 
 	$( '#newItems' ).append(string);
 	itemCount = itemCount+1;
+	
 	document.getElementById('newItemCount').value = itemCount-$form[item_count];
 }
 
