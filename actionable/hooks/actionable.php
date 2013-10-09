@@ -137,6 +137,18 @@ class actionable {
 			$action_item = ORM::factory('actionable')
 				->where('incident_id', $incident->id)
 				->find();
+				
+			$incident_message = ORM::factory('incident_message')->where('incident_id', $incident->id)->find();	
+			$messageID = $incident_message->message_id;
+			$message = ORM::factory('message')->where('id',$messageID)->find();
+			$smsFrom = $message->message_from;
+			
+			$locationID = $incident->location_id;
+			$location  = ORM::factory('location')->where('id',$locationID)->find();
+			$locationName = $location->location_name; 
+			
+			$outgoingMessage = Kohana::lang('actionable.action_taken_message').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
+
 			$action_item->incident_id = $incident->id;
 			$action_item->actionable = isset($_POST['actionable']) ? 
 				$_POST['actionable'] : "";
@@ -146,7 +158,9 @@ class actionable {
 			if(isset($_POST['action_taken'])){
 				if(!isset($action_item->action_date)){
 					$action_item->action_date = date("Y-m-d H:i:s",time());
+					sms::send($smsFrom,Kohana::config("settings.sms_no1"),$outgoingMessage);
 				}
+
 			}
 			else{
 				$action_item->action_date = null;

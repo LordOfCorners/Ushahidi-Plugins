@@ -10,6 +10,8 @@
 		'action_needed' => 'Acción necesaria',
 		'action_date' => 'Fecha de accion',
 		'action_urgent' => 'Acción necesaria urgente', 
-		'all' => 'Todo'
+		'all' => 'Todo',
+		'action_taken_message' => 'Your report is being acted upon'
+
 	);
 ?>
