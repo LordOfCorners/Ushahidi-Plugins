@@ -11,7 +11,7 @@
 		'action_date' => 'Fecha de accion',
 		'action_urgent' => 'Acción necesaria urgente', 
 		'all' => 'Todo',
-		'action_taken_message' => 'Your report is being acted upon'
+		'action_taken_message' => 'Medidas estan siendo tomadas en su reporte'
 
 	);
 ?>
