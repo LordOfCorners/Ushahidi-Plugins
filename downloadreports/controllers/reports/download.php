@@ -30,9 +30,9 @@ Class Download_Controller extends Main_Controller {
 		$this->template->content->calendar_img = url::base() . "media/img/icon-calendar.gif";
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 		
-		$result = mysql_query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
-		$actionableExists = mysql_num_rows($result) > 0;
-
+		
+		$result = Database::instance()->query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
+		$actionableExists = count($result) > 0;
 
 		// Javascript Header
 		$this->themes->js = new View('download_reports_js');

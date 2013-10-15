@@ -1,4 +1,3 @@
-
 <h1> Inventory Management via SMS - Settings</h1>
 <?php print form::open(); ?>
 
@@ -63,21 +62,31 @@
 		<?php print form::input('delimiter', $form['delimiter'], ' class="text"'); ?>		
 	</div>
 	<br/>
-	<div class="row">
+	<div class="row" id="locationDiv">
 		<h4>Enter your first location</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			Codes are case insensative. For example "AbC" and "abc" will be treated as the same code. 
 		</h6>
-		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
-		Location Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Latitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Longitude: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-
+				<?php
+		for($i=0; $i < $form['location_count']+$newLocationCount; $i++){
+		echo("<p id='location".$i."'> Code: ");
+		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
+		echo(" Location Name: ");
+		print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
+		echo(" Latitude: ");
+		print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
+		echo(" Longitude: ");
+		print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
+		echo("<button onclick='removeElement(&#39;locationDiv&#39;, &#39;location".$i."&#39;)' type='button'>Delete</button>");
+		echo("</p>");
 		
+		}?>
+		<span id="newLocations"> </span>
+		<button onclick="addLocation()" type="button">Add new location</button>
 	</div>
 	<br/>
 	
-		<div class="row">
+		<div class="row" id="itemDiv">
 		<h4>Enter an Item</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			It may be helpful to categorize your item codes by placing a letter at the beginning. <br /> To figure out a category's ID number look at the status bar 
@@ -85,11 +94,32 @@
 	administrative interface. <br />This should be located in admin/manage on your Ushahidi site  
 		</h6>
 		
-		Code: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes --><br/>
-		Item Name: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Item Description: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-		Category ID: <?php print form::input('code_word', $form['code_word'], ' class="text"'); ?> <!-- needs correct variables, this is just for mockup purposes -->
-				
+		<?php
+		$categories = ORM::factory('category')->find_all();
+		for($i=0; $i < $form['item_count']+$newItemCount; $i++){
+		echo("<p id='item".$i."'> Code: ");
+		print form::input('item_code'.$i, $form['item_code'.$i], ' class="text"');
+		echo(" Item Description: ");
+		print form::input('item_description'.$i, $form['item_description'.$i], ' class="text"');
+		echo(" Item Category: "); //would be great to make this a dropdown of categories. 
+		echo("<select name='item_category".$i."'>");
+		foreach($categories as $row){
+			if($form['item_category'.$i] == $row->id){
+				echo("<option selected='selected' value='".$row->id."'>".$row->category_title."</option>");
+			}
+			else{
+				echo("<option value='".$row->id."'>".$row->category_title."</option>");
+			}
+		}
+		echo("</select>");
+		echo("<button onclick='removeElement(&#39;itemDiv&#39;, &#39;item".$i."&#39;)' type='button'>Delete</button>");
+/* 		print form::input('item_category'.$i, $form['item_category'.$i], ' class="text"'); 		 */
+		echo("</p>");		
+		}
+?>
+
+		<span id="newItems"> </span>
+		<button onclick="addItem()" type="button">Add new item</button>
 	</div>
 	
 	
@@ -108,8 +138,72 @@
 	
 </div>
 <br/>
-
+<input name="newLocationCount" type="hidden" id="newLocationCount" value="" />
+<input name="newItemCount" type="hidden" id="newItemCount" value="" />
 <input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
 
 <?php print form::close(); ?>
+
+<!-- store location count in javascript -->
+<?php 
+$form['location_count'] = ORM::factory('inventory_locations')->count_all();
+$form['item_count'] = ORM::factory('inventory_items')->count_all();
+
+
+echo"<script>
+var locationCount = $form[location_count];
+var itemCount = $form[item_count];
+</script>";
+ ?>
+
+	<?php echo("<script> 
+				var catArray = new Array();
+				var catIDs = new Array();");
+		  foreach($categories as $row){
+		   		echo("catArray.push('$row->category_title');");
+		   		echo("catIDs.push('$row->id');");
+		   }
+		  echo("</script>");
+		  ?>
+
+<!-- add new location form field -->
+<?php echo"<script>
+function addLocation()
+{
+	var string = '<p id=\'item'+locationCount+'\'>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'><button onclick=\'removeElement(\'locationDiv\',\''+locationCount+'\')' + 'type=\'button\'>Delete</button></p>';
+	
+	
+	$( '#newLocations' ).append(string);
+	locationCount = locationCount+1;
+	
+	document.getElementById('newLocationCount').value = locationCount-$form[location_count];
+}
+
+function addItem()
+{
+	var string = '<p>Code: ' + '<input type=\'text\' name=\'item_code' + itemCount + '\' id=\'item_code' + itemCount + '\' class=\'text\'> Item Description: '+'<input type=\'text\' name=\'item_description' + itemCount + '\' id=\'item_description' + itemCount + '\' class=\'text\'>';
+	
+	string += ' Item Category: <select name=\'item_category' + itemCount +'\'>';
+	for(var i=0; i<catArray.length;i++){
+	string += '<option value=\''+catIDs[i]+'\'>'+ catArray[i] +'</option>';
+	}
+	string += '</select><button onclick=\'removeElement(\'itemDiv\',\''+itemCount+'\')' + 'type=\'button\'>Delete</button></p>';
+
+	$( '#newItems' ).append(string);
+	itemCount = itemCount+1;
+	
+	document.getElementById('newItemCount').value = itemCount-$form[item_count];
+}
+
+function removeElement(parent,toDelete) {
+
+  var d = document.getElementById(parent);
+
+  var olddiv = document.getElementById(toDelete);
+
+  d.removeChild(olddiv);
+}
+
+
+</script>" ?>
 
