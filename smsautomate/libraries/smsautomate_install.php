@@ -74,7 +74,7 @@ class Smsautomate_Install {
 		{
 			$settings = ORM::factory('smsautomate');
 			$settings->id = 1;
-			$settings->delimiter = ";";
+			$settings->delimiter = " ";
 			$settings->code_word = "abc";
 			$settings->save();
 		}
