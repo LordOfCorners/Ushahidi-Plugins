@@ -11,11 +11,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 	$lang = array(
-	'incident_description' => 'tiene suplementos para menos de un mes de',
-	'report_submitted' => 'Informe Enviado',
-	'bad_location' => 'Código de ubicación no válido',
-	'invalid_format' => 'Mensaje no válido - Formato requerido: 999999 e99',
-	'bad_item' => 'El codigo enviado no existe: ',
-	'help_message' => 'Para enviar un reporte al CEGSS ingrese el código de locación seguido del código del articulo de la siguiente maera: 999999 e99',
+	'bad_location' => 'Location code not found (in spanish)',
 	);
 ?>

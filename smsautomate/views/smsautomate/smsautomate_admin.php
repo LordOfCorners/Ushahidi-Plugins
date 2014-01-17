@@ -112,4 +112,3 @@
 <input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
 
 <?php print form::close(); ?>
-
