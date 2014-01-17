@@ -12,6 +12,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
+		ini_set('MAX_EXECUTION_TIME',-1);
 		$this->template->this_page = 'settings';
 		$this->db = Database::instance();
 

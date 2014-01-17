@@ -45,7 +45,7 @@ class smsautomate {
 	 */
 	public function _parse_sms()
 	{
-	
+		$custom_forms = customforms::get_custom_form_fields();
 		$result = Database::instance()->query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
 		$actionableExists = count($result) > 0;
 
@@ -171,51 +171,16 @@ class smsautomate {
 			$SaveActionable->save();
 		}
 		
-/*
+
 		// STEP 4: SAVE CUSTOM FIELDS
-		//facilityType
-		$saveFacilityType = new Form_Response_Model();
-		$saveFacilityType->incident_id = $incident->id;
-		$saveFacilityType->form_field_id=8; 
-		$saveFacilityType->form_response=$facilityType;
-		$saveFacilityType->save();
-		
-		//facilityName
-		$saveFacilityName = new Form_Response_Model();
-		$saveFacilityName->incident_id = $incident->id;
-		$saveFacilityName->form_field_id=12; 
-		$saveFacilityName->form_response=$location_description;
-		$saveFacilityName->save();
-		
-		//Municipality Name
-		$saveMunicipality = new Form_Response_Model();
-		$saveMunicipality->incident_id = $incident->id;
-		$saveMunicipality->form_field_id=7;
-		$saveMunicipality->form_response=$municipality;
-		$saveMunicipality->save();
-		
-		//Department Name
-		$saveDepartment = new Form_Response_Model();
-		$saveDepartment->incident_id = $incident->id;
-		$saveDepartment->form_field_id=3;
-		$saveDepartment->form_response=$department;
-		$saveDepartment->save();
-		
-		//DMS
-		$saveDMS = new Form_Response_Model();
-		$saveDMS->incident_id = $incident->id;
-		$saveDMS->form_field_id=10;
-		$saveDMS->form_response=$dms;
-		$saveDMS->save();
-		
-		//DAS
-		$saveDAS = new Form_Response_Model();
-		$saveDAS->incident_id = $incident->id;
-		$saveDAS->form_field_id=11;
-		$saveDAS->form_response=$das;
-		$saveDAS->save();
-*/
-		
+		foreach($custom_forms as $field_id => $field_property){
+			$saveCustomFields = new Form_Response_Model();
+			$saveCustomFields->incident_id = $incident->id;
+			$saveCustomFields->form_field_id = $field_id;
+			$saveCustomFields->form_response = $locations->$field_property['field_name'];
+			$saveCustomFields->save(); 
+		}
+				
 		//STEP 5: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;

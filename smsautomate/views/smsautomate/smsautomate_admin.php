@@ -109,8 +109,9 @@
 							$default = $form['custom_field'][$field_id][$i];
 						}
 					}
-		
+					
 					$options = explode(',',$defaults[0]);
+					
 
 					
 						$ddoptions = array();
