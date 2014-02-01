@@ -12,7 +12,6 @@ class Smsautomate_settings_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		ini_set('MAX_EXECUTION_TIME',-1);
 		$this->template->this_page = 'settings';
 		$this->db = Database::instance();
 
@@ -43,35 +42,32 @@ class Smsautomate_settings_Controller extends Admin_Controller
 		);
 		//for($i=0; $i < $form['location_count']; $i++){
 		for($i=0; $i < $form['location_count']; $i++){
-		$form['location_description'.$i] = "";
-		$form['location_code'.$i] = "";
-		$form['longitude'.$i] = "";
-		$form['latitude'.$i] = "";
-		//loop through all the custom fields and add a new form for each
-		foreach ($custom_forms as $field_id => $field_property)
-			{	
-						// Get the field value
-				
-				if ($field_property['field_type'] == 7){ //DROPDOWN
+			$form['location_description'.$i] = "";
+			$form['location_code'.$i] = "";
+			$form['longitude'.$i] = "";
+			$form['latitude'.$i] = "";
+			//loop through all the custom fields and add a new form for each
+				foreach ($custom_forms as $field_id => $field_property){	
+					// Get the field value
+					if ($field_property['field_type'] == 7){ //DROPDOWN
 /*
 					$field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 						? $form['custom_field'][$field_id][$i]
 						: $field_property['field_default'];
 */
-						
 					$form['custom_field'][$field_id][$i] ="";
-			
-			}
+					}
+				}
 		}
 /*
-		var_dump($form);
-		die;
+			var_dump($form);
+			die;
 */
 		
 		for($i=0; $i < $form['item_count']+$newItemCount; $i++){
-		$form['item_description'.$i] = "";
-		$form['item_code'.$i] = "";
-		$form['item_category'.$i] = "";
+			$form['item_description'.$i] = "";
+			$form['item_code'.$i] = "";
+			$form['item_category'.$i] = "";
 		}
 		
 
@@ -100,18 +96,16 @@ class Smsautomate_settings_Controller extends Admin_Controller
 				$form['location_code'.$i] = "";
 				$form['longitude'.$i] = "";
 				$form['latitude'.$i] = "";
-				foreach ($custom_forms as $field_id => $field_property)
-				{	
-						// Get the field value
-				//custom_field[".$field_id."]".$i -- FROM THE VIEW
+				foreach ($custom_forms as $field_id => $field_property){	
+					// Get the field value
+					//custom_field[".$field_id."]".$i -- FROM THE VIEW
 					if ($field_property['field_type'] == 7){ //DROPDOWN
-						//$form['custom_field'][$field_id][$i] ="";
-						/*
-$field_value = ( ! empty($form['custom_field'][$field_id][$i]))
+					//$form['custom_field'][$field_id][$i] ="";
+					/*
+					$field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 							? $form['custom_field'][$field_id][$i]
 							: $field_property['field_default'];
 */
-				
 					}
 				}
 				
@@ -128,17 +122,14 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			$post->add_rules('delimiter', 'length[1,1]');
 			$post->add_rules('code_word', 'length[1,11]');
 			
-			 if ($post->validate())
-			{		
+			 if ($post->validate()){		
 			
 				$customFields = "";
-				foreach ($custom_forms as $field_id => $field_property)
-				{		
+				foreach ($custom_forms as $field_id => $field_property){		
 					// Get the field value
 					if ($field_property['field_type'] == 7){ //DROPDOWN
 						$customFields .= "`".$field_property['field_name']."` varchar(255) NOT NULL,";
-					}
-					
+					}	
 				}
 				//$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventory_locations`');
 				/*
@@ -161,10 +152,10 @@ $this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default
 				$settings->save();
 				$form_saved = TRUE;
 				if($post->newLocationCount!=null){
-				$newLocationCount=$post->newLocationCount;
+					$newLocationCount=$post->newLocationCount;
 				}
 				if($post->newItemCount!=null){
-				$newItemCount=$post->newItemCount;
+					$newItemCount=$post->newItemCount;
 				}
 				$form = arr::overwrite($form, $post->as_array());
 /*
@@ -177,8 +168,7 @@ $this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default
 					$_locationDesc = "location_description".$i;
 					$_latitude = "latitude".$i;
 					$_longitude = "longitude".$i;
-					foreach ($custom_forms as $field_id => $field_property)
-					{	
+					foreach ($custom_forms as $field_id => $field_property){	
 						// Get the field value
 						//custom_field[".$field_id."]".$i -- FROM THE VIEW
 						if ($field_property['field_type'] == 7){ //DROPDOWN
@@ -187,7 +177,6 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 								? $form['custom_field'][$field_id].$i
 								: $field_property['field_default'];
 */
-				
 						}		
 					}
 	
@@ -250,8 +239,7 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			
 			// No! We have validation errors, we need to show the form again,
 			// with the errors
-			else
-			{
+			else{
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
@@ -270,41 +258,39 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			$form['code_word'] = $settings->code_word;
 			
 			
-				$j=0;			
-				$locations = ORM::factory('inventory_locations')->find_all();
-				foreach($locations as $row){
-					$form['location_code'.$j] = $row->location_code;
-					$form['location_description'.$j] = $row->location_description;
-					$form['latitude'.$j] = $row->latitude;
-					$form['longitude'.$j] = $row->longitude;
-					//Load custom fields from DB
-					
-					foreach($custom_forms as $field_id => $field_property){
-						  $form['custom_field'][$field_id][$j] = $row->$field_property['field_name'] ;
-					}
-
-					$j++;
-				}
+			$j=0;			
+			$locations = ORM::factory('inventory_locations')->find_all();
+			foreach($locations as $row){
+				$form['location_code'.$j] = $row->location_code;
+				$form['location_description'.$j] = $row->location_description;
+				$form['latitude'.$j] = $row->latitude;
+				$form['longitude'.$j] = $row->longitude;
+				//Load custom fields from DB
 				
-				$k=0;			
-				$items = ORM::factory('inventory_items')->find_all();
-				foreach($items as $row){
+				foreach($custom_forms as $field_id => $field_property){
+					  $form['custom_field'][$field_id][$j] = $row->$field_property['field_name'] ;
+				}
+
+				$j++;
+			}
+				
+			$k=0;			
+			$items = ORM::factory('inventory_items')->find_all();
+			foreach($items as $row){
 				$form['item_code'.$k] = $row->item_code;
 				$form['item_description'.$k] = $row->item_description;
 				$form['item_category'.$k] = $row->item_category;
 				$k++;
-				}
+			}
 			
 			
 			//get the white listed numbers
 			$whitelist = "";
 			$count = 0;
 			$listers = ORM::factory('smsautomate_whitelist')->find_all();
-			foreach($listers as $item)
-			{
+			foreach($listers as $item){
 				$count++;
-				if($count > 1)
-				{
+				if($count > 1){
 					$whitelist = $whitelist."\n";
 				}
 				$whitelist = $whitelist.$item->phone_number;
@@ -326,7 +312,6 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 		$this->template->content->form_error = $form_error;
 		$this->template->content->errors = $errors;
 
-	}
 		
 		}//end index method
 	
