@@ -23,9 +23,15 @@
 		<div class="green-box">
 		<h3><?php echo Kohana::lang('ui_main.configuration_saved');?></h3>
 		</div>
-	<?php } ?>
+	<?php 
+		$form['location_count'] = ORM::factory('inventory_locations')->count_all();
+		
+	} ?>
 	
 	<?php 
+		if($form['location_count'] == 0){
+			$form['location_count'] = 1;
+		}
 		$addLocationString = "'<p id=\'item'+locationCount+'\'>Code: ' + '<input type=\'text\' name=\'location_code' + locationCount + '\' id=\'location_code' + locationCount + '\' class=\'text\'>  Location Name: '+'<input type=\'text\' name=\'location_description' + locationCount + '\' id=\'location_description' + locationCount + '\' class=\'text\'> Latitude: '+'<input type=\'text\' name=\'latitude' + locationCount + '\' id=\'latitude' + locationCount + '\' class=\'text\'> Longitude: '+'<input type=\'text\' name=\'longitude' + locationCount + '\' id=\'longitude' + locationCount + '\' class=\'text\'>";
 	?>
 
@@ -74,81 +80,80 @@
 						//var_dump($disp_custom_fields);
 		for($i=0; $i < $form['location_count']; $i++){
 		//for($i=0; $i < $form['location_count']+$newLocationCount; $i++){
-		echo("<p id='location".$i."'> Code: ");
-		//echo("<script>console.log($newLocationCount + ' ' + $i);</script>");
-		print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
-		echo(" Location Name: ");
-		print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
-		echo(" Latitude: ");
-		print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
-		echo(" Longitude: ");
-		print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
-
-		echo "Custom Fields: ";
+			echo("<p id='location".$i."'> Code: ");
+			//echo("<script>console.log($newLocationCount + ' ' + $i);</script>");
+			print form::input('location_code'.$i, $form['location_code'.$i], ' class="text"');
+			echo(" Location Name: ");
+			print form::input('location_description'.$i, $form['location_description'.$i], ' class="text"');
+			echo(" Latitude: ");
+			print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
+			echo(" Longitude: ");
+			print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
 	
-			foreach ($disp_custom_fields as $field_id => $field_property)
-			{	
-						// Get the field value
-
-				if ($field_property['field_type'] == 7){ //DROPDOWN
-					$id_name = 'id="custom_field_'.$field_id.'"';
-
-/*
-					$field_value = ( ! empty($form['custom_field'.$i][$field_id]))
-						? $form['custom_field'.$i][$field_id]
-						: $field_property['field_default'];
-*/
-					$defaults = explode('::',$field_property['field_default']);
+			echo "Custom Fields: ";
 		
-					$default = (isset($defaults[1])) ? $defaults[1] : 0;
-		
-					if (isset($form['custom_field'][$field_id][$i]))
-					{
-						if($form['custom_field'][$field_id][$i] != '')
+				foreach ($disp_custom_fields as $field_id => $field_property)
+				{	
+							// Get the field value
+	
+					if ($field_property['field_type'] == 7){ //DROPDOWN
+						$id_name = 'id="custom_field_'.$field_id.'"';
+	
+	/*
+						$field_value = ( ! empty($form['custom_field'.$i][$field_id]))
+							? $form['custom_field'.$i][$field_id]
+							: $field_property['field_default'];
+	*/
+						$defaults = explode('::',$field_property['field_default']);
+			
+						$default = (isset($defaults[1])) ? $defaults[1] : 0;
+			
+						if (isset($form['custom_field'][$field_id][$i]))
 						{
-							$default = $form['custom_field'][$field_id][$i];
+							if($form['custom_field'][$field_id][$i] != '')
+							{
+								$default = $form['custom_field'][$field_id][$i];
+							}
 						}
-					}
-					
-					$options = explode(',',$defaults[0]);
-					
-
-					
-						$ddoptions = array();
-					// Semi-hack to deal with dropdown boxes receiving a range like 0-100
-					if (preg_match("/[0-9]+-[0-9]+/",$defaults[0]) AND count($options == 1))
-					{
-						$dashsplit = explode('-',$defaults[0]);
-						$start = $dashsplit[0];
-						$end = $dashsplit[1];
-						for($i = $start; $i <= $end; $i++)
+						
+						$options = explode(',',$defaults[0]);
+						
+	
+						
+							$ddoptions = array();
+						// Semi-hack to deal with dropdown boxes receiving a range like 0-100
+						if (preg_match("/[0-9]+-[0-9]+/",$defaults[0]) AND count($options == 1))
 						{
-							$ddoptions[$i] = $i;
+							$dashsplit = explode('-',$defaults[0]);
+							$start = $dashsplit[0];
+							$end = $dashsplit[1];
+							for($i = $start; $i <= $end; $i++)
+							{
+								$ddoptions[$i] = $i;
+							}
 						}
-					}
-					else
-					{
-						foreach($options as $op)
+						else
 						{
-							$op = trim($op);
-							$ddoptions[$op] = $op;
+							foreach($options as $op)
+							{
+								$op = trim($op);
+								$ddoptions[$op] = $op;
+							}
 						}
+	
 					}
-
+					print form::dropdown("custom_field[".$field_id.']'."[".$i."]",$ddoptions,$default,"id = \"custom_field[".$field_id."]"."[".$i."]"."\"");
+					//
+					//ob_start();
+					//print form::dropdown("custom_field[".$field_id.']'.$i,$ddoptions,$default,"id = \"custom_field[".$field_id."]".$i."\"");
+					//$customFieldFormTemp = ob_get_contents();
+					//ob_end_clean();
+					
+					//$customFieldForm = (string)$customFieldFormTemp;
+	/* 				preg_replace('/"/', "'", $customFieldForm); */
+					//$addLocationString .= $customFieldForm;
+					
 				}
-				
-				print form::dropdown("custom_field[".$field_id.']'."[".$i."]",$ddoptions,$default,"id = \"custom_field[".$field_id."]"."[".$i."]"."\"");
-				//
-				//ob_start();
-				//print form::dropdown("custom_field[".$field_id.']'.$i,$ddoptions,$default,"id = \"custom_field[".$field_id."]".$i."\"");
-				//$customFieldFormTemp = ob_get_contents();
-				//ob_end_clean();
-				
-				//$customFieldForm = (string)$customFieldFormTemp;
-/* 				preg_replace('/"/', "'", $customFieldForm); */
-				//$addLocationString .= $customFieldForm;
-				
-			}
 	
 			//print form::input('item_description'.$i, $form['item_description'.$i], ' class="text"');
 
@@ -251,9 +256,14 @@ function addLocation()
     }
     sourceNode.parentNode.appendChild(out);
     function bump(/*String*/str) {
-    	str  = str.substring(0,str.length-1);
-    	return str + '' + locationCount;
-
+    	if(str.substring(0,3) == 'cus'){
+    		str = str.substring(0,str.length-2);
+    		return str + '' + (locationCount-1) + ']';
+    	}
+    	else{
+	    	str  = str.substring(0,str.length-1);
+	    	return str + '' + (locationCount-1);
+    	}
     }
     document.getElementById('newLocationCount').value = locationCount+1;
 }</script>";
@@ -288,12 +298,12 @@ function removeElement(parent,toDelete,type) {
   		document.getElementById('newItemCount').value = itemCount-$form[item_count];
   		break;
   	case 1:
-  		if(locationCount > 1){
-  			var olddiv = document.getElementById(toDelete.parentNode.id);
+  		var olddiv = document.getElementById(toDelete.parentNode.id);
+  		if(toDelete.parentNode.id != 'location0'){
   			d.removeChild(olddiv);
   			locationCount--;
   			document.getElementById('newLocationCount').value = locationCount-$form[location_count];
-  		}
+  		} 
   		break;
   	default:
   		//break;

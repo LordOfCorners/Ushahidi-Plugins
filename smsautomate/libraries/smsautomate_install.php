@@ -28,6 +28,8 @@ class Smsautomate_Install {
 	 */
 	public function run_install()
 	{
+		$custom_forms = customforms::get_custom_form_fields();
+
 		// Create the database tables.
 		// Also include table_prefix in name
 		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'smsautomate` (
@@ -50,14 +52,24 @@ class Smsautomate_Install {
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 			
-		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
-			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  `location_code` varchar(255) NOT NULL COMMENT \'code used to indicate location\',
-			  `location_description` varchar(255) NOT NULL,
-			  `latitude` double NOT NULL,
-			  `longitude` double NOT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
+				$customFields = "";
+				foreach ($custom_forms as $field_id => $field_property){		
+					// Get the field value
+					if ($field_property['field_type'] == 7){ //DROPDOWN
+						$customFields .= "`".$field_property['field_name']."` varchar(255) NOT NULL,";
+					}	
+				}
+								
+				$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
+					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`location_code` varchar(255) NOT NULL COMMENT \'code used to indicate location\',
+					`location_description` varchar(255) NOT NULL,
+					`latitude` double NOT NULL,
+					`longitude` double NOT NULL,
+					'.$customFields.'
+					PRIMARY KEY (`id`)
+					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
+
 			
 		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_items` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

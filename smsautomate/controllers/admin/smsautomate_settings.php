@@ -25,7 +25,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 	public function index()
 	{
 		$newItemCount=0;
-		$newLocationCount=0;
+		$newLocationCount=1;
 		$this->template->content = new View('smsautomate/smsautomate_admin');
 		$custom_forms = customforms::get_custom_form_fields();
 		$this->template->content->disp_custom_fields = $custom_forms;
@@ -41,7 +41,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 
 		);
 		//for($i=0; $i < $form['location_count']; $i++){
-		for($i=0; $i < $form['location_count']; $i++){
+		for($i=0; $i < $form['location_count']+$newLocationCount; $i++){
 			$form['location_description'.$i] = "";
 			$form['location_code'.$i] = "";
 			$form['longitude'.$i] = "";
@@ -131,9 +131,9 @@ class Smsautomate_settings_Controller extends Admin_Controller
 						$customFields .= "`".$field_property['field_name']."` varchar(255) NOT NULL,";
 					}	
 				}
-				//$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventory_locations`');
-				/*
-$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
+				$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventory_locations`');
+				
+				$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
 					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 					`location_code` varchar(255) NOT NULL COMMENT \'code used to indicate location\',
 					`location_description` varchar(255) NOT NULL,
@@ -142,7 +142,7 @@ $this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default
 					'.$customFields.'
 					PRIMARY KEY (`id`)
 					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
-*/
+
 				
 				$settings = ORM::factory('smsautomate')
 					->where('id', 1)
@@ -301,6 +301,8 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			$sec = "0";
 			header("Refresh: $sec; url=$page");
 */
+
+			
 		}// end of post
 		
 		
