@@ -89,8 +89,7 @@
 			print form::input('latitude'.$i, $form['latitude'.$i], ' class="text"'); 		
 			echo(" Longitude: ");
 			print form::input('longitude'.$i, $form['longitude'.$i], ' class="text"');
-	
-			echo "Custom Fields: ";
+			echo("<br >");
 		
 				foreach ($disp_custom_fields as $field_id => $field_property)
 				{	
@@ -140,9 +139,12 @@
 								$ddoptions[$op] = $op;
 							}
 						}
-	
+						
+						echo $field_property['field_name'].": ";
 					}
 					print form::dropdown("custom_field[".$field_id.']'."[".$i."]",$ddoptions,$default,"id = \"custom_field[".$field_id."]"."[".$i."]"."\"");
+					echo("<br >");
+
 					//
 					//ob_start();
 					//print form::dropdown("custom_field[".$field_id.']'.$i,$ddoptions,$default,"id = \"custom_field[".$field_id."]".$i."\"");
