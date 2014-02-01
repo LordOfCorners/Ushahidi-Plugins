@@ -16,6 +16,6 @@
 	'bad_location' => 'Código de ubicación no válido',
 	'invalid_format' => 'Mensaje no válido - Formato requerido: 999999 e99',
 	'bad_item' => 'El codigo enviado no existe: ',
-	'help_message' => 'Para enviar un reporte al CEGSS ingrese el código de locación seguido del código del articulo de la siguiente maera: 999999 e99',
+	'help_message' => 'Para enviar un reporte ingrese el código de locación seguido del código del articulo de la siguiente maera: 999999 e99',
 	);
 ?>
