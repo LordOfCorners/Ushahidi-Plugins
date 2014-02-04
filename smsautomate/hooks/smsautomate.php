@@ -155,8 +155,16 @@ class smsautomate {
 		$incident->incident_dateadd = $message_date;
 		$incident->incident_mode = 2;
 		// Incident Evaluation Info
-		$incident->incident_active = 1;
-		$incident->incident_verified = 1;
+		
+		//don't approve messages from senders marked as spam
+		$reporter = ORM::factory('reporter')->where('service_account',$from)->find();
+		if($reporter->level_id==2){
+			$incident->incident_active = 0;
+			$incident->incident_verified = 0;
+		}else{
+			$incident->incident_active = 1;
+			$incident->incident_verified = 1;
+		}
 		//Save
 		$incident->save();
 		error_log($incident->id);
@@ -180,6 +188,7 @@ class smsautomate {
 			$saveCustomFields->form_response = $locations->$field_property['field_name'];
 			$saveCustomFields->save(); 
 		}
+		
 				
 		//STEP 5: Record Approval
 		$verify = new Verify_Model();
@@ -202,6 +211,7 @@ class smsautomate {
 		{
 			$verify->verified_status = '0';
 		}
+		
 		$verify->save();
 		
 		//STEP 6: SAVE "FROM" INFORMATION

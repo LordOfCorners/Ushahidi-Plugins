@@ -23,7 +23,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 	}
 	
 	public function index()
-	{
+	{		
 		$newItemCount=0;
 		$newLocationCount=1;
 		$this->template->content = new View('smsautomate/smsautomate_admin');

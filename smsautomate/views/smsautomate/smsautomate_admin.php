@@ -29,6 +29,7 @@
 	} ?>
 	
 	<?php 
+	
 		if($form['location_count'] == 0){
 			$form['location_count'] = 1;
 		}
@@ -139,7 +140,7 @@
 								$ddoptions[$op] = $op;
 							}
 						}
-						
+						$ddoptions = array(' ' => "---".$field_property['field_name']."---") + $ddoptions;
 						echo $field_property['field_name'].": ";
 					}
 					print form::dropdown("custom_field[".$field_id.']'."[".$i."]",$ddoptions,$default,"id = \"custom_field[".$field_id."]"."[".$i."]"."\"");
