@@ -187,6 +187,7 @@
 		print form::input('item_description'.$i, $form['item_description'.$i], ' class="text"');
 		echo(" Item Category: "); //would be great to make this a dropdown of categories. 
 		echo("<select name='item_category".$i."'>");
+		echo("<option value=''>---".Kohana::lang('ui_main.category')."---</option>");
 		foreach($categories as $row){
 			if($form['item_category'.$i] == $row->id){
 				echo("<option selected='selected' value='".$row->id."'>".$row->category_title."</option>");
@@ -279,6 +280,8 @@ function addItem()
 	var string = '<p id = \'item' + itemCount + '\'>Code: ' + '<input type=\'text\' name=\'item_code' + itemCount + '\' id=\'item_code' + itemCount + '\' class=\'text\'> Item Description: '+'<input type=\'text\' name=\'item_description' + itemCount + '\' id=\'item_description' + itemCount + '\' class=\'text\'>';
 	
 	string += ' Item Category: <select name=\'item_category' + itemCount +'\'>';
+	string += '<option value=\'\'>'+ category + '</option>';
+
 	for(var i=0; i<catArray.length;i++){
 	string += '<option value=\''+catIDs[i]+'\'>'+ catArray[i] +'</option>';
 	}
@@ -327,6 +330,8 @@ function removeElement(parent,toDelete,type) {
 		   		echo("catArray.push('$row->category_title');");
 		   		echo("catIDs.push('$row->id');");
 		   }
+		   
+		  echo("var category ='---".Kohana::lang('ui_main.category')."---';");
 		  echo("</script>");
 		  ?>
 
