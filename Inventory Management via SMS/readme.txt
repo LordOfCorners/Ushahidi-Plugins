@@ -15,4 +15,7 @@ Allows for the mass generation of reports based on codes sent in a SMS. In one s
 1. Copy the entire /smsautomate/ directory into your /plugins/ directory.
 2. Activate the plugin.
 
+== Full Implementation Guide ==
+http://cegss.osf.parsons.edu/implementation-guide.pdf
+
 == Changelog ==
