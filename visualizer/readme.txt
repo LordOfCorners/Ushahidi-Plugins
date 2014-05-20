@@ -12,7 +12,7 @@ author website: http://www.michaelkahane.com
 Adds a page to Ushahidi with visualizations related to inventory management.
 
 == Installation ==
-1. Copy the entire /visualizzer/ directory into your /plugins/ directory.
+1. Copy the entire /visualizer/ directory into your /plugins/ directory.
 2. Activate the plugin.
 
 == Changelog ==
