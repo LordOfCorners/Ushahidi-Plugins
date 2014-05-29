@@ -1,6 +1,6 @@
 === About ===
 name: Inventory Management via SMS
-website: http://www.ushahidi.com
+website: http://cegss.osf.parsons.edu
 description: Allows for the mass generation of reports based on codes sent in a SMS message. Based off of John Etherton's SMS Automate plugin
 version: 0.1
 requires: 2.0b10
