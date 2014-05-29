@@ -154,6 +154,8 @@ class smsautomate {
 		$incident->incident_date = $message_date;  
 		$incident->incident_dateadd = $message_date;
 		$incident->incident_mode = 2;
+		$incident->incident_alert_status = 1; //Tag incident for sending alerts
+
 		// Incident Evaluation Info
 		
 		//don't approve messages from senders marked as spam
