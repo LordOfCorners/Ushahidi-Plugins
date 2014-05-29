@@ -105,6 +105,7 @@ class inventorymanagementviasms {
 		$locations = ORM::factory('inventory_locations')->where('location_code',$message_elements[0])->find();
 		if($locations->loaded){
 			$location_description=$locations->location_description;
+			$municipality = $locations->Municipalidad; //Line added to get the Municipality name
 			$location_lat=$locations->latitude;
 			$location_long=$locations->longitude;
 		}else{
@@ -122,7 +123,7 @@ class inventorymanagementviasms {
 			if($items->loaded){
 				$title = $items->item_description;
 				$category = $items->item_category;
-				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title;
+				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title." .Municipality: ".$municipality; // Municipality info added;
 			}
 			else{
 				$badCode = true;
