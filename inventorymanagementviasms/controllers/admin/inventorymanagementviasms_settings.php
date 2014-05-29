@@ -1,12 +1,14 @@
  <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * SMS Automate Administrative Controller
+ * Inventory Management via SMS Administrative Controller
  *
- * @author	   John Etherton
- * @package	   SMS Automate
+ * @author	   Open Health Networks
+ * @package	   Inventory Management via SMS
+ * 
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
  */
 
-class Smsautomate_settings_Controller extends Admin_Controller
+class inventorymanagementviasms_settings_Controller extends Admin_Controller
 {
 
 	function __construct()
@@ -26,7 +28,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 	{		
 		$newItemCount=0;
 		$newLocationCount=1;
-		$this->template->content = new View('smsautomate/smsautomate_admin');
+		$this->template->content = new View('inventorymanagementviasms/inventorymanagementviasms_admin');
 		$custom_forms = customforms::get_custom_form_fields();
 		$this->template->content->disp_custom_fields = $custom_forms;
 
@@ -144,7 +146,7 @@ class Smsautomate_settings_Controller extends Admin_Controller
 					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 
 				
-				$settings = ORM::factory('smsautomate')
+				$settings = ORM::factory('inventorymanagementviasms')
 					->where('id', 1)
 					->find();
 				$settings->delimiter = $post->delimiter;
@@ -251,7 +253,7 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 		else
 		{
 			//get settings from the database
-			$settings = ORM::factory('smsautomate')
+			$settings = ORM::factory('inventorymanagementviasms')
 				->where('id', 1)
 				->find();
 			$form['delimiter'] = $settings->delimiter;
@@ -287,7 +289,7 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			//get the white listed numbers
 			$whitelist = "";
 			$count = 0;
-			$listers = ORM::factory('smsautomate_whitelist')->find_all();
+			$listers = ORM::factory('inventorymanagementviasms_whitelist')->find_all();
 			foreach($listers as $item){
 				$count++;
 				if($count > 1){
