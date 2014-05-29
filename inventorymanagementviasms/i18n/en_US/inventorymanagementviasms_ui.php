@@ -1,14 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * English language file for SMSAutomate plugin
+ * English language file for Inventory Management via SMS plugin
  *
- * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
- * that is available through the world-wide-web at the following URI:
- * http://www.gnu.org/copyleft/lesser.html
- * @author	   Michael Kahane <kaham340@newschool.edu> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @author	   Open Health Networks
+ * @package	   Inventory Management via SMS
+ * 
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
  */
 	$lang = array(
 	'incident_description' => 'has less than a one month supply of',

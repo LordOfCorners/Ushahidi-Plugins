@@ -1,19 +1,15 @@
 <?php
 /**
- * Performs install/uninstall methods for the smsautomate plugin
+ * Performs install/uninstall methods for the Inventory Management via SMS plugin
  *
- * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
- * that is available through the world-wide-web at the following URI:
- * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module	   smsautomate Installer
- * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @author	   Open Health Networks
+ * @package	   Inventory Management via SMS
+ * 
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
  */
 
-class Smsautomate_Install {
+
+class inventorymanagementviasms_Install {
 
 	/**
 	 * Constructor to load the shared database library
@@ -32,14 +28,14 @@ class Smsautomate_Install {
 
 		// Create the database tables.
 		// Also include table_prefix in name
-		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'smsautomate` (
+		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventorymanagementviasms` (
 				  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 				  `delimiter` varchar(1) NOT NULL,
 				  `code_word` varchar(11) NOT NULL,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 				
-		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'smsautomate_whitelist` (
+		$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventorymanagementviasms_whitelist` (
 			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  `phone_number` varchar(20) NOT NULL,
 			  PRIMARY KEY (`id`)
@@ -79,12 +75,12 @@ class Smsautomate_Install {
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 		
-		$num_settings = ORM::factory('smsautomate')
+		$num_settings = ORM::factory('inventorymanagementviasms')
 				->where('id', 1)
 				->count_all();
 		if($num_settings == 0)
 		{
-			$settings = ORM::factory('smsautomate');
+			$settings = ORM::factory('inventorymanagementviasms');
 			$settings->id = 1;
 			$settings->delimiter = " ";
 			$settings->code_word = "abc";
@@ -98,7 +94,7 @@ class Smsautomate_Install {
 	 */
 	public function uninstall()
 	{
-		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'smsautomate`');
-		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'smsautomate_whitelist`');
+		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventorymanagementviasms`');
+		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventorymanagementviasms_whitelist`');
 	}
 }

@@ -1,20 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * smsautomate Hook - Load All Events
+ * Inventory Management via SMS Hook - Load All Events
  *
- * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
- * that is available through the world-wide-web at the following URI:
- * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
- * @package	   Ushahidi - http://source.ushahididev.com
- * @copyright  Ushahidi - http://www.ushahidi.com
- * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @author	   Open Health Networks
+ * @package	   Inventory Management via SMS
+ * 
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
  */
  
  /*test*/
 
-class smsautomate {
+class inventorymanagementviasms {
 	
 	/**
 	 * Registers the main event add method
@@ -25,7 +21,7 @@ class smsautomate {
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
 		
-		$this->settings = ORM::factory('smsautomate')
+		$this->settings = ORM::factory('inventorymanagementviasms')
 				->where('id', 1)
 				->find();
 	}
@@ -126,7 +122,7 @@ class smsautomate {
 			if($items->loaded){
 				$title = $items->item_description;
 				$category = $items->item_category;
-				$incident_description=$location_description." ".Kohana::lang('smsautomate_ui.incident_description')." ".$title;
+				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title;
 			}
 			else{
 				$badCode = true;
@@ -285,24 +281,24 @@ class smsautomate {
 		
 
 		if(isset($help)){
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.help_message'));
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.help_message'));
 		}else if($goodFormat && $goodLocation && !$badCode){
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted'));
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.report_submitted'));
 		}else if(!$goodFormat && $goodLocation){
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.invalid_format'));
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.invalid_format'));
 		}else if(!$goodLocation && $goodFormat){
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.bad_location'));
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.bad_location'));
 		}else if(!$goodFormat && !$goodLocation){
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.invalid_format'));
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.invalid_format'));
 		}else if($goodFormat && $goodLocation && $badCode && isset($title)){
-			$codeList = "".Kohana::lang('smsautomate_ui.bad_item');
+			$codeList = "".Kohana::lang('inventorymanagementviasms_ui.bad_item');
 			$codeCount = count($badCodes);
 			for($b = 0; $b<$codeCount;$b++){
 				$codeList = $codeList.$badCodes[$b]." ";
 			}
-			sms::send($from, $sms_from, Kohana::lang('smsautomate_ui.report_submitted')." ".$codeList);
+			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.report_submitted')." ".$codeList);
 		}else if($goodFormat && $goodLocation && $badCode && !isset($title)){
-			$codeList = "".Kohana::lang('smsautomate_ui.bad_item');
+			$codeList = "".Kohana::lang('inventorymanagementviasms_ui.bad_item');
 			$codeCount = count($badCodes);
 			for($b = 0; $b<$codeCount;$b++){
 				$codeList = $codeList.$badCodes[$b]." ";
@@ -319,4 +315,4 @@ class smsautomate {
 } // smsautomate
 
 
-new smsautomate;
+new inventorymanagementviasms;
