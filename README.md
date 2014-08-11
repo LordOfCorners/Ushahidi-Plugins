@@ -12,3 +12,5 @@ creating more data visualizations in Ushahidi. It should be upgraded to a better
 
 The rest of the plugins here are forked from existing plugins that just have slight changes to provide additional
 functionality with the Inventory Management by SMS plugin. 
+
+Cloud9 Commit test
