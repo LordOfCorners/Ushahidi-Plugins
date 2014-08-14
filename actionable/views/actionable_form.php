@@ -14,10 +14,20 @@
 <!-- report is acted on -->
 <div class="row">
   <h4>
-    <?php echo Kohana::lang('actionable.action_taken') ?>: <?php print form::checkbox('action_taken', '1', $action_taken); ?> 
+    <?php echo Kohana::lang('actionable.action_taken') ?>: <?php print form::radio('action_taken', '1', $action_taken == 1); ?> 
     <span><?php echo Kohana::lang('actionable.action_summary_description'); ?></span>
   </h4>
   <textarea name="action_summary" id="action_summary" style=" height: 60px;"><?php echo $action_summary; ?></textarea>
 </div>
 <!-- / report is acted on -->
+
+<!-- report is resolved -->
+<div class="row">
+  <h4>
+    <?php echo Kohana::lang('actionable.resolved') ?>: <?php print form::radio('action_taken', '2', $action_taken == 2); ?> 
+    <span><?php echo Kohana::lang('actionable.resolution_summary_description'); ?></span>
+  </h4>
+  <textarea name="resolution_summary" id="resolution_summary" style=" height: 60px;"><?php echo $resolution_summary; ?></textarea>
+</div>
+<!-- / report is resolved -->
 </div>
