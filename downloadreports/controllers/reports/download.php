@@ -189,10 +189,13 @@ Class Download_Controller extends Main_Controller {
 				
 				//'actionable.actionable','actionable.action_taken','actionable.action_summary','actionable.action_date'
 				if($actionableExists){
-					$incident_query->join('actionable','actionable.incident_id','incident.id','INNER')->select('actionable.actionable','actionable.action_taken','actionable.action_summary','actionable.action_date');
+					$incident_query->join('actionable','actionable.incident_id','incident.id','INNER')->select('actionable.actionable','actionable.action_taken','actionable.action_summary','actionable.action_date', 'actionable.resolution_date','actionable.resolution_summary');
 					$csv_headers[] = "Actionable Status";
 					$csv_headers[] = "Action Summary";
 					$csv_headers[] = "Action Date";
+					$csv_headers[] = "Resolution Summary";
+					$csv_headers[] = "Resolution Date";
+
 				}
 				
 				//Called if actionable filter is set. 
@@ -205,6 +208,9 @@ Class Download_Controller extends Main_Controller {
 					}
 					if($post->actionable=='action_taken'){
 						$actionableQuery = "(action_taken = 1)";
+					}
+					if($post->actionable=='resolved'){
+						$actionableQuery = "(action_taken = 2)";
 					}
 					if($post->actionable=='not_actionable'){
 						$actionableQuery = "(actionable = 0)";
@@ -312,10 +318,14 @@ Class Download_Controller extends Main_Controller {
 							else if($incident->actionable==1 && $incident->action_taken==0) $actionableStatus = "Actionable";
 							else if($incident->actionable==2 && $incident->action_taken==0) $actionableStatus = "Urgent";
 							else if($incident->action_taken==1) $actionableStatus = "Action Taken";
+							else if($incident->action_taken==2) $actionableStatus = "Resolved";
 							else $actionableStatus = "";
 							array_push($new_report, '"' . $this->_csv_text($actionableStatus) . '"');
 							array_push($new_report, '"' . $this->_csv_text($incident->action_summary) . '"');
 							array_push($new_report, '"' . $incident->action_date .'"');
+							array_push($new_report, '"' . $this->_csv_text($incident->resolution_summary) . '"');
+							array_push($new_report, '"' . $incident->resolution_date .'"');
+
 						}
 
 						array_push($new_report, "\n");

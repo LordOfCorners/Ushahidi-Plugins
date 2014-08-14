@@ -38,6 +38,8 @@ class Actionable_Install {
 				  `action_taken` tinyint(4) NOT NULL DEFAULT \'0\' COMMENT \'Has an action been taken yet?\',
 				  `action_summary` varchar(255) DEFAULT NULL COMMENT \'What action was taken\',
 				  `action_date` DATETIME DEFAULT NULL COMMENT \'When was action taken\',
+				  `resolution_summary` varchar(255) DEFAULT NULL COMMENT \'What was the resolution\',
+				  `resolution_date` DATETIME DEFAULT NULL COMMENT \'When was this resolved\',
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 	}
