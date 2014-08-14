@@ -266,8 +266,8 @@ class inventorymanagementviasms {
 		    	$loadActionable =ORM::factory('actionable')
 				->where('incident_id',$row->id)
 				->find();
-				$loadActionable->action_taken=1;
-				$loadActionable->action_date=date("Y-m-d H:i:s",time());
+				$loadActionable->action_taken=2;
+				$loadActionable->resolution_date=date("Y-m-d H:i:s",time());
 				$loadActionable->save();
 			}
 
