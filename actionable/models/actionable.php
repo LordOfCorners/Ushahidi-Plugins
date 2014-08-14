@@ -23,9 +23,13 @@ class Actionable_Model extends ORM
 	public function status() {
 		if ($this->actionable)
 		{
-			if ($this->action_taken)
+			if ($this->action_taken == 1)
 			{
 				return Kohana::lang('actionable.action_taken');
+			}			
+			elseif ($this->action_taken == 2)
+			{
+				return Kohana::lang('actionable.resolved');
 			}
 			elseif ($this->actionable == 2)
 			{
@@ -45,7 +49,11 @@ class Actionable_Model extends ORM
 	public function color() {
 		if ($this->actionable)
 		{
-			if ($this->action_taken)
+			if ($this->action_taken == 1)
+			{
+				return 'ffff00';
+			}			
+			elseif ($this->action_taken == 2)
 			{
 				return '33ff33';
 			}

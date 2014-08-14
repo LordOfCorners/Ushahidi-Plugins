@@ -1,9 +1,16 @@
-div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0; border: solid 2px #FFF19F; line-height: 1.3em; }
-#action-taken-badge { font-size: 1.2em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
+div.resolved { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0; border: solid 2px #FFF19F; line-height: 1.3em; }
+div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0; border: solid 2px #FFF19F; line-height: 1.3em; position:relative;}
+#action-taken-badge { font-size: 1.2em; background: #f6ee00; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute;}
+#action-resolved-badge { font-size: 1.2em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute}
 #actionable-badge { font-size: 1.2em; background: #ee6600; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
 #action-urgent-badge { font-size: 1.2em; background: #ee0000; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
-#action-summary { float:left;}
-#action-taken { float:left;}
+#action-taken { float:left; margin-left:8em;}
+#action-resolved { float: left; margin-left:8em;}
+
+#action-date { float:left; margin-left:10em}
+#action-summary { float:left; margin-left:10em; margin-bottom:1em;}
+#resolution-date { margin-left:10em; margin-top:1em;}
+#resolution-summary{margin-left:10em;}
 /*
 #badge { font-size: 1.6em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 0.8em 0 0; float: left; }
 #summary { float:left; padding: 0.25em 0.5em;}
