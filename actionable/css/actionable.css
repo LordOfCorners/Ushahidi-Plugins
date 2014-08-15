@@ -7,10 +7,10 @@ div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0
 #action-taken { float:left; margin-left:8em;}
 #action-resolved { float: left; margin-left:8em;}
 
-#action-date { float:left; margin-left:10em}
-#action-summary { float:left; margin-left:10em; margin-bottom:1em;}
-#resolution-date { margin-left:10em; margin-top:1em;}
-#resolution-summary{margin-left:10em;}
+#action-date { float:left; margin-left:13em}
+#action-summary { float:left; margin-left:13em; margin-bottom:1em;}
+#resolution-date { margin-left:13em; margin-top:1em;}
+#resolution-summary{margin-left:13em;}
 /*
 #badge { font-size: 1.6em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 0.8em 0 0; float: left; }
 #summary { float:left; padding: 0.25em 0.5em;}
