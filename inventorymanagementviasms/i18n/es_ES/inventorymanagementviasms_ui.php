@@ -8,7 +8,7 @@
  * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
  */
 	$lang = array(
-	'incident_description' => 'tiene suplementos para menos de un mes de',
+	'incident_description' => 'Se ha reportado un problema que afecta el acceso a los servicios y el derecho a la salud de los usuarios por',
 	'report_submitted' => 'Informe Enviado',
 	'bad_location' => 'Código de ubicación no válido',
 	'invalid_format' => 'Mensaje no válido - Formato requerido: 999999 e99',
