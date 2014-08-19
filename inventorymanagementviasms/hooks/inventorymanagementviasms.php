@@ -26,16 +26,33 @@ class inventorymanagementviasms {
 				->find();
 	}
 	
-
-	
 	/**
 	 * Adds all the events to the main Ushahidi application
 	 */
 	public function add()
 	{
-		Event::add('ushahidi_action.message_sms_add', array($this, '_parse_sms'));		
+		Event::add('ushahidi_action.message_sms_add', array($this, '_parse_sms'));	
+		
+		/*hook to add ID to reports page*/
+		if (Router::$controller == 'reports')
+		{
+			switch (Router::$method)
+			{
+				// Hook into the Report view (front end)
+				case 'view':
+/* 					plugin::add_stylesheet('inventorymanagemenyviasms/css/style'); */
+					Event::add('ushahidi_action.report_meta_after_time', array($this, '_add_ID'));
+					break;
+			}
+		}	
 	}
-
+	
+	/*Add ID to reports page*/
+	public function _add_ID()
+	{
+		echo "<strong>ID:</strong> ".Event::$data;;	
+	}
+	
 	/**
 	 * Check the SMS message and parse it
 	 */
@@ -123,7 +140,7 @@ class inventorymanagementviasms {
 			if($items->loaded){
 				$title = $items->item_description;
 				$category = $items->item_category;
-				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title." .Municipality: ".$municipality; // Municipality info added;
+				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title.". Municipality: ".$municipality; // Municipality info added;
 			}
 			else{
 				$badCode = true;
