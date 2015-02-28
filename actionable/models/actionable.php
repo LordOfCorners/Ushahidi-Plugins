@@ -31,6 +31,10 @@ class Actionable_Model extends ORM
 			{
 				return Kohana::lang('actionable.resolved');
 			}
+			elseif ($this->action_taken == 3)
+			{
+				return Kohana::lang('actionable.legal');
+			}
 			elseif ($this->actionable == 2)
 			{
 				return Kohana::lang('actionable.urgent');
@@ -56,14 +60,18 @@ class Actionable_Model extends ORM
 			elseif ($this->action_taken == 2)
 			{
 				return '33ff33';
+			}			
+			elseif ($this->action_taken == 3)
+			{
+				return 'ffaa00';
 			}
 			elseif ($this->actionable == 2)
 			{
-				return 'ff0000';
+				return '960000';
 			}
 			else
 			{
-				return 'ffaa00';
+				return 'ff0000';
 			}
 		}
 		else

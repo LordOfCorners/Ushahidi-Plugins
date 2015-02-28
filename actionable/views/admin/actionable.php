@@ -27,6 +27,7 @@
 						<li><a href="?status=action" <?php if ($status == 'action' OR $status == 'urgent' ) echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.actionable'); ?></a></li>
 						<li><a href="?status=urgent" <?php if ($status == 'urgent') echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.urgent'); ?></a></li>
 						<li><a href="?status=taken" <?php if ($status == 'taken') echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.action_taken'); ?></a></li>
+						<li><a href="?status=legal" <?php if ($status == 'legal') echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.legal'); ?></a></li>
 						<li><a href="?status=resolved" <?php if ($status == 'resolved') echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.resolved'); ?></a></li>
 
 						<li><a href="?status=na" <?php if ($status == 'na') echo "class=\"active\""; ?>><?php echo Kohana::lang('actionable.not_actionable'); ?></a></li>

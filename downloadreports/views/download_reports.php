@@ -431,6 +431,8 @@ if($actionableExists){
 		print form::radio('actionable', 'urgent').'<br />';
 		print form::label('actionable', Kohana::lang('actionable.action_taken').': ');
 		print form::radio('actionable', 'action_taken').'<br />';
+		print form::label('actionable', Kohana::lang('actionable.legal').': ');
+		print form::radio('actionable', 'legal').'<br />';
 		print form::label('actionable', Kohana::lang('actionable.resolved').': ');
 		print form::radio('actionable', 'resolved').'<br />';
 		print form::label('actionable', Kohana::lang('actionable.not_actionable').': ');

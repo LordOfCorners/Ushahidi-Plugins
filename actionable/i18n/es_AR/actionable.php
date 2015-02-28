@@ -15,6 +15,10 @@
 		'resolution_message' => 'Su reporte ha sido resuelto',
 		'resolution_date' => 'Fecha de resolución',
 		'resolution_summary_description' => 'Ha sido resuelta su queja? Resuma como fue resuelta su queja.',
-		'resolved' => 'Problema Resuelto'
+		'resolved' => 'Problema Resuelto',
+		'legal' => 'Expediente Legal Abierto',
+		'legal_date' => 'Fecha de apertura del caso legal',
+		'legal_summary_description' => 'Agregue detalles sobre el expediente legal de esta denuncia.',
+		'legal_message' => 'Se ha abierto un expediente legal para seguimiento de su denuncia'
 	);
 ?>

@@ -40,6 +40,8 @@ class Actionable_Install {
 				  `action_date` DATETIME DEFAULT NULL COMMENT \'When was action taken\',
 				  `resolution_summary` varchar(255) DEFAULT NULL COMMENT \'What was the resolution\',
 				  `resolution_date` DATETIME DEFAULT NULL COMMENT \'When was this resolved\',
+				  `legal_summary` varchar(255) DEFAULT NULL COMMENT \'What was the legal case\',
+				  `legal_date` DATETIME DEFAULT NULL COMMENT \'When was this legal case opend\',
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 	}
