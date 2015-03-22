@@ -186,8 +186,17 @@ class actionable {
 						sms::send($smsFrom,Kohana::config("settings.sms_no1"),$legalMessage);
 						$legalSendToArray = Kohana::config('actionable.legalSendToEmail');
 						if($legalSendToArray != null){
+						
+							$legalMessageSubject = Kohana::lang('actionable.legal').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
+							if($_POST['legal_summary'] != null){
+								$legal_summary = $_POST['legal_summary'];
+							}else{
+								$legal_summary ="";
+							}
+							
+							$legalEmailBody = Kohana::lang('actionable.legal_message').". ".$legal_summary.": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
 							foreach ($legalSendToArray as $sendTo) {
-								email::send($sendTo, Kohana::config('settings.site_email'), 'this is a test email', $legalMessage, FALSE);
+								email::send($sendTo, Kohana::config('settings.site_email'), $legalMessageSubject, $legalEmailBody, FALSE);
 							}
 						}
 					}
