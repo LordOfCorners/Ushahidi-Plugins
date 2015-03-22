@@ -184,6 +184,12 @@ class actionable {
 					if(!isset($action_item->legal_date)){
 						$action_item->legal_date = date("Y-m-d H:i:s",time());
 						sms::send($smsFrom,Kohana::config("settings.sms_no1"),$legalMessage);
+						$legalSendToArray = Kohana::config('actionable.legalSendToEmail');
+						if($legalSendToArray != null){
+							foreach ($legalSendToArray as $sendTo) {
+								email::send($sendTo, Kohana::config('settings.site_email'), 'this is a test email', $legalMessage, FALSE);
+							}
+						}
 					}
 				}
 			}
