@@ -42,9 +42,15 @@ class inventorymanagementviasms {
 	public function _parse_sms()
 	{
 		$custom_forms = customforms::get_custom_form_fields();
-		$result = Database::instance()->query("SHOW TABLES LIKE 'actionable'"); //see if Actionable plugin is being used.
-		$actionableExists = count($result) > 0;
-
+		
+		//Check to see if Actionable is being used
+		$result = ORM::factory('plugin') ->where('plugin_name','actionable')->find();
+		if($result->plugin_active == 1 && $result->plugin-installed == 1){
+			$actionableExists = true;
+		}else{
+			$actionableExists = false;
+		}
+		
 		//the message
 		$message = Event::$data->message;
 		$message_id = Event::$data->id;
