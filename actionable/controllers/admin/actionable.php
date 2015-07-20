@@ -67,6 +67,11 @@ class Actionable_Controller extends Reports_Controller {
 				$actionable_filter = 'action_taken = 3';
 				$this->params['actionable'] = 'i.id IN (SELECT DISTINCT incident_id FROM `'.Kohana::config('database.default.table_prefix').'actionable` WHERE action_taken = 3)';
 			}
+			elseif (strtolower($status) == 'dropped')
+			{
+				$actionable_filter = 'action_taken = 4';
+				$this->params['actionable'] = 'i.id IN (SELECT DISTINCT incident_id FROM `'.Kohana::config('database.default.table_prefix').'actionable` WHERE action_taken = 4)';
+			}
 			elseif (strtolower($status) == 'na')
 			{
 				$actionable_filter = 'actionable = 0 AND action_taken = 0';

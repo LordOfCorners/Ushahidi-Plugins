@@ -24,6 +24,11 @@
       <?php echo Kohana::lang('actionable.legal');?>
     </div>
 	<?php }; ?>
+	<?php if ($action_taken == 4) { ?>
+    <div id="action-dropped-badge">
+      <?php echo Kohana::lang('actionable.dropped');?>
+    </div>
+	<?php }; ?>
 	<?php if ($action_date) { ?>
 		<div id="action-date">
 		<strong><?php echo Kohana::lang('actionable.action_date');?>: </strong><?php echo $action_date; ?>
@@ -41,6 +46,16 @@
 	<?php }; ?>
   <?php if ($legal_summary) { ?>
 		<div id="legal-summary">
+		<strong><?php echo Kohana::lang('actionable.summary');?>: </strong><?php echo $legal_summary; ?>
+		</div>
+	<?php }; ?>
+		<?php if ($dropped_date) { ?>
+		<div id="dropped-date">
+		<strong><?php echo Kohana::lang('actionable.dropped_date');?>: </strong><?php echo $dropped_date; ?>
+		</div>
+	<?php }; ?>
+  <?php if ($dropped_summary) { ?>
+		<div id="dropped-summary">
 		<strong><?php echo Kohana::lang('actionable.summary');?>: </strong><?php echo $legal_summary; ?>
 		</div>
 	<?php }; ?>

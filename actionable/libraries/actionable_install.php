@@ -41,7 +41,9 @@ class Actionable_Install {
 				  `resolution_summary` varchar(255) DEFAULT NULL COMMENT \'What was the resolution\',
 				  `resolution_date` DATETIME DEFAULT NULL COMMENT \'When was this resolved\',
 				  `legal_summary` varchar(255) DEFAULT NULL COMMENT \'What was the legal case\',
-				  `legal_date` DATETIME DEFAULT NULL COMMENT \'When was this legal case opend\',
+				  `legal_date` DATETIME DEFAULT NULL COMMENT \'When was this legal case opened\',
+				  `dropped_summary` varchar(255) DEFAULT NULL COMMENT \'Why was the report dropped\',
+				  `dropped_date` DATETIME DEFAULT NULL COMMENT \'When was this report dropped\',
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 	}

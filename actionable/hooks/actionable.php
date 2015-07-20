@@ -23,7 +23,8 @@ class actionable {
 		104 => 'Action taken',
 		105 => 'Resolved',
 		106 => 'Not Actionable',
-		107 => 'Legal'
+		107 => 'Legal',
+		108 => 'Dropped'
 		
 		
 	);
@@ -38,6 +39,7 @@ class actionable {
 		$this->action_summary = "";
 		$this->resolution_summary = "";
 		$this->legal_summary = "";
+		$this->dropped_summary = "";
 		
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
@@ -124,6 +126,7 @@ class actionable {
 				$this->action_summary = $action_item->action_summary;
 				$this->resolution_summary = $action_item->resolution_summary;
 				$this->legal_summary = $action_item->legal_summary;
+				$this->dropped_summary = $action_item->dropped_summary;
 			}
 		}
 		
@@ -132,6 +135,7 @@ class actionable {
 		$form->action_summary = $this->action_summary;
 		$form->resolution_summary = $this->resolution_summary;
 		$form->legal_summary = $this->legal_summary;
+		$form->dropped_summary = $this->dropped_summary;
 		$form->render(TRUE);
 	}
 	
@@ -160,6 +164,8 @@ class actionable {
 			$outgoingMessage = Kohana::lang('actionable.action_taken_message').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
 			$resolutionMessage = Kohana::lang('actionable.resolution_message').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
 			$legalMessage = Kohana::lang('actionable.legal_message').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
+			
+			$droppedMessage = Kohana::lang('actionable.dropped_message').": ".$incident->incident_title." | ".$locationName." | ".$incident->incident_date;
 
 			$action_item->incident_id = $incident->id;
 			$action_item->actionable = isset($_POST['actionable']) ? 
@@ -169,6 +175,7 @@ class actionable {
 			$action_item->action_summary = $_POST['action_summary'];
 			$action_item->resolution_summary = $_POST['resolution_summary'];
 			$action_item->legal_summary = $_POST['legal_summary'];
+			$action_item->dropped_summary = $_POST['dropped_summary'];
 			if(isset($_POST['action_taken'])){
 				if($_POST['action_taken']==1){
 					if(!isset($action_item->action_date)){
@@ -200,12 +207,19 @@ class actionable {
 							}
 						}
 					}
+				}else if($_POST['action_taken']==4){
+					if(!isset($action_item->dropped_date)){
+						$action_item->dropped_date = date("Y-m-d H:i:s",time());
+						sms::send($smsFrom,Kohana::config("settings.sms_no1"),$droppedMessage);
+					}
 				}
+
 			}
 			else{
 				$action_item->action_date = null;
 				$action_item->resolution_date = null;
 				$action_item->legal_date = null;
+				$action_item->dropped_date = null;
 			}		
 			$action_item->save();
 		}
@@ -236,6 +250,8 @@ class actionable {
 					$report->resolution_date = $actionable->resolution_date;
 					$report->legal_summary = $actionable->legal_summary;
 					$report->legal_date = $actionable->legal_date;
+					$report->dropped_summary = $actionable->dropped_summary;
+					$report->dropped_date = $actionable->dropped_date;
 					$report->render(TRUE);
 				}
 			}
@@ -313,6 +329,8 @@ class actionable {
 					echo "<actiontaken>RESOLVED</actiontaken>\n";
 				} else if ($action_item->action_taken == 3){
 					echo "<actiontaken>LEGAL FILE OPEN</actiontaken>\n";
+				} else if ($action_item->action_taken == 4){
+					echo "<actiontaken>COMPLAINT DROPPED</actiontaken>\n";
 				}
 				else {
 					echo "<actiontaken>NO</actiontaken>\n";
@@ -370,6 +388,7 @@ $('.actionable_filters li a').click(function() {
 			if($k == 105){ $filterName = Kohana::lang('actionable.resolved');}
 			if($k == 106){ $filterName = Kohana::lang('actionable.not_actionable');}
 			if($k == 107){ $filterName = Kohana::lang('actionable.legal');}
+			if($k == 108){ $filterName = Kohana::lang('actionable.dropped');}
 
 			echo "<li><a id=\"action_$k\" href=\"#\"><span>$filterName</span></a></li>";
 		}
@@ -424,6 +443,10 @@ $('.actionable_filters li a').click(function() {
 					case '107':
 						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
 							WHERE action_taken = 3)';
+						break;	
+					case '108':
+						$actionable_sql[] = 'i.id IN (SELECT DISTINCT incident_id FROM '.Kohana::config('database.default.table_prefix').'actionable
+							WHERE action_taken = 4)';
 						break;					
 				}
 			}

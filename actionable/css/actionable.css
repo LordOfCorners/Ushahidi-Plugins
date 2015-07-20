@@ -4,6 +4,7 @@ div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0
 #action-taken-badge { font-size: 1.2em; background: #f6ee00; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute;}
 #action-resolved-badge { font-size: 1.2em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute}
 #action-legal-badge { width: 120px; line-height: 130%; font-size: 1.2em; background: #ffaa00; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute}
+#action-dropped-badge { width: 120px; line-height: 130%; font-size: 1.2em; background: #add8e6; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 3em 0; float: left; position: absolute}
 #actionable-badge { font-size: 1.2em; background: #fd0505; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
 #action-urgent-badge { font-size: 1.2em; background: #ee0000; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 1em 0 0; float: left; }
 #action-taken { float:left; margin-left:8em;}
@@ -16,6 +17,8 @@ div.action-taken { clear: both; margin: 1em 0; padding: 1em; background: #fffbe0
 #resolution-summary{margin-left:13em;}
 #legal-date { margin-left:13em; margin-top:1em;}
 #legal-summary{margin-left:13em;}
+#dropped-date { margin-left:13em; margin-top:1em;}
+#dropped-summary{margin-left:13em;}
 
 /*
 #badge { font-size: 1.6em; background: #009200; font-weight: bold; color: #fff; padding: 0.25em 0.5em; margin: 0 0.8em 0 0; float: left; }

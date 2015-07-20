@@ -35,6 +35,10 @@ class Actionable_Model extends ORM
 			{
 				return Kohana::lang('actionable.legal');
 			}
+			elseif ($this->action_taken == 4)
+			{
+				return Kohana::lang('actionable.dropped');
+			}
 			elseif ($this->actionable == 2)
 			{
 				return Kohana::lang('actionable.urgent');
@@ -64,6 +68,10 @@ class Actionable_Model extends ORM
 			elseif ($this->action_taken == 3)
 			{
 				return 'ffaa00';
+			}
+			elseif ($this->action_taken == 4)
+			{
+				return 'add8e6';
 			}
 			elseif ($this->actionable == 2)
 			{

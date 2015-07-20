@@ -26,6 +26,11 @@
 			</a>
 		</li>
 		<li>
+			<a href="#" id="filter_link_actionable_108">
+				<span><?php echo Kohana::lang('actionable.dropped')?></span>
+			</a>
+		</li>
+		<li>
 			<a href="#" id="filter_link_actionable_105">
 				<span><?php echo Kohana::lang('actionable.resolved')?></span>
 			</a>

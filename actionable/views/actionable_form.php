@@ -31,6 +31,16 @@
 </div>
 <!-- / legal case opened-->
 
+<!-- report dropped -->
+<div class="row">
+  <h4>
+    <?php echo Kohana::lang('actionable.dropped') ?>: <?php print form::radio('action_taken', '4', $action_taken == 4); ?> 
+    <span><?php echo Kohana::lang('actionable.dropped_summary_description'); ?></span>
+  </h4>
+  <textarea name="dropped_summary" id="dropped_summary" style=" height: 60px;"><?php echo $dropped_summary; ?></textarea>
+</div>
+<!-- / legal case opened-->
+
 <!-- report is resolved -->
 <div class="row">
   <h4>
