@@ -19,6 +19,10 @@
 		'legal' => 'Expediente Legal Abierto',
 		'legal_date' => 'Fecha de apertura del caso legal',
 		'legal_summary_description' => 'Agregue detalles sobre el expediente legal de esta denuncia.',
-		'legal_message' => 'Se ha abierto un expediente legal para seguimiento de su denuncia'
+		'legal_message' => 'Se ha abierto un expediente legal para seguimiento de su denuncia',
+		'dropped' => 'Denunciante no continúa proceso',
+		'dropped_date' => 'Fecha en que el denunciante desistió',
+		'dropped_summary_description' => 'Agregue detalles sobre la razón por la que no continua el proceso',
+		'dropped_message' => 'La denuncia no seguirá ningún proceso administrativo ni legal'
 	);
 ?>
