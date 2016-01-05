@@ -40,7 +40,8 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 			'whitelist' => "",
 			'location_count' => ORM::factory('inventory_locations')->count_all(),
 			'item_count' => ORM::factory('inventory_items')->count_all(),
-			'default_message' => ""
+			'default_message' => "",
+			'auto_approve' => ""
 
 		);
 		//for($i=0; $i < $form['location_count']; $i++){
@@ -151,6 +152,7 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 					->where('id', 1)
 					->find();
 				$settings->default_message = $post->default_message;
+				$settings->auto_approve = $post->auto_approve;
 				$settings->delimiter = $post->delimiter;
 				$settings->code_word = $post->code_word;
 				$settings->save();
@@ -261,6 +263,7 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			$form['delimiter'] = $settings->delimiter;
 			$form['default_message'] = $settings->default_message;
 			$form['code_word'] = $settings->code_word;
+			$form['auto_approve'] = $settings->auto_approve;
 
 
 			$j=0;

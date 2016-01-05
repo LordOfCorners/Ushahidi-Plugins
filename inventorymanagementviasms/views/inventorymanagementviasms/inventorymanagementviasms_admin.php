@@ -71,6 +71,17 @@
 		</h6>
 		<?php print form::input('default_message', $form['default_message'], ' class="text" '); ?>
 	</div>
+	<br/>
+
+	<div class="row">
+
+		<h4>Do you want to auto-approve and auto-verify incoming reports if number is not marked as spam?</h4>
+		<?php
+			// echo form::label('a', Kohana::lang('auto approve'), ' class="fixw"');
+			echo "<label class='wrapped'>".form::radio('auto_approve',1, $form['auto_approve'] == 1) . Kohana::lang('ui_main.yes') . "</label>";
+			echo "<label class='wrapped'>".form::radio('auto_approve',0, $form['auto_approve'] == 0) . Kohana::lang('ui_main.no') . "</label>";
+		?>
+	</div>
 <!-- 	<div class="row">
 
 		<h4>What character should be the delimiter between fields in a text message? - DISABLED</h4>

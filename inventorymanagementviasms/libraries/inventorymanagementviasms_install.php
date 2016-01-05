@@ -33,6 +33,8 @@ class inventorymanagementviasms_Install {
 				  `delimiter` varchar(1) NOT NULL,
 				  `code_word` varchar(11) NOT NULL,
 				  `default_message` varchar(11) NOT NULL,
+				  `auto_approve` int(10) NOT NULL,
+
 
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
@@ -87,6 +89,7 @@ class inventorymanagementviasms_Install {
 			$settings->delimiter = " ";
 			$settings->default_message = "";
 			$settings->code_word = "abc";
+			$settings->auto_approve = 1;
 			$settings->save();
 		}
 

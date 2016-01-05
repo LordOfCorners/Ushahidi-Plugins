@@ -82,6 +82,7 @@ class inventorymanagementviasms {
 		//the delimiter
 		$delimiter = $this->settings->delimiter;
 		$default_message_text = $this->settings->default_message;
+		$auto_approve = $this->settings->auto_approve;
 
 /*  		$delimiter = " "; */
 
@@ -168,13 +169,18 @@ class inventorymanagementviasms {
 		// Incident Evaluation Info
 
 		//don't approve messages from senders marked as spam
-		$reporter = ORM::factory('reporter')->where('service_account',$from)->find();
-		if($reporter->level_id==2){
+		if ($auto_approve == 0) {
 			$incident->incident_active = 0;
 			$incident->incident_verified = 0;
-		}else{
-			$incident->incident_active = 1;
-			$incident->incident_verified = 1;
+		}else if ($auto_approve == 1) {
+			$reporter = ORM::factory('reporter')->where('service_account',$from)->find();
+			if($reporter->level_id==2){
+				$incident->incident_active = 0;
+				$incident->incident_verified = 0;
+			}else{
+				$incident->incident_active = 1;
+				$incident->incident_verified = 1;
+			}
 		}
 		//Save
 		$incident->save();
