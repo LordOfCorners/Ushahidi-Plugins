@@ -65,7 +65,7 @@
 <div>
 	<div class="row">
 
-		<h4>Set the default message for the report</h4>
+		<h4>Enter text in this field if you wish to override default report description.</h4>
 		<h6 style="margin-top:1px; padding-top:1px;margin-bottom:1px; padding-bottom:1px;">
 			If you wish to have no messsage at all, enter &amp;nbsp; in this field.
 		</h6>
