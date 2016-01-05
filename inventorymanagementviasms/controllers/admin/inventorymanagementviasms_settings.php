@@ -4,8 +4,8 @@
  *
  * @author	   Open Health Networks
  * @package	   Inventory Management via SMS
- * 
- * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
+ *
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point.
  */
 
 class inventorymanagementviasms_settings_Controller extends Admin_Controller
@@ -23,9 +23,9 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 			url::redirect('admin/dashboard');
 		}
 	}
-	
+
 	public function index()
-	{		
+	{
 		$newItemCount=0;
 		$newLocationCount=1;
 		$this->template->content = new View('inventorymanagementviasms/inventorymanagementviasms_admin');
@@ -39,7 +39,8 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 			'code_word' => "",
 			'whitelist' => "",
 			'location_count' => ORM::factory('inventory_locations')->count_all(),
-			'item_count' => ORM::factory('inventory_items')->count_all()
+			'item_count' => ORM::factory('inventory_items')->count_all(),
+			'default_message' => ""
 
 		);
 		//for($i=0; $i < $form['location_count']; $i++){
@@ -49,7 +50,7 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 			$form['longitude'.$i] = "";
 			$form['latitude'.$i] = "";
 			//loop through all the custom fields and add a new form for each
-				foreach ($custom_forms as $field_id => $field_property){	
+				foreach ($custom_forms as $field_id => $field_property){
 					// Get the field value
 					if ($field_property['field_type'] == 7){ //DROPDOWN
 /*
@@ -65,32 +66,32 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 			var_dump($form);
 			die;
 */
-		
+
 		for($i=0; $i < $form['item_count']+$newItemCount; $i++){
 			$form['item_description'.$i] = "";
 			$form['item_code'.$i] = "";
 			$form['item_category'.$i] = "";
 		}
-		
 
-		
+
+
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-				
+
 		// check, has the form been submitted if so check the input values and save them
 		if ($_POST)
 		{
-		
+
 
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
 			$post = new Validation($_POST);
-						
+
 /*
 			var_dump($form);
 			die;
-	
+
 */
 
 			for($i=0; $i < $form['location_count']+$post->newLocationCount; $i++){
@@ -98,7 +99,7 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 				$form['location_code'.$i] = "";
 				$form['longitude'.$i] = "";
 				$form['latitude'.$i] = "";
-				foreach ($custom_forms as $field_id => $field_property){	
+				foreach ($custom_forms as $field_id => $field_property){
 					// Get the field value
 					//custom_field[".$field_id."]".$i -- FROM THE VIEW
 					if ($field_property['field_type'] == 7){ //DROPDOWN
@@ -110,31 +111,31 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 */
 					}
 				}
-				
+
 			}
-			
+
 			for($i=0; $i < $form['item_count']+$post->newItemCount; $i++){
 				$form['item_description'.$i] = "";
 				$form['item_code'.$i] = "";
 				$form['item_category'.$i] = "";
 			}
-		
+
 			// Add some filters
 			$post->pre_filter('trim', TRUE);
 			$post->add_rules('delimiter', 'length[1,1]');
 			$post->add_rules('code_word', 'length[1,11]');
-			
-			 if ($post->validate()){		
-			
+
+			 if ($post->validate()){
+
 				$customFields = "";
-				foreach ($custom_forms as $field_id => $field_property){		
+				foreach ($custom_forms as $field_id => $field_property){
 					// Get the field value
 					if ($field_property['field_type'] == 7){ //DROPDOWN
 						$customFields .= "`".$field_property['field_name']."` varchar(255) NOT NULL,";
-					}	
+					}
 				}
 				$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'inventory_locations`');
-				
+
 				$this->db->query('CREATE TABLE IF NOT EXISTS `'.Kohana::config('database.default.table_prefix').'inventory_locations` (
 					`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 					`location_code` varchar(255) NOT NULL COMMENT \'code used to indicate location\',
@@ -145,10 +146,11 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 					PRIMARY KEY (`id`)
 					) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1');
 
-				
+
 				$settings = ORM::factory('inventorymanagementviasms')
 					->where('id', 1)
 					->find();
+				$settings->default_message = $post->default_message;
 				$settings->delimiter = $post->delimiter;
 				$settings->code_word = $post->code_word;
 				$settings->save();
@@ -170,7 +172,7 @@ class inventorymanagementviasms_settings_Controller extends Admin_Controller
 					$_locationDesc = "location_description".$i;
 					$_latitude = "latitude".$i;
 					$_longitude = "longitude".$i;
-					foreach ($custom_forms as $field_id => $field_property){	
+					foreach ($custom_forms as $field_id => $field_property){
 						// Get the field value
 						//custom_field[".$field_id."]".$i -- FROM THE VIEW
 						if ($field_property['field_type'] == 7){ //DROPDOWN
@@ -179,9 +181,9 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 								? $form['custom_field'][$field_id].$i
 								: $field_property['field_default'];
 */
-						}		
+						}
 					}
-	
+
 					if(isset($post->$_locationCode) && $post->$_locationCode != ""){
 						$locations = new Inventory_locations_Model();
 						$locations->location_code = strtoupper($post->$_locationCode);
@@ -197,13 +199,13 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 						continue;
 					}
 				}
-				
+
 				ORM::factory('inventory_items')->delete_all();
 				for($i=0; $i < $form['item_count']+ $newItemCount; $i++){
 					$_itemCode = "item_code".$i;
 					$_itemDesc = "item_description".$i;
 					$_itemCat = "item_category".$i;
-	
+
 					if(isset($post->$_itemCode) && $post->$_itemCode!=""){
 						$items = new Inventory_items_Model();
 						$items->item_code = strtoupper($post->$_itemCode);
@@ -216,13 +218,13 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 					}
 				}
 
-				
-/* This would need to be uncommented if the whitelist is re-implemented 
+
+/* This would need to be uncommented if the whitelist is re-implemented
 				//do the white list
-				
+
 				//delete everything in the white list db to make room for the new ones
 				ORM::factory('smsautomate_whitelist')->delete_all();
-				
+
 				$whitelist = nl2br(trim($post->whitelist));
 				if($whitelist != "" && $whitelist != null)
 				{
@@ -238,7 +240,7 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 */
 
 			}
-			
+
 			// No! We have validation errors, we need to show the form again,
 			// with the errors
 			else{
@@ -257,10 +259,11 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 				->where('id', 1)
 				->find();
 			$form['delimiter'] = $settings->delimiter;
+			$form['default_message'] = $settings->default_message;
 			$form['code_word'] = $settings->code_word;
-			
-			
-			$j=0;			
+
+
+			$j=0;
 			$locations = ORM::factory('inventory_locations')->find_all();
 			foreach($locations as $row){
 				$form['location_code'.$j] = $row->location_code;
@@ -268,15 +271,15 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 				$form['latitude'.$j] = $row->latitude;
 				$form['longitude'.$j] = $row->longitude;
 				//Load custom fields from DB
-				
+
 				foreach($custom_forms as $field_id => $field_property){
 					  $form['custom_field'][$field_id][$j] = $row->$field_property['field_name'] ;
 				}
 
 				$j++;
 			}
-				
-			$k=0;			
+
+			$k=0;
 			$items = ORM::factory('inventory_items')->find_all();
 			foreach($items as $row){
 				$form['item_code'.$k] = $row->item_code;
@@ -284,8 +287,8 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 				$form['item_category'.$k] = $row->item_category;
 				$k++;
 			}
-			
-			
+
+
 			//get the white listed numbers
 			$whitelist = "";
 			$count = 0;
@@ -304,11 +307,11 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 			header("Refresh: $sec; url=$page");
 */
 
-			
+
 		}// end of post
-		
-		
-		
+
+
+
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->newLocationCount = $newLocationCount;
 		$this->template->content->newItemCount = $newItemCount;
@@ -316,10 +319,10 @@ $field_value = ( ! empty($form['custom_field'][$field_id][$i]))
 		$this->template->content->form_error = $form_error;
 		$this->template->content->errors = $errors;
 
-		
-		}//end index method
-	
-	
 
-	
+		}//end index method
+
+
+
+
 }

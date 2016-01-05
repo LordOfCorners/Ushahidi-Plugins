@@ -4,36 +4,36 @@
  *
  * @author	   Open Health Networks
  * @package	   Inventory Management via SMS
- * 
- * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point. 
+ *
+ * Many thanks to John Etherton for his SMSautomate plugin, which was a great help and provided a starting point.
  */
- 
+
  /*test*/
 
 class inventorymanagementviasms {
-	
+
 	/**
 	 * Registers the main event add method
 	 */
 	public function __construct()
 	{
-	
+
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
-		
+
 		$this->settings = ORM::factory('inventorymanagementviasms')
 				->where('id', 1)
 				->find();
 	}
-	
 
-	
+
+
 	/**
 	 * Adds all the events to the main Ushahidi application
 	 */
 	public function add()
 	{
-		Event::add('ushahidi_action.message_sms_add', array($this, '_parse_sms'));		
+		Event::add('ushahidi_action.message_sms_add', array($this, '_parse_sms'));
 	}
 
 	/**
@@ -42,7 +42,7 @@ class inventorymanagementviasms {
 	public function _parse_sms()
 	{
 		$custom_forms = customforms::get_custom_form_fields();
-		
+
 		//Check to see if Actionable is being used
 		$result = ORM::factory('plugin') ->where('plugin_name','actionable')->find();
 		if($result->plugin_active == 1 && $result->plugin-installed == 1){
@@ -50,7 +50,7 @@ class inventorymanagementviasms {
 		}else{
 			$actionableExists = false;
 		}
-		
+
 		//the message
 		$message = Event::$data->message;
 		$message_id = Event::$data->id;
@@ -78,30 +78,32 @@ class inventorymanagementviasms {
 			}
 		}
 */
-		
+
 		//the delimiter
 		$delimiter = $this->settings->delimiter;
+		$default_message_text = $this->settings->default_message;
+
 /*  		$delimiter = " "; */
 
-		
+
 	//add trim to exploded array
-		
+
 		//split up the string using the delimiter
 		$message = trim($message);
 		$message_elements = explode(" ", $message);
-		
+
 		//echo Kohana::debug($message_elements);
-		
+
 		//check if the message properly exploded
 		$elements_count = count($message_elements);
-		
+
 		if($elements_count <= 1){
 			$goodFormat = false;
 			if(strtolower($message_elements[0])=="help" || strtolower($message_elements[0])=="ayuda"){ //should localize
 				$help=true;
 			}
 		}
-		
+
 		//convert strings to uppercase
 		for($j=0;$j<$elements_count;$j++){
 			$message_elements[$j]= strtoupper($message_elements[$j]);
@@ -117,7 +119,7 @@ class inventorymanagementviasms {
 			$goodLocation=false;
 			$location_description="";
 		}
-		
+
 		for($i=1; $i<$elements_count; $i++){
 			if(substr($message_elements[$i], 0,1)=="*"){
 				$tempMessageElement = substr($message_elements[$i], 1);
@@ -128,14 +130,19 @@ class inventorymanagementviasms {
 			if($items->loaded){
 				$title = $items->item_description;
 				$category = $items->item_category;
-				$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title;
+				if ($default_message_text != ""){
+					$incident_description = $default_message_text;
+				}else {
+					$incident_description=$location_description." ".Kohana::lang('inventorymanagementviasms_ui.incident_description')." ".$title;
+				}
+
 			}
 			else{
 				$badCode = true;
 				array_push($badCodes, $message_elements[$i]);
 				continue;
 			}
-		
+
 		// STEP 1: SAVE LOCATION
 		if($goodFormat && $goodLocation){
 		if(substr($message_elements[$i], 0,1)!="*"){
@@ -146,20 +153,20 @@ class inventorymanagementviasms {
 		$location->longitude = $location_long;//-90.92;
 		$location->location_date = $message_date;
 		$location->save();
-			
+
 		//STEP 2: Save the incident
 		$incident = new Incident_Model();
 		$incident->location_id = $location->id;
 		$incident->user_id = 0;
-		$incident->incident_title = $title;  
+		$incident->incident_title = $title;
 		$incident->incident_description = $incident_description;
-		$incident->incident_date = $message_date;  
+		$incident->incident_date = $message_date;
 		$incident->incident_dateadd = $message_date;
 		$incident->incident_mode = 2;
 		$incident->incident_alert_status = 1; //Tag incident for sending alerts
 
 		// Incident Evaluation Info
-		
+
 		//don't approve messages from senders marked as spam
 		$reporter = ORM::factory('reporter')->where('service_account',$from)->find();
 		if($reporter->level_id==2){
@@ -172,9 +179,9 @@ class inventorymanagementviasms {
 		//Save
 		$incident->save();
 		error_log($incident->id);
-		
+
 		if($actionableExists){
-	
+
 		// STEP 3: SAVE REPORTS AS ACTIONABLE
 			$SaveActionable = new Actionable_Model();
 			$SaveActionable-> incident_id = $incident->id;
@@ -182,7 +189,7 @@ class inventorymanagementviasms {
 			//save
 			$SaveActionable->save();
 		}
-		
+
 
 		// STEP 4: SAVE CUSTOM FIELDS
 		foreach($custom_forms as $field_id => $field_property){
@@ -190,10 +197,10 @@ class inventorymanagementviasms {
 			$saveCustomFields->incident_id = $incident->id;
 			$saveCustomFields->form_field_id = $field_id;
 			$saveCustomFields->form_response = $locations->$field_property['field_name'];
-			$saveCustomFields->save(); 
+			$saveCustomFields->save();
 		}
-		
-				
+
+
 		//STEP 5: Record Approval
 		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
@@ -215,17 +222,17 @@ class inventorymanagementviasms {
 		{
 			$verify->verified_status = '0';
 		}
-		
+
 		$verify->save();
-		
+
 		//STEP 6: SAVE "FROM" INFORMATION
 		$person = new Incident_Person_Model();
 		$person->incident_id = $incident->id;
 		$person->person_first = $from;
 		$person->person_date = date("Y-m-d H:i:s",time());
-		$person->save();		
+		$person->save();
 
-		
+
 		// STEP 7: SAVE CATEGORIES
 		ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
 
@@ -236,9 +243,9 @@ class inventorymanagementviasms {
 				$incident_category->category_id = $category;
 				$incident_category->save();
 			}
-			
+
 			Event::run('ushahidi_action.report_add', $incident);
-		
+
 
 		//don't forget to set incident_id in the message
 		//Event::$data->incident_id = $incident->id;
@@ -249,19 +256,19 @@ class inventorymanagementviasms {
 		$saveMessageID = new Incident_Message_Model();
 		$saveMessageID->incident_id = $incident->id;
 		$saveMessageID->message_id = $message_id;
-		$saveMessageID->save(); 
-		
-		
+		$saveMessageID->save();
+
+
 		}// end loop to check for asterisk
-		
-		if(substr($message_elements[$i], 0,1)=="*" && $actionableExists){ //only run if actionable is being used. 
-		
-		
+
+		if(substr($message_elements[$i], 0,1)=="*" && $actionableExists){ //only run if actionable is being used.
+
+
 			//search database for report with location title and (report title or category number)
 			//get the incident ID
 			//edit the actionable database to say action as been taken
 
-			//this query could also easily be used to prevent duplicate reports 
+			//this query could also easily be used to prevent duplicate reports
 			$query = ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id')
 				->where('location.location_name', $location_description)
@@ -279,12 +286,12 @@ class inventorymanagementviasms {
 
 		}//end change actionable loop.
 
-				
-				
-			
+
+
+
 			} // badCode
 		} // for loop for items
-		
+
 
 		if(isset($help)){
 			sms::send($from, $sms_from, Kohana::lang('inventorymanagementviasms_ui.help_message'));
@@ -312,11 +319,11 @@ class inventorymanagementviasms {
 			sms::send($from, $sms_from, $codeList);
 		}
 
-			
- 
+
+
 
 	} // _parseSMS
-	
+
 
 } // smsautomate
 
